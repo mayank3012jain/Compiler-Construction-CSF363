@@ -1,4 +1,3 @@
-#include<stdio.h>
 #include"lexer.h"
 
 lex getNextToken(char input[], int* index, int* lineNumber){
