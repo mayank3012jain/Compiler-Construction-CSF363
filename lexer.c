@@ -39,6 +39,12 @@ lex getNextToken(char input[], int* indx, int* lineNumber){
             *indx = *indx +1;
             return cur;
         }
+    }
+    else{
+    	cur = operator_dfa(input,indx,lineNumber;
+    	return cur;
+    }
+}
 
 // lex number_dfa(char* c, int* id){
 //     int id_base = *id;

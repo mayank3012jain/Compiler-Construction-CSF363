@@ -1,5 +1,5 @@
 
-#include"lexer.h"
+#include "lexer.c"
 
 int main(){
     FILE *fp = fopen("input.txt", "r");
@@ -12,10 +12,13 @@ int main(){
         read_ptr++;
     }
 
-    long long LINE_NUMBER = 1;
+    int LINE_NUMBER = 1;
+    read_ptr = 0;
     lex tokenReturn;
     while(1){
-        tokenReturn = getNextToken(read_buffer, &read_ptr, LINE_NUMBER);
+        tokenReturn = getNextToken(read_buffer, &read_ptr, &LINE_NUMBER);
+        printf(tokenReturn.lexeme);
         if (tokenReturn.token == ENDOFFILE)
+        	break;
     }
 }
