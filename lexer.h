@@ -19,7 +19,7 @@ typedef struct{
     unsigned int tag:1;
 }lex;
 
-lex getNextToken(char*, int*, int*);
+void getNextToken(char*, int*, int*, lex*);
 lex operator_dfa(char*, int*, int*);
 lex identifier_dfa(char*, int*);
 lex number_dfa(char*, int*);
