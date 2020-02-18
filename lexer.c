@@ -5,19 +5,20 @@
 #include <stddef.h>
 
 // enum token {ID,ERROR,NUM,RNUM};
-lex getNextToken(char input[], int* indx, int* lineNumber){
+int check_keyword(char[],int,int);
+void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet){
     // int indx = 0;
     char c = input[*indx];
     lex cur;
-    // while (c != '\0'){
     if((c>='a'&&c<='z')||(c>='A'&&c<='Z')){
         cur = identifier_dfa(input, indx);
-        //call parser
         cur.line = *lineNumber;
-        return cur;
-    }else if((c>='0' && c<=9+'0')){
+        // return cur;
+        memcpy(tokenRet,&cur,sizeof(lex));
+    }else if((c>='0' && c<='9')){
         cur = number_dfa(input, indx);
-        //call parser
+        cur.line = *lineNumber;
+        memcpy(tokenRet,&cur,sizeof(lex));
     }// comment
     else if(c=='*'){
         *indx = *indx + 1;
@@ -30,77 +31,35 @@ lex getNextToken(char input[], int* indx, int* lineNumber){
                 }
             }while(!(input[*indx]== '*' && input[*indx+1]== '*' ));
             *indx = *indx +2;
-            return getNextToken(input, indx, lineNumber);
+            return getNextToken(input, indx, lineNumber, tokenRet);
         }else{
             cur.token = MUL;
             cur.lexeme[0] = '*';
             cur.lexeme[1] = '\0';
             cur.line = *lineNumber;
             *indx = *indx +1;
-            return cur;
+            memcpy(tokenRet,&cur,sizeof(lex));
         }
+    }// whitespace
+    else if(c==' ' || c== '\t'){
+        (*indx)++;
+        getNextToken(input,indx,lineNumber,tokenRet);
+    }// newline
+    else if(c=='\n'){
+        *lineNumber = *lineNumber+1;
+        *indx = *indx +1;
+        getNextToken(input,indx,lineNumber,tokenRet);
+    }// EOF
+    else if(c=='\0'){
+        cur.token = ENDOFFILE;
+        cur.lexeme[0] = '\0';
+        memcpy(tokenRet,&cur,sizeof(lex));
     }
     else{
-    	cur = operator_dfa(input,indx,lineNumber;
-    	return cur;
+    	cur = operator_dfa(input,indx,lineNumber);
+    	memcpy(tokenRet,&cur,sizeof(lex));
     }
 }
-
-// lex number_dfa(char* c, int* id){
-//     int id_base = *id;
-//     (*id)++;
-//     // state 36
-//     while(c[*id] >= '0' && c[*id]<='9'){
-//         (*id)++;
-//     }
-//     // state 38
-//     if (c[*id]== '.'){
-//         (*id)++;
-//     }
-//     // state 37
-//     else{
-//         // return NUM
-//         lex ls;
-//         ls.token = NUM;
-//         strncpy(ls.lexeme, &c[id_base], *id-id_base);
-//         ls.lexeme[*id-id_base] = '\0';
-//         ls.value.num = atoi(ls.lexeme);
-//         return ls;
-//     }
-//     // state 40
-//     if(c[*id] >= '0' && c[*id]<='9')
-//         while(c[*id] >= '0' && c[*id]<='9'){
-//             (*id)++;
-//         }
-//     // state 39
-//     else{
-//         (*id)--;
-//         // return NUM
-//         lex ls;
-//         ls.token = RNUM;
-//         strncpy(ls.lexeme, &c[id_base], *id-id_base);
-//         ls.lexeme[*id-id_base] = '\0';
-//         ls.value.rnum = strtof(ls.lexeme, NULL);
-//         return ls;
-//     }
-//     if(c[*id] == 'E' || c[*id] == 'e'){
-//         // state 41
-//         (*id)++;
-//     }
-//     else if(c==' ' || c== '\t'){
-//         *indx++;
-//         getNextToken(input, indx,lineNumber);
-//     }
-//     else if(c=='\0'){
-//         cur.token = ENDOFFILE;
-//         return cur;
-//     }
-//     else{
-//        cur = operator_dfa(input,indx, lineNumber);
-//        // cur.line = lineNumber;
-//        return cur;
-//     }
-// }
 
 lex operator_dfa(char input[], int* indx,int *lineNumber){
     lex cur;
@@ -327,41 +286,44 @@ lex operator_dfa(char input[], int* indx,int *lineNumber){
                 *indx = *indx +1;
                 return cur;
                 break;
-            case '\n':
-                *lineNumber = *lineNumber+1;
-                *indx = *indx +1;
-                return getNextToken(input,indx,lineNumber);
-                break;
+            // case '\n':
+            //     *lineNumber = *lineNumber+1;
+            //     *indx = *indx +1;
+            //     return getNextToken(input,indx,lineNumber);
+            //     break;
 
             
         }
 }
 
 lex identifier_dfa(char input[], int* indx){
-    int id_base = *indx;
-    // int len;
+    int tok,id_base = *indx;
+    char tok_name[100];
     (*indx)++;
     while(((input[*indx] >= 'A' && input[*indx]<='Z') || (input[*indx] >= 'a' && input[*indx]<='z') || 
     (input[*indx] >= '0' && input[*indx]<='9') || input[*indx]=='_')){
         (*indx)++;
-        // len++;
     }
-    // Check of input[id_base -> id] is a keyword in table
-    // if(keyword) return 
-    // else
+    strncpy(tok_name,&input[id_base],*indx-id_base);
+    tok_name[*indx-id_base] = '\0';
+    if((tok=check_keyword(tok_name,*indx,id_base))!=-1){
+        lex ls;
+        ls.token = tok;
+        strcpy(ls.lexeme,tok_name);
+        return ls; 
+    } 
     if (*indx - id_base <= 20){
         lex ls;
         ls.token = ID;
-        strncpy(ls.lexeme,&input[id_base],*indx-id_base);
-        ls.lexeme[*indx-id_base] = '\0';
-        // (*indx)++;
+        // strncpy(ls.lexeme,&input[id_base],*indx-id_base);
+        // ls.lexeme[*indx-id_base] = '\0';
+        strcpy(ls.lexeme,tok_name);
         return ls;
     }
     else{
         lex ls;
         ls.token = ERROR;
         strcpy(ls.lexeme,"ERROR");
-        // (*indx)++;
         return ls;
     }
 }
@@ -466,3 +428,15 @@ lex number_dfa(char input[], int* indx){
     ls.value.rnum = strtof(ls.lexeme, NULL);
     return ls;
 }
+
+int check_keyword(char tok[], int end, int start){
+    char* term_strings[] = {"E","INTEGER","REAL","BOOLEAN","OF","ARRAY","START","END","DECLARE","MODULE","DRIVER","PROGRAM","RECORD","TAGGED","UNION","GET_VALUE","PRINT","USE","WITH","PARAMETERS","TRUE","FALSE","TAKES","INPUT","RETURNS","AND","OR","FOR","IN","SWITCH","CASE","BREAK","DEFAULT","WHILE","PLUS","MINUS","MUL","DIV","LT","LE","GE","GT","EQ","NE","DEF","DRIVERDEF","ENDDEF","DRIVERENDDEF","COLON","RANGEOP","SEMICOL","COMMA","ASSIGNOP","SQBO","SQBC","BO","BC","COMMENTMARK","ID","RNUM","NUM","ERROR","EOF"};
+    int len = 63;
+    for(int i=0; i<63; i++){
+        // // // // IMPORTANT
+        if(strcasecmp(tok,term_strings[i])==0)
+            return i;
+    }
+    return -1;
+}
+
