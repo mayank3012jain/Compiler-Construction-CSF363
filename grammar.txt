@@ -1,95 +1,103 @@
 program moduledeclarations othermodules drivermodule othermodules
-moduledeclarations moduledeclaration moduledeclarations 
-moduledeclaration E
-othermodules module othermodules 
-othermodules E
-drivermodule DRIVERDEF DRIVER PROGRAM DRIVERENDDEF moduldef
+moduledeclarations moduledeclaration moduledeclarations
+moduledeclarations EPSILON
+moduledeclaration DECLARE MODULE ID SEMICOL
+othermodules module othermodules
+othermodules EPSILON
+drivermodule DRIVERDEF DRIVER PROGRAM DRIVERENDDEF moduledef
 module DEF MODULE ID ENDDEF TAKES INPUT SQBO inputplist SQBC SEMICOL ret moduledef
-ret RETURNS SQBO outputlist SQBC SEMICOL
-ret E
-inputplist ID COLON datatype inputplistnew
-inputplistnew COMMA ID COLON datatype inputplistnew
-inputplistnew E
-outplist ID COLON type outputplistnew
-outputplistnew COMMA ID COLON type outputplistnew
-outputplistnew E
+ret RETURNS SQBO outputplist SQBC SEMICOL
+ret EPSILON
+inputplist ID COLON datatype n1
+n1 COMMA ID COLON datatype n1
+n1 EPSILON
+outputplist ID COLON type n2
+n2 COMMA ID COLON type n2
+n2 EPSILON
 datatype INTEGER
 datatype REAL
 datatype BOOLEAN
-datatype ARRAY SQBO range SQBC OF type
+datatype ARRAY SQBO rangearrays SQBC OF type
+rangearrays ind RANGEOP ind
 type INTEGER
 type REAL
 type BOOLEAN
 moduledef START statements END
 statements statement statements
-statements E
+statements EPSILON
 statement iostmt
 statement simplestmt
 statement declarestmt
 statement conditionalstmt
 statement iterativestmt
-iostmt GETVALUE BO ID BC SEMICOL
+iostmt GET_VALUE BO ID BC SEMICOL
 iostmt PRINT BO var BC SEMICOL
-var ID whichid
-var NUM
-var RNUM
-var TRUE
-var FALSE
-whichid SQBO index SQBC
-whichid E
-simplestmt assignmentstmt
+boolconstt TRUE
+boolconstt FALSE
+varidnum ID whichid
+varidnum NUM
+varidnum RNUM
+var varidnum
+var boolconstt
+whichid SQBO ind SQBC
+whichid EPSILON
+simplestmt assignstmt
 simplestmt modulereusestmt
-assignmentstmt ID whichstmt
+assignstmt ID whichstmt
 whichstmt lvalueidstmt
 whichstmt lvaluearrstmt
-lvalueidstmt ASSIGNOP expressionnew SEMICOL
-lvaluearrstmt SQBO index SQBC ASSIGNOP expressionnew SEMICOL
-index NUM
-index ID
+lvalueidstmt ASSIGNOP expression SEMICOL
+lvaluearrstmt SQBO ind SQBC ASSIGNOP expression SEMICOL
+ind NUM
+ind ID
 modulereusestmt optional USE MODULE ID WITH PARAMETERS idlist SEMICOL
-optional SQBO idlist SQBO ASSIGNOP
-optional E
-idlist ID idlistnew
-idlistnew COMMA ID idlistnew
-idlistnew E
-expression bterm btermrec
-btermrec logicalop bterm btermrec
-btermrec E
-bterm arithmeticexpr aterm
-aterm relationalop arithmeticexpr aterm
-aterm E
-arithmeticexpr term aenew
-aenew pmop term aenew
-aenew E
-term factor termnew
-termnew mdop factor termnew
-termnew E
-factor var
-factor BO expression BC
-unterm var
-unterm BO expression BC
-pmop PLUS
-pmop MINUS
-mdop MUL
-mdop DIV
+optional SQBO idlist SQBC ASSIGNOP
+optional EPSILON
+idlist ID n3
+n3 COMMA ID n3
+n3 EPSILON
+expression arithmeticorbooleanexpr
+expression u
+u op1 newnt
+newnt BO arithmeticexpr BC
+newnt varidnum
+arithmeticorbooleanexpr anyterm n7
+n7 logicalop anyterm n7
+n7 EPSILON
+anyterm arithmeticexpr n8
+anyterm boolconstt
+n8 relationalop arithmeticexpr
+n8 EPSILON
+arithmeticexpr term n4
+n4 op1 term n4
+n4 EPSILON
+term factor n5
+n5 op2 factor n5
+n5 EPSILON
+factor BO arithmeticorbooleanexpr BC
+factor varidnum
+op1 PLUS
+op1 MINUS
+op2 MUL
+op2 DIV
 logicalop AND
 logicalop OR
-relational LT
-relational LE
-relational GT
-relational GE
-relational EQ
-relational NE
+relationalop LT
+relationalop LE
+relationalop GT
+relationalop GE
+relationalop EQ
+relationalop NE
 declarestmt DECLARE idlist COLON datatype SEMICOL
-conditionalstmt SWITCH BO ID BC START casestmts default END
-casestmts CASE value COLON statements BREAK SEMICOL csnew
-csnew CASE value COLON statements BREAK SEMICOL
-csnew E
+conditionalstmt SWITCH BO ID BC START casestmts dflt END
+casestmts CASE value COLON statements BREAK SEMICOL n9
+n9 CASE value COLON statements BREAK SEMICOL n9
+n9 EPSILON
 value NUM
 value TRUE
 value FALSE
-default DEFAULT COLON statements BREAK SEMICOL
-default E
+dflt DEFAULT COLON statements BREAK SEMICOL
+dflt EPSILON
 iterativestmt FOR BO ID IN range BC START statements END
-iterativestmt WHILE BO expression BC START statements END
+iterativestmt WHILE BO arithmeticorbooleanexpr BC START statements END
 range NUM RANGEOP NUM
