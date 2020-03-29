@@ -7,7 +7,7 @@
 
 typedef union attributeType;
 enum type {INTEGER,REAL,BOOLEAN};
-enum nodeName {MODULEDECLARATIONS_NODE, }
+enum nodeName {MODULEDECLARATIONS_NODE, };
 
 typedef struct ASTnode{
     int label;
@@ -21,7 +21,7 @@ typedef struct ASTnode{
     // attributeType syn;//what will be the type
     // int inhtag;
     // int syntag;
-} ASTnode;
+}ASTnode;
 
 typedef struct symbolTable {
     char name[50];//variable name
