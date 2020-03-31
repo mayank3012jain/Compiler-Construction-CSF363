@@ -139,7 +139,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
         //Create leaf nodes using syntax tree nodes
 
         case 4: //moduledeclaration -> DECLARE MODULE ID SEMICOL
-            current = allocateAstNode(MODULEDECLARATIONS_NODE, parent, NULL, NULL, root->children[2]);
+            current = allocateAstNode(ID_NODE, parent, NULL, NULL, root->children[2]);
             break;
 
         case 17: //datatype -> INTEGER
@@ -271,9 +271,10 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             break;
         
         case 11: //inputplist -> ID COLON datatype n1
-            current = populateAST(root->children[2], parent);
+            current = allocateAstNode(INPUTPLIST_NODE, parent, NULL, NULL, NULL);
             if(current!=NULL){
-                current-> firstChild = allocateAstNode(ID,current,NULL, NULL,root->children[0]);
+                current-> firstChild = populateAST(root->children[2], current);
+                current->firstChild->sibling =  allocateAstNode(ID_NODE,current,NULL, NULL,root->children[0]);
                 current-> sibling = populateAST(root->children[3], parent);
             
             }else{
@@ -284,7 +285,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
         case 12: //n1 -> COMMA ID COLON datatype n11
             current = populateAST(root->children[3], parent);
             if(current!=NULL){
-                current-> firstChild = allocateAstNode(ID,current,NULL, NULL,root->children[0]);
+                current-> firstChild = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[0]);
                 current-> sibling = populateAST(root->children[4], parent);
             
             }else{
@@ -295,7 +296,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
         case 14: //outputplist -> ID COLON type n2
             current = populateAST(root->children[2], parent);
             if(current!=NULL){
-                current-> firstChild = allocateAstNode(ID,current,NULL, NULL,root->children[0]);
+                current-> firstChild = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[0]);
                 current-> sibling = populateAST(root->children[3], parent);
             
             }else{
@@ -306,7 +307,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
         case 15: //n2 -> COMMA ID COLON type n21
             current = populateAST(root->children[3], parent);
             if(current!=NULL){
-                current-> firstChild = allocateAstNode(ID,current,NULL, NULL,root->children[1]);
+                current-> firstChild = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[1]);
                 current-> sibling = populateAST(root->children[4], parent);
             
             }else{
@@ -390,10 +391,14 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             //         }
             //     }
             // }
-            current->firstChild = allocateAstNode(MODULEDEC_HEADER_NODE, current, populateAST(root->children[0], current->firstChild), NULL, root);
-            current->firstChild->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, populateAST(root->children[1], current->firstChild->sibling), NULL, root);
-            current->firstChild->sibling->sibling = allocateAstNode(DRIVER_MOD_NODE, current, populateAST(root->children[2], current->firstChild->sibling->sibling), NULL, root);
-            current->firstChild->sibling->sibling->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, populateAST(root->children[3], current->firstChild->sibling->sibling->sibling), NULL, root);
+            current->firstChild = allocateAstNode(MODULEDEC_HEADER_NODE, current, NULL, NULL, NULL);
+            current->firstChild->firstChild = populateAST(root->children[0], current->firstChild);
+            current->firstChild->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, NULL, NULL, NULL);
+            current->firstChild->sibling->firstChild = populateAST(root->children[1], current->firstChild->sibling);
+            current->firstChild->sibling->sibling = allocateAstNode(DRIVER_MOD_NODE, current, NULL, NULL, NULL);
+            current->firstChild->sibling->sibling->firstChild = populateAST(root->children[2], current->firstChild->sibling->sibling);
+            current->firstChild->sibling->sibling->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, NULL, NULL, NULL);
+            current->firstChild->sibling->sibling->sibling->firstChild = populateAST(root->children[3], current->firstChild->sibling->sibling->sibling);
             
             break;
 
@@ -425,9 +430,12 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             //     }
             // }
             current->firstChild = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[2]);
-            current->firstChild->sibling = allocateAstNode(INPUTPLIST_HEADER_NODE, current, populateAST(root->children[7], current->firstChild->sibling), NULL, root);
-            current->firstChild->sibling->sibling = allocateAstNode(RET_HEADER_NODE, current, populateAST(root->children[10], current->firstChild->sibling->sibling), NULL, root);
-            current->firstChild->sibling->sibling->sibling = allocateAstNode(MODULEDEF_HEADER_NODE, current, populateAST(root->children[11], current->firstChild->sibling->sibling->sibling), NULL, root);
+            current->firstChild->sibling = allocateAstNode(INPUTPLIST_HEADER_NODE, current, NULL, NULL, root);
+            current->firstChild->sibling->firstChild = populateAST(root->children[7], current->firstChild->sibling);
+            current->firstChild->sibling->sibling = allocateAstNode(RET_HEADER_NODE, current, NULL, NULL, root);
+            current->firstChild->sibling->sibling->firstChild = populateAST(root->children[10], current->firstChild->sibling->sibling);
+            current->firstChild->sibling->sibling->sibling = allocateAstNode(MODULEDEF_HEADER_NODE, current, NULL, NULL, root);
+            current->firstChild->sibling->sibling->sibling->firstChild = populateAST(root->children[11], current->firstChild->sibling->sibling->sibling);
             break;
 
         case 20://datatype -> ARRAY SQBO rangearrays SQBC OF type
@@ -446,34 +454,40 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             current = allocateAstNode(MODEULEREUSESTMT_NODE, parent, NULL, NULL, root);
             int arr2[] = {0,3,6};
 
-            if(current!=NULL){
-                index = 0;
-                temp = populateAST(root->children[0], current);
-                temp2 = current;
-                while(index < 3){
-                    while(index < 3 && temp == NULL){
-                        index++;
-                        if(index == 1){
-                            temp = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[arr2[index]]);
-                        }
-                        else{
-                            temp = populateAST(root->children[arr2[index]], current);
-                        }
-                    }
-                    if(index == 3){
-                        break;
-                    }
-                    else{
-                        if(temp2 == current){
-                            current->firstChild = temp;
-                            temp2 = temp;
-                        }else{
-                            temp2->sibling = temp;
-                            temp2 = temp;
-                        }
-                    }
-                }
-            }
+            // if(current!=NULL){
+            //     index = 0;
+            //     temp = populateAST(root->children[0], current);
+            //     temp2 = current;
+            //     while(index < 3){
+            //         while(index < 3 && temp == NULL){
+            //             index++;
+            //             if(index == 1){
+            //                 temp = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[arr2[index]]);
+            //             }
+            //             else{
+            //                 temp = populateAST(root->children[arr2[index]], current);
+            //             }
+            //         }
+            //         if(index == 3){
+            //             break;
+            //         }
+            //         else{
+            //             if(temp2 == current){
+            //                 current->firstChild = temp;
+            //                 temp2 = temp;
+            //             }else{
+            //                 temp2->sibling = temp;
+            //                 temp2 = temp;
+            //             }
+            //         }
+            //     }
+            // }
+
+            current->firstChild = allocateAstNode(OPTIONAL_RETURN_NODE, current, NULL, NULL, NULL);
+            current->firstChild->firstChild = populateAST(root->children[0], current->firstChild);
+            current->firstChild->sibling = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[3]);
+            current->firstChild->sibling->sibling = allocateAstNode(IDLIST_NODE, current, NULL, NULL, NULL);
+            current->firstChild->sibling->sibling->firstChild = populateAST(root->children[6], current->firstChild->sibling->sibling);
             break;
             
         
@@ -539,9 +553,8 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
 
 
         case 61: //u -> op1 newnt
-            current = allocateAstNode(U_NODE, parent, NULL, NULL, root);
-            current->firstChild = allocateAstNode(OP1_NODE, current, NULL, NULL, root->children[0]);
-            current->firstChild->sibling = populateAST(root->children[1], current);
+            current = allocateAstNode(U_NODE, parent, NULL, NULL, root->children[0]);
+            current->firstChild= populateAST(root->children[1], current);
             break;
 
         case 91: //declarestmt -> DECLARE idlist COLON datatype SEMICOL
@@ -606,6 +619,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             {
                 temp->sibling = current->firstChild;
                 temp->parent = current;
+                current->firstChild = temp;
             }
             break;
             
@@ -713,7 +727,7 @@ void printAST(ASTnode* root){
 
 void printASTNode(ASTnode* node){
     if(node->parent){
-        printf("\nlabelEnum: %d Label:%s Parent:%d %s", node->label, nodeNameString[node->label], node->parent->label, "..");
+        printf("\nlabelEnum: %d Label:%s Parent:%d %s", node->label, nodeNameString[node->label], node->parent->label, nodeNameString[node->parent->label]);
     }else{
         printf("\nlabelEnum: %d Label:%s Parent:%d %s", node->label, nodeNameString[node->label], -1, "NULL");
     }

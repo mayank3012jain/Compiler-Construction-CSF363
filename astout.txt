@@ -1,0 +1,8 @@
+Rule: 1	Lexeme:                    ------	Linenumber: -----	Token:   1	Value: -----	Parent:                   PROGRAM	IsLeaf:  NO	Symbol:        moduledeclarations
+Rule: 3	Lexeme:                    ------	Linenumber: -----	Token:   2	Value: -----	Parent:        moduledeclarations	IsLeaf:  NO	Symbol:         moduledeclaration
+Rule: -2	Lexeme:                   declare	Linenumber:     1	Token:   9	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                   DECLARE
+Rule: -2	Lexeme:                    module	Linenumber:     1	Token:  10	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                    MODULE
+Rule: -2	Lexeme:                   readArr	Linenumber:     1	Token:  59	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                        ID
+Rule: -2	Lexeme:                         ;	Linenumber:     1	Token:  51	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 2	Lexeme:                    ------	Linenumber: -----	Token:   1	Value: -----	Parent:        moduledeclarations	IsLeaf:  NO	Symbol:        moduledeclarations
+Rule: -2	Lexeme:                        <<	Linenumber:     3	Token:   0	Value: -----	Parent:        moduledeclarations	IsLeaf: YES	Symbol:                   EPSILON
