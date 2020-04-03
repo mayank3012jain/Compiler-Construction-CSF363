@@ -269,7 +269,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
                 printf("Error module");
             }
             break;
-        
+
         case 11: //inputplist -> ID COLON datatype n1
             current = allocateAstNode(INPUTPLIST_NODE, parent, NULL, NULL, NULL);
             if(current!=NULL){
@@ -283,11 +283,11 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             break;
 
         case 12: //n1 -> COMMA ID COLON datatype n11
-            current = populateAST(root->children[3], parent);
+            current = allocateAstNode(INPUTPLIST_NODE, parent, NULL, NULL, NULL);
             if(current!=NULL){
-                current-> firstChild = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[0]);
-                current-> sibling = populateAST(root->children[4], parent);
-            
+                current->firstChild = populateAST(root->children[3], parent);
+                current->firstChild->sibling = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[0]);
+                current->sibling = populateAST(root->children[4], parent);
             }else{
                 printf("Error n1");
             }
@@ -451,7 +451,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             break;
             
         case 53: // modulereusestmt -> optional USE MODULE ID WITH PARAMETERS idlist SEMICOL
-            current = allocateAstNode(MODEULEREUSESTMT_NODE, parent, NULL, NULL, root);
+            current = allocateAstNode(MODULEREUSESTMT_NODE, parent, NULL, NULL, root);
             int arr2[] = {0,3,6};
 
             // if(current!=NULL){
@@ -551,9 +551,9 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             current->firstChild->sibling = populateAST(root->children[4], current);
             break;
 
-
+        // change?
         case 61: //u -> op1 newnt
-            current = allocateAstNode(U_NODE, parent, NULL, NULL, root->children[0]);
+            current = populateAST(root->children[0], current);
             current->firstChild= populateAST(root->children[1], current);
             break;
 
@@ -596,7 +596,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
         //Expression rules
 
         case 75: //n5 -> op2 factor n51
-            current = allocateAstNode(OP2_NODE, parent, NULL, NULL, root->children[0]);
+            current = populateAST(root->children[0], current);
             current->firstChild = populateAST(root->children[1], current);
             temp = populateAST(root->children[2], current);
             
@@ -624,7 +624,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             break;
             
         case 72: //n4 -> op1 term n41
-            current = allocateAstNode(OP1_NODE, parent, NULL, NULL, root->children[0]);
+            current = populateAST(root->children[0], current);
             current->firstChild = populateAST(root->children[1], current);
             temp = populateAST(root->children[2], current);
             
@@ -652,7 +652,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             break;
 
         case 69: //n8 -> relationalop arithmeticexpr
-            current = allocateAstNode(RELATIONALOP_NODE, parent, NULL, NULL, root->children[0]);
+            current = populateAST(root->children[0], current);
             current->firstChild = populateAST(root->children[1], current);
             break;
 
@@ -672,7 +672,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             
 
         case 65: //n7 -> logicalop anyterm n71
-            current = allocateAstNode(LOGICALOP_NODE, parent, NULL, NULL, root->children[0]);
+            current = populate(root->children[0], parent);populateAST(root->child
             current->firstChild = populateAST(root->children[1], current);
             temp = populateAST(root->children[2], current);
             
