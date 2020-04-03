@@ -1,6 +1,6 @@
 void traverse_ast(ASTnode* root);
-void insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset);
-void traverse_ast_recurse(ASTnode* root, symbolTable* stable, hashNode* symbolForest[]);
+int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset, int isAssigned, int isReturn);
+void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[]);
 symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name);
 
 #define VAR_SYMBOLTABLE_SIZE 100

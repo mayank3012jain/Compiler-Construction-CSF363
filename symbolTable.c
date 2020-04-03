@@ -33,14 +33,14 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             if(ast->firstChild->label == INTEGER_NODE || ast->firstChild->label == BOOLEAN_NODE || 
                 ast->firstChild->label == REAL_NODE){
                 int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
-                        ast->firstChild->label, 0, 0, 0, stable->running_offset, 0,0);
-                stable->running_offset += x;
+                        ast->firstChild->label, 0, 0, 0, stable->running_offset, 1,0);
+                stable->running_offset += x;//check once again
             }
             else{ 
                 int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
                         ast->firstChild->firstChild->sibling->label, 1, 
                         ast->firstChild->firstChild->firstChild->syntaxTreeNode->value.num, 
-                        ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->value.num, stable->running_offset, 0,0);
+                        ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->value.num, stable->running_offset, 1,0);
                 stable->running_offset += x;
             }
             ast = ast->sibling;
@@ -52,6 +52,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         while(ast!= NULL){
             int x = insert_into_stable(stable->varHashTable, ast->firstChild->syntaxTreeNode->lexeme, 
                     ast->label, 0, 0, 0, stable->running_offset, 0,1);
+                    stable->running_offset += x;
             ast = ast->sibling;
         }
     }
@@ -64,6 +65,18 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest); //inputplist
         traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest); //ret
         traverse_ast_recurse(root->firstChild->sibling->sibling->sibling, temp, symbolForest); //stmts
+
+        // Checking is the returned parameters are assigned or not.
+        ASTnode* ret = root->firstChild->sibling->sibling->firstChild;
+        while(ret!= NULL){
+            symbolTableEntry* entr = isDeclared(stable->varHashTable, ret->firstChild->syntaxTreeNode->lexeme);
+            if(entr != NULL && entr->isAssigned == 0){
+                //Raise Error
+                printf("Returned parameters not assigned\n");
+            }
+            ret = ret->sibling;
+        }
+
         if(root->sibling)
             return traverse_ast_recurse(root->sibling,stable,symbolForest);
         else
