@@ -73,16 +73,6 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
     }
 
     return width;
-    int width = 0;
-    if(isArray){
-        int size = DATA_TYPE_SIZES[type];
-        width = (endIndex - startIndex) * size;
-    }
-    else{
-        width = DATA_TYPE_SIZES[type];
-    }
-
-    return width;
 } 
 
 symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[]){
