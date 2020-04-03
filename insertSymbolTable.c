@@ -54,40 +54,60 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
     strcpy(temp->key, name);
     temp->entryPtr = (symbolTableEntry*)malloc(sizeof(symbolTableEntry));
     strcpy(temp->entryPtr->name,name);
-    emp->entryPtr->type = type;
-    emp->entryPtr->isArray = isArray;
-    emp->entryPtr->startIndex = startIndex;
-    emp->entryPtr->endIndex = endIndex;
-    emp->entryPtr->offset = offset;
-    emp->entryPtr->isAssigned = isAssigned;
-    emp->entryPtr->isReturn = isReturn;
+    temp->entryPtr->type = type;
+    temp->entryPtr->isArray = isArray;
+    temp->entryPtr->startIndex = startIndex;
+    temp->entryPtr->endIndex = endIndex;
+    temp->entryPtr->offset = offset;
+    temp->entryPtr->isAssigned = isAssigned;
+    temp->entryPtr->isReturn = isReturn;
 
-    return 0;
+    // calculate size of entry
+    int width = 0;
+    if(isArray){
+        int size = DATA_TYPE_SIZES[type];
+        width = (endIndex - startIndex) * size;
+    }
+    else{
+        width = DATA_TYPE_SIZES[type];
+    }
+
+    return width;
+    int width = 0;
+    if(isArray){
+        int size = DATA_TYPE_SIZES[type];
+        width = (endIndex - startIndex) * size;
+    }
+    else{
+        width = DATA_TYPE_SIZES[type];
+    }
+
+    return width;
 } 
 
-int insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[], moduleHashNode* next){
+symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[]){
 
     if(checkKeyword(name)==-1){
-        return -1;
+        return NULL;
     }
     int ind = hashGivenIndex(name, 1, MAX_MODULES-1);
     moduleHashNode* temp = symbolForest[ind];
-    SymbolTableNode* stable;
+    symbolTableNode* stable;
 
     if(temp!=NULL){
 
         while(temp->next != NULL){
             if(strcmp(temp->key, name)==0){
                 //Raise Error
-                printf("Module declared again.");
-                return -1;
+                printf("Module declared again.\n");
+                return NULL;
             }
             temp = temp->next;
         }
         if(strcmp(temp->key, name)==0){
             //Raise Error
-            printf("Module declared again.");
-            return -1;
+            printf("Module declared again.\n");
+            return NULL;
         }
 
         temp->next = (moduleHashNode*)malloc(sizeof(moduleHashNode));
@@ -101,10 +121,12 @@ int insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[], modul
     }
 
     strcpy(temp->key, name);
-    temp->tableptr = (SymbolTableNode*)malloc(sizeof(symbolTableNode)); // change value to tablePtr
+    temp->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode)); // change value to tablePtr
     stable = temp->tablePtr;
     stable->parent = NULL;
     temp->next = NULL;
+
+    return stable;
 }
 
 symbolTableEntry* isDeclared(varHashNode* varHashTable[], char* name){
@@ -128,7 +150,7 @@ symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name){
     //check in all hashtables
     symbolTableNode* tempST = stNode;
     while(tempST != NULL){
-        symbolTableEntry ans = isDeclared(stNode->varHashTable, name)
+        symbolTableEntry ans = isDeclared(stNode->varHashTable, name);
         if(ans == NULL){
             tempST = tempST->parent;
         }
