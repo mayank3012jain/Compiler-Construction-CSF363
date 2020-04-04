@@ -2,6 +2,16 @@
 #include "ast.h"
 #include"symbolTable.h"
 
+//types checks for module
+// 1. The types and the number of parameters returned by a function must be the same as that of the parameters used in invoking the function.
+// 2. The parameters being returned by a function must be assigned a value. If a parameter does not get a value assigned within the function definition, it should be reported as an error.
+// 3. The function that does not return any value, must be invoked appropriately.
+// 4. Function input parameters passed while invoking it should be of the same type as those used in the function definition.
+// 5. Function overloading is not allowed.
+// 6. A function declaration for a function being used (say F1) by another (say F2) must precede the definition of the function using it(i.e. F2), only if the function definition of F1 does not precede the definition of F2.
+// 7. If the function definition of F1 precedes function definition of F2(the one which uses F1), then the function declaration of F1 is redundant and is not valid.
+// 8. The function cannot be invoked recursively.
+
 //for table of size 5, pass 0 and 4
 int hashGivenIndex(char str[], int lowerIndex, int higherIndex){
     // const int PRIME = 199;
@@ -103,7 +113,30 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             return;
     }
     // If new scope
-    if(root->label == CONDITIONALSTMT_NODE){       
+    if(root->label == CONDITIONALSTMT_NODE){
+
+        //Free karne se error na aaye ye check karna hai
+
+        //Checks 
+        //1. ID should be declared in the previous scope
+        //2. If ID is boolean, default should be NULL
+        //3. If ID is integer, default should not be NULL
+        //4. ID should not be real
+        //5. Value type in individual case statement
+        //6. **Case value in individual case statement??
+        
+        if(isDeclared(stable->varHashTable, root->firstChild->syntaxTreeNode->lexeme) == NULL){
+            //Raise Error
+            printf("ID not declared before SWITCH scope");
+            return;
+        }
+
+        if(check_type(root->firstChild,stable) == FLOAT){
+            //Raise Error
+            printf("Switch value has a real variable\n");
+            return;
+        }
+
         symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
         temp->parent = stable;
         temp->running_offset = 0;
@@ -114,13 +147,66 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             i++;
         }
         stable->childList[i] = temp;
-        traverse_ast_recurse(root->firstChild, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
+
+        if(check_type(root->firstChild,stable) == INT){
+
+            if (root->firstChild->sibling->sibling == NULL){
+                //Raise Error
+                free(stable->childList[i]);
+                printf("Default statement does not exist with a INT value.\n");
+                return;
+            }
+
+            ASTnode *node = root->firstChild->sibling->firstChild;
+
+            while(node != NULL){
+                if (node->label != NUM_NODE){
+                    //Raise Error
+                    printf("Case Statement of Integer Switch has not integer value\n");
+                    free(stable->childList[i]);
+                    return;
+                }
+                traverse_ast_recurse(node->firstChild, temp, symbolForest);
+                node = node->sibling;
+            }
+
+            //Recurse on dflt
+            traverse_ast_recurse((root->firstChild->sibling->sibling, temp, symbolForest);
+        }
+        else if(check_type(root->firstChild,stable) == BOOL){
+
+            if (root->firstChild->sibling->sibling != NULL){
+                //Raise Error
+                free(stable->childList[i]);
+                printf("Default statement exists with a BOOLEAN value.\n");
+                return;
+            }
+
+            ASTnode *node = root->firstChild->sibling->firstChild;
+
+            if(node == NULL || node->sibling == NULL || node->sibling->sibling != NULL){
+                free(stable->childList[i]);
+                printf("Default statement exists with a BOOLEAN value.\n");
+                return;
+            }
+            if((node->label == TRUE_NODE && node->sibling == FALSE_NODE) || (node->label == FALSE_NODE && node->sibling == TRUE_NODE)){
+                traverse_ast_recurse(node->firstChild, temp, symbolForest);
+                traverse_ast_recurse(node->sibling->firstChild, temp, symbolForest);
+            }
+            else{
+                //Raise Error
+                printf("Error in Case Statements of TRUE and FALSE\n");
+            }
+
+        }
+        
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }
         else
             return;
     }// If new scope
+
     if(root->label== FORITERATIVESTMT_NODE){       
         symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
         temp->parent = stable;

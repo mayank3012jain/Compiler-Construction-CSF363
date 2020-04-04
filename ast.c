@@ -343,6 +343,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             break;
 
         case 93: //casestmts -> CASE value COLON statements BREAK SEMICOL n9
+            
             current = populateAST(root->children[1], parent);
             if(current!=NULL){
                 current-> firstChild = populateAST(root->children[3], current);
@@ -368,29 +369,6 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
 
         case 1: //program -> moduledeclarations othermodules drivermodule othermodules1
             current = allocateAstNode(PROGRAM_NODE, parent, NULL, NULL, root);
-            // if(current!=NULL){
-            //     index = 0;
-            //     temp = populateAST(root->children[index],current);
-            //     temp2 = current;
-            //     while(index < 4){
-            //         while(index < 4 && temp == NULL){
-            //             index++;
-            //             temp = populateAST(root->children[index], current);
-            //         }
-            //         if(index == 4){
-            //             break;
-            //         }
-            //         else{
-            //             if(temp2 == current){
-            //                 current->firstChild = temp;
-            //                 temp2 = temp;
-            //             }else{
-            //                 temp2->sibling = temp;
-            //                 temp2 = temp;
-            //             }
-            //         }
-            //     }
-            // }
             current->firstChild = allocateAstNode(MODULEDEC_HEADER_NODE, current, NULL, NULL, NULL);
             current->firstChild->firstChild = populateAST(root->children[0], current->firstChild);
             current->firstChild->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, NULL, NULL, NULL);
@@ -404,31 +382,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
 
         case 8: //module -> DEF MODULE ID ENDDEF TAKES INPUT SQBO inputplist SQBC SEMICOL ret moduledef
             current = allocateAstNode(MODULE_NODE, parent, NULL, NULL, root);
-            // int arr1[] = {2,7,10,11};
-
-            // if(current!=NULL){
-            //     index = 0;
-            //     temp = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[arr1[index]]);
-            //     temp2 = current;
-            //     while(index < 4){
-            //         while(index < 4 && temp == NULL){
-            //             index++;
-            //             temp = populateAST(root->children[arr1[index]], current);
-            //         }
-            //         if(index == 4){
-            //             break;
-            //         }
-            //         else{
-            //             if(temp2 == current){
-            //                 current->firstChild = temp;
-            //                 temp2 = temp;
-            //             }else{
-            //                 temp2->sibling = temp;
-            //                 temp2 = temp;
-            //             }
-            //         }
-            //     }
-            // }
+            //check the last Parameter of allocateASTNode
             current->firstChild = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[2]);
             current->firstChild->sibling = allocateAstNode(INPUTPLIST_HEADER_NODE, current, NULL, NULL, root);
             current->firstChild->sibling->firstChild = populateAST(root->children[7], current->firstChild->sibling);
@@ -452,37 +406,6 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             
         case 53: // modulereusestmt -> optional USE MODULE ID WITH PARAMETERS idlist SEMICOL
             current = allocateAstNode(MODULEREUSESTMT_NODE, parent, NULL, NULL, root);
-            int arr2[] = {0,3,6};
-
-            // if(current!=NULL){
-            //     index = 0;
-            //     temp = populateAST(root->children[0], current);
-            //     temp2 = current;
-            //     while(index < 3){
-            //         while(index < 3 && temp == NULL){
-            //             index++;
-            //             if(index == 1){
-            //                 temp = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[arr2[index]]);
-            //             }
-            //             else{
-            //                 temp = populateAST(root->children[arr2[index]], current);
-            //             }
-            //         }
-            //         if(index == 3){
-            //             break;
-            //         }
-            //         else{
-            //             if(temp2 == current){
-            //                 current->firstChild = temp;
-            //                 temp2 = temp;
-            //             }else{
-            //                 temp2->sibling = temp;
-            //                 temp2 = temp;
-            //             }
-            //         }
-            //     }
-            // }
-
             current->firstChild = allocateAstNode(OPTIONAL_RETURN_NODE, current, NULL, NULL, NULL);
             current->firstChild->firstChild = populateAST(root->children[0], current->firstChild);
             current->firstChild->sibling = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[3]);
@@ -567,7 +490,8 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
         case 92: //conditionalstmt -> SWITCH BO ID BC START casestmts dflt END
             current = allocateAstNode(CONDITIONALSTMT_NODE, parent, NULL, NULL, root);
             current->firstChild = allocateAstNode(ID_NODE, current, NULL, NULL, root->children[2]);
-            current->firstChild->sibling = populateAST(root->children[5], current);
+            current->firstChild->sibling = allocateAstNode(CASESTMTS_HEADER_NODE, current, NULL, NULL, NULL); 
+            current->firstChild->sibling->firstChild = populateAST(root->children[5], current->firstChild->sibling);
             temp = populateAST(root->children[6], current);
             if (temp != NULL)
                 current->firstChild->sibling->sibling = temp;
