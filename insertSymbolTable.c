@@ -140,7 +140,7 @@ symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name){
     //check in all hashtables
     symbolTableNode* tempST = stNode;
     while(tempST != NULL){
-        symbolTableEntry ans = isDeclared(stNode->varHashTable, name);
+        symbolTableEntry* ans = isDeclared(stNode->varHashTable, name);
         if(ans == NULL){
             tempST = tempST->parent;
         }
