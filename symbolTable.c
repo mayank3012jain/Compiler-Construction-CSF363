@@ -84,7 +84,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //check for assignment before Return
     }
     // If new scope
-    if(root->label == CONDITIONALSTMT_NODE || root->label== FORITERATIVESTMT_NODE || root->label == WHILEITERATIVESTMT_NODE){       
+    if(root->label == WHILEITERATIVESTMT_NODE){       
         symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
         temp->parent = stable;
         temp->running_offset = 0;
@@ -96,6 +96,52 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         }
         stable->childList[i] = temp;
         traverse_ast_recurse(root->firstChild, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
+        if(root->sibling!=NULL){
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        }
+        else
+            return;
+    }
+    // If new scope
+    if(root->label == CONDITIONALSTMT_NODE){       
+        symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
+        temp->parent = stable;
+        temp->running_offset = 0;
+        int i = 0;
+        while(i<MAX_SCOPES){
+            if(stable->childList[i] == NULL)
+                break;
+            i++;
+        }
+        stable->childList[i] = temp;
+        traverse_ast_recurse(root->firstChild, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
+        if(root->sibling!=NULL){
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        }
+        else
+            return;
+    }// If new scope
+    if(root->label== FORITERATIVESTMT_NODE){       
+        symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
+        temp->parent = stable;
+        temp->running_offset = 0;
+        int i = 0;
+        while(i<MAX_SCOPES){
+            if(stable->childList[i] == NULL)
+                break;
+            i++;
+        }
+        stable->childList[i] = temp;
+        
+        //check loop variable not changed inside
+        char* loopVar = root->firstChild->syntaxTreeNode->lexeme;
+        symbolTableEntry* loopVarEntry = getSymbolTableEntry(stable, loopVar);
+        int tempIsAssigned = loopVarEntry->isAssigned;
+        loopVarEntry->isAssigned = 0;
+        traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
+        if(loopVarEntry->isAssigned==1){
+            printf("Loop variable %s is changed inside the loop", loopVar);
+        }
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }
