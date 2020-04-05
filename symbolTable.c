@@ -270,6 +270,8 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         }
     }else if(root->label == MODULEREUSESTMT_NODE){
 
+        //call function to check whether type of return formal parameters match actual parameters
+
         ASTnode* temp = root->firstChild->firstChild;
         
         while(temp!= NULL){

@@ -75,7 +75,7 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
     return width;
 } 
 
-symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[]){
+symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[], ASTnode* moduleRoot){
 
     if(checkKeyword(name)==-1){
         return NULL;
@@ -115,6 +115,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     stable = temp->tablePtr;
     stable->parent = NULL;
     temp->next = NULL;
+    temp->moduleAst= moduleRoot;
 
     return stable;
 }

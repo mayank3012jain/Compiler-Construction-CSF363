@@ -52,6 +52,7 @@ typedef struct symbolTableEntry {
 typedef struct moduleHashNode{
     char key[MAXKEYLEN];
     symbolTableNode* tablePtr;
+    ASTnode* moduleAst;
     struct moduleHashNode* next;
 }moduleHashNode; //SymbolTable TABLE
 
