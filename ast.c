@@ -596,7 +596,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             
 
         case 65: //n7 -> logicalop anyterm n71
-            current = populate(root->children[0], parent);populateAST(root->child
+            current = populateAST(root->children[0], parent);
             current->firstChild = populateAST(root->children[1], current);
             temp = populateAST(root->children[2], current);
             

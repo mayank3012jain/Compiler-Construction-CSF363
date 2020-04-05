@@ -4,7 +4,7 @@
 #include "symbolTable.h"
 #include "astDef.h"
 
-int checkKeyword(char * name){
+int checkKeyword(char *name){
     
     int ind = hash(name);
     hashNode* temp = symbolTable[ind];
@@ -21,7 +21,7 @@ int checkKeyword(char * name){
 int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset, int isAssigned, int isReturn){
 
     //check in keywords
-    if(checkKeyword(name)==-1){
+    if(checkKeyword(name)!=-1){
         return -1;
     }
     int ind = hashGivenIndex(name, 0, VAR_SYMBOLTABLE_SIZE-1);
@@ -31,14 +31,14 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
         while(temp->next != NULL){
             if(strcmp(temp->key, name)==0){
                 //Raise Error
-                printf("ID declared again.");
+                printf("ID declared again [%s]\n", name);
                 return -1;
             }
             temp = temp->next;
         }
         if(strcmp(temp->key, name)==0){
             //Raise Error
-            printf("ID declared again.");
+            printf("ID declared again [%s]\n", name);
             return -1;
         }
         temp->next = (varHashNode*)malloc(sizeof(varHashNode));
@@ -77,7 +77,7 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
 
 symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[], ASTnode* moduleRoot){
 
-    if(checkKeyword(name)==-1){
+    if(checkKeyword(name)!=-1){
         return NULL;
     }
     int ind = hashGivenIndex(name, 1, MAX_MODULES-1);
@@ -151,7 +151,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
 //Creates a new node otherwise
 void check_module_dec(char* name, moduleHashNode *symbolForest[]){
     
-    if(checkKeyword(name)==-1){
+    if(checkKeyword(name)!=-1){
         return;
     }
 
@@ -224,4 +224,79 @@ symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name){
         }
     }
     return NULL;
+}
+
+int check_type(ASTnode* root, symbolTableNode* stable){
+    if(root->label == ID_NODE){
+        symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
+        return temp->type;
+    }
+    
+    if(root->label == RNUM_NODE)
+        return FLOAT;
+
+    if(root->label == NUM_NODE)
+        return INT;
+    
+    if(root->label == AND_NODE || root->label == OR_NODE){
+        int op1 = check_type(root->firstChild, stable);
+        int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==BOOL && op2==BOOL)
+            return BOOL;
+        else
+            return -1;
+    }
+
+    if(root->label == GE_NODE || root->label == LE_NODE || root->label == GT_NODE 
+        || root->label == LT_NODE || root->label == EQ_NODE){
+        int op1 = check_type(root->firstChild, stable);
+        int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==BOOL || op2==BOOL)
+            return -1;
+        else
+            return BOOL;
+    }
+
+    if(root->label == MUL_NODE || root->label == DIV_NODE){
+        int op1 = check_type(root->firstChild, stable);
+        int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==BOOL || op2==BOOL)
+            return -1;
+        if(op1==INT && op2==INT)
+            return INT;
+        if(op1==FLOAT || op2==FLOAT)
+            return FLOAT;       
+    }
+
+    if(root->label == PLUS_NODE || root->label == MINUS_NODE){
+        int op1 = check_type(root->firstChild, stable);
+        // unary
+        if(root->firstChild == NULL){
+            if(op1 == BOOL)
+                return -1;
+            else
+                return op1;
+        }
+        // binary
+        else{
+            int op2 = check_type(root->firstChild->sibling, stable);
+            if(op1==BOOL || op2==BOOL)
+                return -1;
+            if(op1==FLOAT || op2==FLOAT)
+                return FLOAT;      
+            if(op1==INT && op2==INT)
+                return INT;
+        }
+    }
+}
+
+int hashGivenIndex(char str[], int lowerIndex, int higherIndex){
+    // const int PRIME = 199;
+    int length = strlen(str);
+    int ans=0;
+    for (int i=0; i<length; i++){
+        ans += str[i]*(i+1);
+    }
+    ans %= (higherIndex-lowerIndex)+1;
+    return ans+lowerIndex;
 }

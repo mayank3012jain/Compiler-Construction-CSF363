@@ -10,7 +10,15 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name);
 symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[],ASTnode* moduleRoot);
 symbolTableEntry* isDeclared(varHashNode* varHashTable[], char* name);
-symbolTableNode* getSymbolTableNode(char *name, moduleHashNode* symbolForest[]);
+moduleHashNode* getModuleHashNode(char *name, moduleHashNode* symbolForest[]);
+int checkFunctionReturnType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolTableNode* stable, moduleHashNode* symbolForest[]);
+int checkFunctionParameterType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolTableNode* stable, moduleHashNode* symbolForest[]);
+// symbolTableNode* getSymbolTableNode(char *name, moduleHashNode* symbolForest[]);
+void check_module_dec(char* name, moduleHashNode *symbolForest[]);
+int check_type(ASTnode* root, symbolTableNode* stable);
+int hashGivenIndex(char str[], int lowerIndex, int higherIndex);
+
+
 #define VAR_SYMBOLTABLE_SIZE 100
 # define MAX_MODULES 64
 # define MAX_SCOPES 64

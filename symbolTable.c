@@ -13,16 +13,6 @@
 // 8. The function cannot be invoked recursively.
 
 //for table of size 5, pass 0 and 4
-int hashGivenIndex(char str[], int lowerIndex, int higherIndex){
-    // const int PRIME = 199;
-    int length = strlen(str);
-    int ans=0;
-    for (int i=0; i<length; i++){
-        ans += str[i]*(i+1);
-    }
-    ans %= (higherIndex-lowerIndex)+1;
-    return ans+lowerIndex;
-}
 
 void traverse_ast(ASTnode* root){
     moduleHashNode* symbolForest[MAX_MODULES];
@@ -70,7 +60,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     if(root->label == MODULE_NODE){
         
         char* lexeme = root->firstChild->syntaxTreeNode->lexeme;
-        symbolTableNode* temp = insert_into_moduleHashNode(lexeme, symbolForest);
+        symbolTableNode* temp = insert_into_moduleHashNode(lexeme, symbolForest, root);
 
         //temp is NULL if 
         //1. Declared and defined before use
@@ -101,7 +91,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //check for assignment before Return
     }
 
-    if(root->label = MODULEDEC_HEADER_NODE){
+    if(root->label == MODULEDEC_HEADER_NODE){
         ASTnode* mdec = root->firstChild;
         while(mdec != NULL){
 
@@ -125,7 +115,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         stable->childList[i] = temp;
 
         //Check for a valid boolean expression
-        ASTnode* temp = root->firstChild;
+        // ASTnode* node = root->firstChild;
 
         traverse_ast_recurse(root->firstChild, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
         if(root->sibling!=NULL){
@@ -193,7 +183,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             }
 
             //Recurse on dflt
-            traverse_ast_recurse((root->firstChild->sibling->sibling, temp, symbolForest);
+            traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest);
         }
         else if(check_type(root->firstChild,stable) == BOOL){
 
@@ -211,7 +201,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
                 printf("Default statement exists with a BOOLEAN value.\n");
                 return;
             }
-            if((node->label == TRUE_NODE && node->sibling == FALSE_NODE) || (node->label == FALSE_NODE && node->sibling == TRUE_NODE)){
+            if((node->label == TRUE_NODE && node->sibling->label == FALSE_NODE) || (node->label == FALSE_NODE && node->sibling->label == TRUE_NODE)){
                 traverse_ast_recurse(node->firstChild, temp, symbolForest);
                 traverse_ast_recurse(node->sibling->firstChild, temp, symbolForest);
             }
@@ -286,15 +276,14 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
         if(entry == NULL){
             // Raise Error
-            printf("ID not declared before ");
+            printf("ID %s not declared before use\n", root->firstChild->syntaxTreeNode->lexeme);
         }
         else{
             entry->isAssigned = 1;
         }
     }else if(root->label == MODULEREUSESTMT_NODE){
 
-        //call function to check whether type of return formal parameters match actual parameters
-
+        
         ASTnode* temp = root->firstChild->firstChild;
         
         while(temp!= NULL){
@@ -302,12 +291,22 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 
             if(entry == NULL){
                 // Raise Error
-                printf("ID not declared before");
+                printf("ID %s not declared before use\n", temp->syntaxTreeNode->lexeme);
+                return;
             }
             else{
                 entry->isAssigned = 1;
             }
             temp = temp->sibling;
+        }
+        //call function to check whether type of return formal parameters match actual parameters
+        moduleHashNode* moduleRoot = getModuleHashNode(root->firstChild->sibling->syntaxTreeNode->lexeme, symbolForest);
+        if(moduleRoot == NULL){
+            return;
+        }
+        else{
+            checkFunctionReturnType(moduleRoot->moduleAst, root, stable, symbolForest);
+            checkFunctionParameterType(moduleRoot->moduleAst, root, stable, symbolForest);
         }
     }
     // expression type check
@@ -315,38 +314,54 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
         if(op1!=BOOL || op2!=BOOL)
-            printf("Error: bool mismatch");
-        return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            printf("Error: bool mismatch\n");
+        if (root->sibling != NULL)
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        else
+            return;
     }
     if(root->label == GE_NODE || root->label == LE_NODE || root->label == GT_NODE 
         || root->label == LT_NODE || root->label == EQ_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1!=op2 || op1==BOOL)
-            printf("Error: relop type mismatch");
-        return travese_ast_recurse(root->sibling, stable, symbolForest);
+        if(op1==BOOL || op2==BOOL)
+            printf("Error: relop type mismatch\n");
+        if (root->sibling != NULL)    
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        else
+            return;
     }
     if(root->label == MUL_NODE || root->label == DIV_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1 != op2 || op1==BOOL)
-            printf("Error: MUL/DIV type mismatch");
-        return travese_ast_recurse(root->sibling, stable, symbolForest);     
+        if(op1==BOOL || op2==BOOL)
+            printf("Error: MUL/DIV type mismatch\n");
+        if (root->sibling != NULL)
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);     
+        else
+            return;
     }
+
     if(root->label == PLUS_NODE || root->label == MINUS_NODE){
         int op1 = check_type(root->firstChild, stable);
         // unary
         if(root->firstChild == NULL){
             if(op1 == BOOL)
-                printf("Error: unary PLUS/MINUS type mismatch");
-            return travese_ast_recurse(root->sibling, stable, symbolForest);
+                printf("Error: unary PLUS/MINUS type mismatch\n");
+            if (root->sibling != NULL)
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            else
+                return;
         }
         // binary
         else{
             int op2 = check_type(root->firstChild->sibling, stable);
-            if(op1!=op2 || op1==BOOL)
-                printf("Error: binary PLUS/MINUS type mismatch");
-            return travese_ast_recurse(root->sibling, stable, symbolForest);
+            if(op1==BOOL || op2==BOOL)
+                printf("Error: binary PLUS/MINUS type mismatch\n");
+            if (root->sibling != NULL)
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            else
+                return;
         }
     }
 
@@ -354,107 +369,5 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     if(root->firstChild != NULL)
         traverse_ast_recurse(root->firstChild, stable, symbolForest);
     if(root->sibling != NULL)
-        travese_ast_recurse(root->sibling, stable, symbolForest);
-}
-
-int check_type(ASTnode* root, symbolTableNode* stable){
-    if(root->label == VARIDNUM_NODE){
-        symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
-        // If array
-        if(root->firstChild->sibling){
-            // If array indexed by variable
-            if(root->firstChild->sibling->label==ID_NODE){    
-                symbolTableEntry* index = getSymbolTableEntry(stable, 
-                        root->firstChild->sibling->syntaxTreeNode->lexeme);
-                // If indexing variable doesn't exist in scope
-                if(index == NULL)
-                    return -1; //print error
-                // If indexing variable exists and is not int
-                if(index->type != INT)
-                    return -1; //print error
-                // Bound check
-                if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex)
-                    return -1; //print error
-                // If everything ok
-                return temp->type;
-            }
-            // If array indexed by int constant
-            else if(root->firstChild->sibling->label==NUM_NODE){
-                int num = root->firstChild->sibling->syntaxTreeNode->value.num;
-                // Bound check error
-                if(num<temp->startIndex || num>temp->endIndex)
-                    return -1; // print error
-                return temp->type;
-            }
-            // If array indexed by real or float constant
-            else
-                return -1; // print error
-        }
-        // If not array
-        else
-            return temp->type;
-    }
-
-    // Probably won't be executed
-    if(root->label == ID_NODE){
-        symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
-        return temp->type;
-    }
-
-    if(root->label == RNUM_NODE)
-        return FLOAT;
-
-    if(root->label == NUM_NODE)
-        return INT;
-    
-    if(root->label == AND_NODE || root->label == OR_NODE){
-        int op1 = check_type(root->firstChild, stable);
-        int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1==BOOL && op2==BOOL)
-            return BOOL;
-        else
-            return -1;
-    }
-
-    if(root->label == GE_NODE || root->label == LE_NODE || root->label == GT_NODE 
-        || root->label == LT_NODE || root->label == EQ_NODE){
-        int op1 = check_type(root->firstChild, stable);
-        int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1==BOOL || op2==BOOL)
-            return -1;
-        else
-            return BOOL;
-    }
-
-    if(root->label == MUL_NODE || root->label == DIV_NODE){
-        int op1 = check_type(root->firstChild, stable);
-        int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1==BOOL || op2==BOOL)
-            return -1;
-        if(op1==INT && op2==INT)
-            return INT;
-        if(op1==FLOAT || op2==FLOAT)
-            return FLOAT;       
-    }
-
-    if(root->label == PLUS_NODE || root->label == MINUS_NODE){
-        int op1 = check_type(root->firstChild, stable);
-        // unary
-        if(root->firstChild == NULL){
-            if(op1 == BOOL)
-                return -1;
-            else
-                return op1;
-        }
-        // binary
-        else{
-            int op2 = check_type(root->firstChild->sibling, stable);
-            if(op1==BOOL || op2==BOOL)
-                return -1;
-            if(op1==FLOAT || op2==FLOAT)
-                return FLOAT;      
-            if(op1==INT && op2==INT)
-                return INT;
-        }
-    }
+        traverse_ast_recurse(root->sibling, stable, symbolForest);
 }
