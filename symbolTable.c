@@ -68,31 +68,49 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     }
     // If function
     if(root->label == MODULE_NODE){
+        
         char* lexeme = root->firstChild->syntaxTreeNode->lexeme;
         symbolTableNode* temp = insert_into_moduleHashNode(lexeme, symbolForest);
-        temp->parent = NULL;
-        temp->running_offset = 0;
-        traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest); //inputplist
-        traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest); //ret
-        traverse_ast_recurse(root->firstChild->sibling->sibling->sibling, temp, symbolForest); //stmts
 
-        // Checking is the returned parameters are assigned or not.
-        ASTnode* ret = root->firstChild->sibling->sibling->firstChild;
-        while(ret!= NULL){
-            symbolTableEntry* entr = isDeclared(stable->varHashTable, ret->firstChild->syntaxTreeNode->lexeme);
-            if(entr != NULL && entr->isAssigned == 0){
-                //Raise Error
-                printf("Returned parameters not assigned\n");
+        //temp is NULL if 
+        //1. Declared and defined before use
+        //2. Module already defined
+        if (temp != NULL){
+            temp->parent = NULL;
+            temp->running_offset = 0;
+            traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest); //inputplist
+            traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest); //ret
+            traverse_ast_recurse(root->firstChild->sibling->sibling->sibling, temp, symbolForest); //stmts
+
+            // Checking is the returned parameters are assigned or not.
+            ASTnode* ret = root->firstChild->sibling->sibling->firstChild;
+            while(ret!= NULL){
+                symbolTableEntry* entr = isDeclared(stable->varHashTable, ret->firstChild->syntaxTreeNode->lexeme);
+                if(entr != NULL && entr->isAssigned == 0){
+                    //Raise Error
+                    printf("Returned parameters not assigned\n");
+                }
+                ret = ret->sibling;
             }
-            ret = ret->sibling;
         }
-
+        
         if(root->sibling)
             return traverse_ast_recurse(root->sibling,stable,symbolForest);
         else
             return;
         //check for assignment before Return
     }
+
+    if(root->label = MODULEDEC_HEADER_NODE){
+        ASTnode* mdec = root->firstChild;
+        while(mdec != NULL){
+
+            check_module_dec(mdec->syntaxTreeNode->lexeme,symbolForest);
+            mdec = mdec->sibling;
+        }
+
+    }
+
     // If new scope
     if(root->label == WHILEITERATIVESTMT_NODE){       
         symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
@@ -105,6 +123,10 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             i++;
         }
         stable->childList[i] = temp;
+
+        //Check for a valid boolean expression
+        ASTnode* temp = root->firstChild;
+
         traverse_ast_recurse(root->firstChild, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
@@ -234,6 +256,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         else
             return;
     }
+
     // If new variable
     if(root->label==DECLARESTMT_NODE){
         int isArray, type, startIndex, endIndex; 
@@ -331,7 +354,6 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         traverse_ast_recurse(root->firstChild, stable, symbolForest);
     if(root->sibling != NULL)
         travese_ast_recurse(root->sibling, stable, symbolForest);
-
 }
 
 int check_type(ASTnode* root, symbolTableNode* stable){

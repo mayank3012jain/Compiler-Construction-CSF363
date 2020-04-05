@@ -87,17 +87,42 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     if(temp!=NULL){
 
         while(temp->next != NULL){
+
             if(strcmp(temp->key, name)==0){
-                //Raise Error
-                printf("Module declared again.\n");
-                return NULL;
+                
+                if(temp->isDefined == 1){
+                    //Raise Error
+                    printf("Module defined again.\n");
+                    return NULL;
+                }
+                else if(temp->isUsed == 0){
+                    //Raise Error
+                    printf("Module declared but not used before Definition\n");
+                    return NULL;
+                }
+                else{
+                    temp->isDefined == 1;
+                    return temp->tablePtr;
+                }
             }
             temp = temp->next;
         }
         if(strcmp(temp->key, name)==0){
-            //Raise Error
-            printf("Module declared again.\n");
-            return NULL;
+
+            if(temp->isDefined == 1){
+                //Raise Error
+                printf("Module defined again.\n");
+                return NULL;
+            }
+            else if(temp->isUsed == 0){
+                //Raise Error
+                printf("Module Declared but not Used before Definition\n");
+                return NULL;
+            }
+            else{
+                temp->isDefined == 1;
+                return temp->tablePtr;
+            }
         }
 
         temp->next = (moduleHashNode*)malloc(sizeof(moduleHashNode));
@@ -111,12 +136,61 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     }
 
     strcpy(temp->key, name);
+    temp->isUsed = 0;
+    temp->isDefined = 1;
     temp->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode)); // change value to tablePtr
     stable = temp->tablePtr;
     stable->parent = NULL;
     temp->next = NULL;
 
     return stable;
+}
+
+//Returns error if module already declared
+//Creates a new node otherwise
+void check_module_dec(char* name, moduleHashNode *symbolForest[]){
+    
+    if(checkKeyword(name)==-1){
+        return;
+    }
+
+    int ind = hashGivenIndex(name, 1, MAX_MODULES-1);
+    moduleHashNode* temp = symbolForest[ind];
+    symbolTableNode* stable;
+
+    if(temp!=NULL){
+
+        while(temp->next != NULL){
+
+            if(strcmp(temp->key, name)==0){
+                //Raise Error
+                printf("Declaration Repeated\n");
+                return;
+            }
+            temp = temp->next;
+        }
+        if(strcmp(temp->key, name)==0){
+            //Raise Error
+            printf("Declaration Repeated\n");
+            return;
+        }
+
+        temp->next = (moduleHashNode*)malloc(sizeof(moduleHashNode));
+        temp = temp->next;
+
+    }
+    else{
+        symbolForest[ind] = (moduleHashNode*)malloc(sizeof(moduleHashNode));
+        temp = symbolForest[ind];
+    }
+
+    strcpy(temp->key, name);
+    temp->isUsed = 0;
+    temp->isDefined = 0;
+    temp->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode));
+    stable = temp->tablePtr;
+    stable->parent = NULL;
+    temp->next = NULL;
 }
 
 symbolTableEntry* isDeclared(varHashNode* varHashTable[], char* name){
