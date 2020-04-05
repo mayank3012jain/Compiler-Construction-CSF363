@@ -322,18 +322,17 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         || root->label == LT_NODE || root->label == EQ_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1==BOOL || op2==BOOL)
+        if(op1!=op2 || op1==BOOL)
             printf("Error: relop type mismatch");
         return travese_ast_recurse(root->sibling, stable, symbolForest);
     }
     if(root->label == MUL_NODE || root->label == DIV_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
-        if(op1==BOOL || op2==BOOL)
+        if(op1 != op2 || op1==BOOL)
             printf("Error: MUL/DIV type mismatch");
         return travese_ast_recurse(root->sibling, stable, symbolForest);     
     }
-
     if(root->label == PLUS_NODE || root->label == MINUS_NODE){
         int op1 = check_type(root->firstChild, stable);
         // unary
@@ -345,7 +344,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         // binary
         else{
             int op2 = check_type(root->firstChild->sibling, stable);
-            if(op1==BOOL || op2==BOOL)
+            if(op1!=op2 || op1==BOOL)
                 printf("Error: binary PLUS/MINUS type mismatch");
             return travese_ast_recurse(root->sibling, stable, symbolForest);
         }
@@ -359,11 +358,49 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 }
 
 int check_type(ASTnode* root, symbolTableNode* stable){
+    if(root->label == VARIDNUM_NODE){
+        symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
+        // If array
+        if(root->firstChild->sibling){
+            // If array indexed by variable
+            if(root->firstChild->sibling->label==ID_NODE){    
+                symbolTableEntry* index = getSymbolTableEntry(stable, 
+                        root->firstChild->sibling->syntaxTreeNode->lexeme);
+                // If indexing variable doesn't exist in scope
+                if(index == NULL)
+                    return -1; //print error
+                // If indexing variable exists and is not int
+                if(index->type != INT)
+                    return -1; //print error
+                // Bound check
+                if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex)
+                    return -1; //print error
+                // If everything ok
+                return temp->type;
+            }
+            // If array indexed by int constant
+            else if(root->firstChild->sibling->label==NUM_NODE){
+                int num = root->firstChild->sibling->syntaxTreeNode->value.num;
+                // Bound check error
+                if(num<temp->startIndex || num>temp->endIndex)
+                    return -1; // print error
+                return temp->type;
+            }
+            // If array indexed by real or float constant
+            else
+                return -1; // print error
+        }
+        // If not array
+        else
+            return temp->type;
+    }
+
+    // Probably won't be executed
     if(root->label == ID_NODE){
         symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
         return temp->type;
     }
-    
+
     if(root->label == RNUM_NODE)
         return FLOAT;
 
