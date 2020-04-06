@@ -286,7 +286,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             current = allocateAstNode(INPUTPLIST_NODE, parent, NULL, NULL, NULL);
             if(current!=NULL){
                 current->firstChild = populateAST(root->children[3], parent);
-                current->firstChild->sibling = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[0]);
+                current->firstChild->sibling = allocateAstNode(ID_NODE,current,NULL, NULL,root->children[1]);
                 current->sibling = populateAST(root->children[4], parent);
             }else{
                 printf("Error n1");
@@ -651,7 +651,11 @@ void printAST(ASTnode* root){
 
 void printASTNode(ASTnode* node){
     if(node->parent){
-        printf("\nlabelEnum: %d Label:%s Parent:%d %s", node->label, nodeNameString[node->label], node->parent->label, nodeNameString[node->parent->label]);
+    //     if(node->syntaxTreeNode){
+    //         printf("\nlabelEnum: %d Label:%s Parent:%d %s \t\t SyntaxTreeLex: %s", node->label, nodeNameString[node->label], node->parent->label, nodeNameString[node->parent->label], node->syntaxTreeNode->lexeme);
+    //     }else{
+            printf("\nlabelEnum: %d Label:%s Parent:%d %s", node->label, nodeNameString[node->label], node->parent->label, nodeNameString[node->parent->label]);
+    //    }
     }else{
         printf("\nlabelEnum: %d Label:%s Parent:%d %s", node->label, nodeNameString[node->label], -1, "NULL");
     }

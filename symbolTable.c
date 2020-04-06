@@ -34,7 +34,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 
     if(root == NULL){
         //Raise Error
-        printf("CALLED ON NULL ROOT");
+        printf("\nCALLED ON NULL ROOT\n");
         return;
     }
     printASTNode(root);
@@ -104,13 +104,17 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             }
         }
         
-        if(root->sibling)
+        if(root->sibling){
             return traverse_ast_recurse(root->sibling,stable,symbolForest);
+        }else{
+            return;
+        }
         //check for assignment before Return
     }
 
     if(root->label == DRIVER_MOD_NODE){
-        stable = insert_into_moduleHashNode("driver", symbolForest, root);
+        stable = insert_into_moduleHashNode("driverFunctionNode", symbolForest, root);
+
     }
 
     if(root->label == MODULEDEC_HEADER_NODE){
@@ -161,7 +165,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //5. Value type in individual case statement
         //6. **Case value in individual case statement??
         
-        if(isDeclared(stable->varHashTable, root->firstChild->syntaxTreeNode->lexeme) == NULL){
+        if(getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme) == NULL){
             //Raise Error
             printf("ID not declared before SWITCH scope");
             return;
@@ -312,7 +316,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 
             if(entry == NULL){
                 // Raise Error
-                printf("ID %s not declared before use\n", temp->syntaxTreeNode->lexeme);
+                printf("MODULE ID %s not declared before use\n", temp->syntaxTreeNode->lexeme);
                 return;
             }
             else{
@@ -326,9 +330,14 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             return;
         }
         else{
-            checkFunctionReturnType(moduleRoot->moduleAst, root, stable, symbolForest);
-            checkFunctionParameterType(moduleRoot->moduleAst, root, stable, symbolForest);
+            moduleRoot->isUsed = 1;
         }
+        if(root->sibling){
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        }else{
+            return;
+        }
+        
     }
     // expression type check
     if(root->label == AND_NODE || root->label == OR_NODE){
@@ -388,6 +397,30 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     }
 
     // continue if no match
+    if(root->firstChild != NULL)
+        traverse_ast_recurse(root->firstChild, stable, symbolForest);
+    if(root->sibling != NULL)
+        traverse_ast_recurse(root->sibling, stable, symbolForest);
+}
+
+void traverse_ast_recurse2(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[]){
+
+    if(root->label == MODULEREUSESTMT_NODE){
+
+        //call function to check whether type of return formal parameters match actual parameters
+        moduleHashNode* moduleRoot = getModuleHashNode(root->firstChild->sibling->syntaxTreeNode->lexeme, symbolForest);
+
+        if(moduleRoot == NULL){
+            return;
+        }
+        else{
+            checkFunctionReturnType(moduleRoot->moduleAst, root, stable, symbolForest);
+            checkFunctionParameterType(moduleRoot->moduleAst, root, stable, symbolForest);
+        }
+        
+        return traverse_ast_recurse2(root->sibling, stable, symbolForest);
+    }
+
     if(root->firstChild != NULL)
         traverse_ast_recurse(root->firstChild, stable, symbolForest);
     if(root->sibling != NULL)

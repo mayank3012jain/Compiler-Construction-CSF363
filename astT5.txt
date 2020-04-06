@@ -9,145 +9,148 @@ ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
 Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  
 PARSED SUCCESSFULLY
 
-labelEnum: 27 Label:PROGRAM_NODE Parent:-1 NULL
-labelEnum: 3 Label:MODULEDEC_HEADER_NODE Parent:27 PROGRAM_NODE
-labelEnum: 14 Label:ID_NODE Parent:3 MODULEDEC_HEADER_NODE
-labelEnum: 4 Label:OTHERMOD_HEADER_NODE Parent:27 PROGRAM_NODE
-labelEnum: 28 Label:MODULE_NODE Parent:4 OTHERMOD_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:28 MODULE_NODE
-labelEnum: 0 Label:INPUTPLIST_HEADER_NODE Parent:28 MODULE_NODE
-labelEnum: 50 Label:INPUTPLIST_NODE Parent:0 INPUTPLIST_HEADER_NODE
-labelEnum: 29 Label:DATATYPE_ARRAY_NODE Parent:50 INPUTPLIST_NODE
-labelEnum: 30 Label:RANGEARRAYS_NODE Parent:29 DATATYPE_ARRAY_NODE
-labelEnum: 12 Label:NUM_NODE Parent:30 RANGEARRAYS_NODE
-labelEnum: 12 Label:NUM_NODE Parent:30 RANGEARRAYS_NODE
-labelEnum: 8 Label:REAL_NODE Parent:29 DATATYPE_ARRAY_NODE
-labelEnum: 14 Label:ID_NODE Parent:50 INPUTPLIST_NODE
-labelEnum: 7 Label:INTEGER_NODE Parent:0 INPUTPLIST_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:7 INTEGER_NODE
-labelEnum: 1 Label:RET_HEADER_NODE Parent:28 MODULE_NODE
-labelEnum: 8 Label:REAL_NODE Parent:1 RET_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:8 REAL_NODE
-labelEnum: 2 Label:MODULEDEF_HEADER_NODE Parent:28 MODULE_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 7 Label:INTEGER_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 9 Label:BOOLEAN_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 35 Label:ASSIGNOP_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 13 Label:RNUM_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 42 Label:FORITERATIVESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:42 FORITERATIVESTMT_NODE
-labelEnum: 44 Label:RANGE_NODE Parent:42 FORITERATIVESTMT_NODE
-labelEnum: 12 Label:NUM_NODE Parent:44 RANGE_NODE
-labelEnum: 12 Label:NUM_NODE Parent:44 RANGE_NODE
-labelEnum: 35 Label:ASSIGNOP_NODE Parent:42 FORITERATIVESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 46 Label:RELATIONALOP_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:46 RELATIONALOP_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:46 RELATIONALOP_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 41 Label:CONDITIONALSTMT_NODE Parent:42 FORITERATIVESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:41 CONDITIONALSTMT_NODE
-labelEnum: 10 Label:TRUE_NODE Parent:41 CONDITIONALSTMT_NODE
-labelEnum: 33 Label:PRINT_STMT_NODE Parent:10 TRUE_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:33 PRINT_STMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 35 Label:ASSIGNOP_NODE Parent:10 TRUE_NODE
-labelEnum: 14 Label:ID_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 39 Label:OP1_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:39 OP1_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:39 OP1_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 11 Label:FALSE_NODE Parent:41 CONDITIONALSTMT_NODE
-labelEnum: 33 Label:PRINT_STMT_NODE Parent:11 FALSE_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:33 PRINT_STMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 33 Label:PRINT_STMT_NODE Parent:11 FALSE_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:33 PRINT_STMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 33 Label:PRINT_STMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:33 PRINT_STMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 5 Label:DRIVER_MOD_NODE Parent:27 PROGRAM_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 29 Label:DATATYPE_ARRAY_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 30 Label:RANGEARRAYS_NODE Parent:29 DATATYPE_ARRAY_NODE
-labelEnum: 12 Label:NUM_NODE Parent:30 RANGEARRAYS_NODE
-labelEnum: 12 Label:NUM_NODE Parent:30 RANGEARRAYS_NODE
-labelEnum: 8 Label:REAL_NODE Parent:29 DATATYPE_ARRAY_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 7 Label:INTEGER_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 8 Label:REAL_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 32 Label:GET_STMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 14 Label:ID_NODE Parent:32 GET_STMT_NODE
-labelEnum: 31 Label:MODEULEREUSESTMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 49 Label:OPTIONAL_RETURN_NODE Parent:31 MODEULEREUSESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:31 MODEULEREUSESTMT_NODE
-labelEnum: 48 Label:IDLIST_NODE Parent:31 MODEULEREUSESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:48 IDLIST_NODE
-labelEnum: 14 Label:ID_NODE Parent:48 IDLIST_NODE
-labelEnum: 31 Label:MODEULEREUSESTMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 49 Label:OPTIONAL_RETURN_NODE Parent:31 MODEULEREUSESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:49 OPTIONAL_RETURN_NODE
-labelEnum: 14 Label:ID_NODE Parent:31 MODEULEREUSESTMT_NODE
-labelEnum: 48 Label:IDLIST_NODE Parent:31 MODEULEREUSESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:48 IDLIST_NODE
-labelEnum: 14 Label:ID_NODE Parent:48 IDLIST_NODE
-labelEnum: 33 Label:PRINT_STMT_NODE Parent:5 DRIVER_MOD_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:33 PRINT_STMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 4 Label:OTHERMOD_HEADER_NODE Parent:27 PROGRAM_NODE
-labelEnum: 28 Label:MODULE_NODE Parent:4 OTHERMOD_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:28 MODULE_NODE
-labelEnum: 0 Label:INPUTPLIST_HEADER_NODE Parent:28 MODULE_NODE
-labelEnum: 50 Label:INPUTPLIST_NODE Parent:0 INPUTPLIST_HEADER_NODE
-labelEnum: 29 Label:DATATYPE_ARRAY_NODE Parent:50 INPUTPLIST_NODE
-labelEnum: 30 Label:RANGEARRAYS_NODE Parent:29 DATATYPE_ARRAY_NODE
-labelEnum: 12 Label:NUM_NODE Parent:30 RANGEARRAYS_NODE
-labelEnum: 12 Label:NUM_NODE Parent:30 RANGEARRAYS_NODE
-labelEnum: 8 Label:REAL_NODE Parent:29 DATATYPE_ARRAY_NODE
-labelEnum: 14 Label:ID_NODE Parent:50 INPUTPLIST_NODE
-labelEnum: 7 Label:INTEGER_NODE Parent:0 INPUTPLIST_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:7 INTEGER_NODE
-labelEnum: 1 Label:RET_HEADER_NODE Parent:28 MODULE_NODE
-labelEnum: 2 Label:MODULEDEF_HEADER_NODE Parent:28 MODULE_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 8 Label:REAL_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 40 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 7 Label:INTEGER_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:40 DECLARESTMT_NODE
-labelEnum: 35 Label:ASSIGNOP_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 14 Label:ID_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 12 Label:NUM_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 43 Label:WHILEITERATIVESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE
-labelEnum: 46 Label:RELATIONALOP_NODE Parent:43 WHILEITERATIVESTMT_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:46 RELATIONALOP_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:46 RELATIONALOP_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 32 Label:GET_STMT_NODE Parent:43 WHILEITERATIVESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:32 GET_STMT_NODE
-labelEnum: 36 Label:ASSIGNOP_ARRAY_NODE Parent:43 WHILEITERATIVESTMT_NODE
-labelEnum: 37 Label:ID_ARRAY_NODE Parent:36 ASSIGNOP_ARRAY_NODE
-labelEnum: 14 Label:ID_NODE Parent:37 ID_ARRAY_NODE
-labelEnum: 14 Label:ID_NODE Parent:37 ID_ARRAY_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:36 ASSIGNOP_ARRAY_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 35 Label:ASSIGNOP_NODE Parent:43 WHILEITERATIVESTMT_NODE
-labelEnum: 14 Label:ID_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 39 Label:OP1_NODE Parent:35 ASSIGNOP_NODE
-labelEnum: 34 Label:VARIDNUM_NODE Parent:39 OP1_NODE
-labelEnum: 14 Label:ID_NODE Parent:34 VARIDNUM_NODE
-labelEnum: 12 Label:NUM_NODE Parent:39 OP1_NODEEnter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  
+labelEnum: 26 Label:PROGRAM_NODE Parent:-1 NULL
+labelEnum: 3 Label:MODULEDEC_HEADER_NODE Parent:26 PROGRAM_NODE
+labelEnum: 13 Label:ID_NODE Parent:3 MODULEDEC_HEADER_NODE, SyntaxTreeLex: readArr
+labelEnum: 4 Label:OTHERMOD_HEADER_NODE Parent:26 PROGRAM_NODE
+labelEnum: 27 Label:MODULE_NODE Parent:4 OTHERMOD_HEADER_NODE, SyntaxTreeLex: <<
+labelEnum: 13 Label:ID_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: arraySum
+labelEnum: 0 Label:INPUTPLIST_HEADER_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: <<
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:0 INPUTPLIST_HEADER_NODE
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:47 INPUTPLIST_NODE, SyntaxTreeLex: list
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE, SyntaxTreeLex: array
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE, SyntaxTreeLex: 1
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE, SyntaxTreeLex: 15
+labelEnum: 7 Label:REAL_NODE Parent:28 DATATYPE_ARRAY_NODE, SyntaxTreeLex: real
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE, SyntaxTreeLex: list
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:0 INPUTPLIST_HEADER_NODE
+labelEnum: 6 Label:INTEGER_NODE Parent:0 INPUTPLIST_HEADER_NODE, SyntaxTreeLex: integer
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE, SyntaxTreeLex: ,
+labelEnum: 1 Label:RET_HEADER_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: <<
+labelEnum: 7 Label:REAL_NODE Parent:1 RET_HEADER_NODE, SyntaxTreeLex: real
+labelEnum: 13 Label:ID_NODE Parent:7 REAL_NODE, SyntaxTreeLex: sum
+labelEnum: 2 Label:MODULEDEF_HEADER_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: <<
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: declare
+labelEnum: 6 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: integer
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: index
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: declare
+labelEnum: 8 Label:BOOLEAN_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: boolean
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: t
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: :=
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: sum
+labelEnum: 12 Label:RNUM_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: 0.0
+labelEnum: 40 Label:FORITERATIVESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: for
+labelEnum: 13 Label:ID_NODE Parent:40 FORITERATIVESTMT_NODE, SyntaxTreeLex: index
+labelEnum: 42 Label:RANGE_NODE Parent:40 FORITERATIVESTMT_NODE, SyntaxTreeLex: for
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE, SyntaxTreeLex: 1
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE, SyntaxTreeLex: 15
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:40 FORITERATIVESTMT_NODE, SyntaxTreeLex: :=
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: t
+labelEnum: 21 Label:LE_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: <=
+labelEnum: 33 Label:VARIDNUM_NODE Parent:21 LE_NODE, SyntaxTreeLex: index
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: index
+labelEnum: 33 Label:VARIDNUM_NODE Parent:21 LE_NODE, SyntaxTreeLex: n
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: n
+labelEnum: 39 Label:CONDITIONALSTMT_NODE Parent:40 FORITERATIVESTMT_NODE, SyntaxTreeLex: switch
+labelEnum: 13 Label:ID_NODE Parent:39 CONDITIONALSTMT_NODE, SyntaxTreeLex: t
+labelEnum: 48 Label:CASESTMTS_HEADER_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 9 Label:TRUE_NODE Parent:48 CASESTMTS_HEADER_NODE, SyntaxTreeLex: true
+labelEnum: 32 Label:PRINT_STMT_NODE Parent:9 TRUE_NODE, SyntaxTreeLex: print
+labelEnum: 33 Label:VARIDNUM_NODE Parent:32 PRINT_STMT_NODE, SyntaxTreeLex: list
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: list
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: index
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:9 TRUE_NODE, SyntaxTreeLex: :=
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: sum
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: +
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE, SyntaxTreeLex: sum
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: sum
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE, SyntaxTreeLex: list
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: list
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: index
+labelEnum: 10 Label:FALSE_NODE Parent:48 CASESTMTS_HEADER_NODE, SyntaxTreeLex: false
+labelEnum: 32 Label:PRINT_STMT_NODE Parent:10 FALSE_NODE, SyntaxTreeLex: print
+labelEnum: 33 Label:VARIDNUM_NODE Parent:32 PRINT_STMT_NODE, SyntaxTreeLex: sum
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: sum
+labelEnum: 32 Label:PRINT_STMT_NODE Parent:10 FALSE_NODE, SyntaxTreeLex: print
+labelEnum: 33 Label:VARIDNUM_NODE Parent:32 PRINT_STMT_NODE, SyntaxTreeLex: index
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: index
+labelEnum: 32 Label:PRINT_STMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: print
+labelEnum: 33 Label:VARIDNUM_NODE Parent:32 PRINT_STMT_NODE, SyntaxTreeLex: sum
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: sum
+labelEnum: 5 Label:DRIVER_MOD_NODE Parent:26 PROGRAM_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: declare
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: declare
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE, SyntaxTreeLex: array
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE, SyntaxTreeLex: 1
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE, SyntaxTreeLex: 15
+labelEnum: 7 Label:REAL_NODE Parent:28 DATATYPE_ARRAY_NODE, SyntaxTreeLex: real
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: A
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: declare
+labelEnum: 6 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: integer
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: k
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: declare
+labelEnum: 7 Label:REAL_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: real
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: s
+labelEnum: 31 Label:GET_STMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: get_value
+labelEnum: 13 Label:ID_NODE Parent:31 GET_STMT_NODE, SyntaxTreeLex: k
+labelEnum: 30 Label:MODULEREUSESTMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: use
+labelEnum: 46 Label:OPTIONAL_RETURN_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:30 MODULEREUSESTMT_NODE, SyntaxTreeLex: readArr
+labelEnum: 45 Label:IDLIST_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE, SyntaxTreeLex: A
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE, SyntaxTreeLex: k
+labelEnum: 30 Label:MODULEREUSESTMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: [
+labelEnum: 46 Label:OPTIONAL_RETURN_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:46 OPTIONAL_RETURN_NODE, SyntaxTreeLex: s
+labelEnum: 13 Label:ID_NODE Parent:30 MODULEREUSESTMT_NODE, SyntaxTreeLex: arraySum
+labelEnum: 45 Label:IDLIST_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE, SyntaxTreeLex: A
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE, SyntaxTreeLex: k
+labelEnum: 32 Label:PRINT_STMT_NODE Parent:5 DRIVER_MOD_NODE, SyntaxTreeLex: print
+labelEnum: 33 Label:VARIDNUM_NODE Parent:32 PRINT_STMT_NODE, SyntaxTreeLex: s
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: s
+labelEnum: 4 Label:OTHERMOD_HEADER_NODE Parent:26 PROGRAM_NODE
+labelEnum: 27 Label:MODULE_NODE Parent:4 OTHERMOD_HEADER_NODE, SyntaxTreeLex: <<
+labelEnum: 13 Label:ID_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: readArr
+labelEnum: 0 Label:INPUTPLIST_HEADER_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: <<
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:0 INPUTPLIST_HEADER_NODE
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:47 INPUTPLIST_NODE, SyntaxTreeLex: arr1
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE, SyntaxTreeLex: array
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE, SyntaxTreeLex: 1
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE, SyntaxTreeLex: 15
+labelEnum: 7 Label:REAL_NODE Parent:28 DATATYPE_ARRAY_NODE, SyntaxTreeLex: real
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE, SyntaxTreeLex: arr1
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:0 INPUTPLIST_HEADER_NODE
+labelEnum: 6 Label:INTEGER_NODE Parent:0 INPUTPLIST_HEADER_NODE, SyntaxTreeLex: integer
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE, SyntaxTreeLex: ,
+labelEnum: 1 Label:RET_HEADER_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: <<
+labelEnum: 2 Label:MODULEDEF_HEADER_NODE Parent:27 MODULE_NODE, SyntaxTreeLex: <<
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: declare
+labelEnum: 7 Label:REAL_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: real
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: tempvar
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: declare
+labelEnum: 6 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: integer
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE, SyntaxTreeLex: i
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: :=
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: i
+labelEnum: 11 Label:NUM_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: 1
+labelEnum: 41 Label:WHILEITERATIVESTMT_NODE Parent:2 MODULEDEF_HEADER_NODE, SyntaxTreeLex: while
+labelEnum: 21 Label:LE_NODE Parent:41 WHILEITERATIVESTMT_NODE, SyntaxTreeLex: <=
+labelEnum: 33 Label:VARIDNUM_NODE Parent:21 LE_NODE, SyntaxTreeLex: i
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: i
+labelEnum: 33 Label:VARIDNUM_NODE Parent:21 LE_NODE, SyntaxTreeLex: k
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: k
+labelEnum: 31 Label:GET_STMT_NODE Parent:41 WHILEITERATIVESTMT_NODE, SyntaxTreeLex: get_value
+labelEnum: 13 Label:ID_NODE Parent:31 GET_STMT_NODE, SyntaxTreeLex: tempvar
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:41 WHILEITERATIVESTMT_NODE, SyntaxTreeLex: [
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE, SyntaxTreeLex: arr1
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE, SyntaxTreeLex: i
+labelEnum: 33 Label:VARIDNUM_NODE Parent:35 ASSIGNOP_ARRAY_NODE, SyntaxTreeLex: tempvar
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: tempvar
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:41 WHILEITERATIVESTMT_NODE, SyntaxTreeLex: :=
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: i
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE, SyntaxTreeLex: +
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE, SyntaxTreeLex: i
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE, SyntaxTreeLex: i
+labelEnum: 11 Label:NUM_NODE Parent:14 PLUS_NODE, SyntaxTreeLex: 1Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  
