@@ -16,16 +16,29 @@
 
 void traverse_ast(ASTnode* root){
     moduleHashNode* symbolForest[MAX_MODULES];
-    symbolForest[0] = malloc(sizeof(hashNode));
-    symbolForest[0]->tablePtr = malloc(sizeof(symbolTableNode));
-    symbolTableNode* stable = symbolForest[0]->tablePtr;
-    stable->parent = NULL;
-    stable->running_offset = 0;
+    for(int i=0; i<MAX_MODULES; i++){
+        symbolForest[i] = NULL;
+    }
+    // symbolForest[0] = (moduleHashNode*)malloc(sizeof(moduleHashNode));
+    // symbolForest[0]->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode));
+    symbolTableNode* stable = NULL;
+    // stable->parent = NULL;
+    // stable->running_offset = 0;
+    // symbolForest[0]->next = NULL;
+    // symbolForest[0]->moduleAst= root;
     //change
     traverse_ast_recurse(root,stable,symbolForest);
 }
 
-void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[]){    
+void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[]){ 
+
+    if(root == NULL){
+        //Raise Error
+        printf("CALLED ON NULL ROOT");
+        return;
+    }
+    printASTNode(root);
+
     if(root->label == INPUTPLIST_HEADER_NODE){       
         ASTnode* ast = root->firstChild;
         //Dynamic array?
@@ -44,7 +57,10 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
                 stable->running_offset += x;
             }
             ast = ast->sibling;
-        }        
+        }
+        if(root->sibling != NULL){
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);  
+        }
     }
 
     if(root->label == RET_HEADER_NODE){       
@@ -55,6 +71,10 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
                     stable->running_offset += x;
             ast = ast->sibling;
         }
+        if (root->sibling != NULL){
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        }
+        return;
     }
     // If function
     if(root->label == MODULE_NODE){
@@ -69,8 +89,8 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             temp->parent = NULL;
             temp->running_offset = 0;
             traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest); //inputplist
-            traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest); //ret
-            traverse_ast_recurse(root->firstChild->sibling->sibling->sibling, temp, symbolForest); //stmts
+            // traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest); //ret
+            // traverse_ast_recurse(root->firstChild->sibling->sibling->sibling, temp, symbolForest); //stmts
 
             // Checking is the returned parameters are assigned or not.
             ASTnode* ret = root->firstChild->sibling->sibling->firstChild;
@@ -86,19 +106,25 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         
         if(root->sibling)
             return traverse_ast_recurse(root->sibling,stable,symbolForest);
-        else
-            return;
         //check for assignment before Return
+    }
+
+    if(root->label == DRIVER_MOD_NODE){
+        stable = insert_into_moduleHashNode("driver", symbolForest, root);
     }
 
     if(root->label == MODULEDEC_HEADER_NODE){
         ASTnode* mdec = root->firstChild;
         while(mdec != NULL){
 
-            check_module_dec(mdec->syntaxTreeNode->lexeme,symbolForest);
+            check_module_dec(mdec->syntaxTreeNode->lexeme,symbolForest, mdec);
             mdec = mdec->sibling;
         }
-
+        if(root->sibling!= NULL){
+            return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        }else{
+            return;
+        }
     }
 
     // If new scope
@@ -121,8 +147,6 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }
-        else
-            return;
     }
     // If new scope
     if(root->label == CONDITIONALSTMT_NODE){
@@ -183,7 +207,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             }
 
             //Recurse on dflt
-            traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest);
+            return traverse_ast_recurse(root->firstChild->sibling->sibling, temp, symbolForest);
         }
         else if(check_type(root->firstChild,stable) == BOOL){
 
@@ -215,8 +239,6 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }
-        else
-            return;
     }// If new scope
 
     if(root->label== FORITERATIVESTMT_NODE){       
@@ -243,8 +265,6 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }
-        else
-            return;
     }
 
     // If new variable
@@ -281,7 +301,8 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         else{
             entry->isAssigned = 1;
         }
-    }else if(root->label == MODULEREUSESTMT_NODE){
+    }
+    else if(root->label == MODULEREUSESTMT_NODE){
 
         
         ASTnode* temp = root->firstChild->firstChild;
@@ -345,7 +366,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     if(root->label == PLUS_NODE || root->label == MINUS_NODE){
         int op1 = check_type(root->firstChild, stable);
         // unary
-        if(root->firstChild == NULL){
+        if(root->firstChild->sibling == NULL){
             if(op1 == BOOL)
                 printf("Error: unary PLUS/MINUS type mismatch\n");
             if (root->sibling != NULL)
@@ -363,6 +384,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             else
                 return;
         }
+        
     }
 
     // continue if no match

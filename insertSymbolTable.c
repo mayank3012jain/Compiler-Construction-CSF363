@@ -149,7 +149,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
 
 //Returns error if module already declared
 //Creates a new node otherwise
-void check_module_dec(char* name, moduleHashNode *symbolForest[]){
+void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast){
     
     if(checkKeyword(name)!=-1){
         return;
@@ -192,6 +192,7 @@ void check_module_dec(char* name, moduleHashNode *symbolForest[]){
     stable = temp->tablePtr;
     stable->parent = NULL;
     temp->next = NULL;
+    temp->moduleAst = ast;
 }
 
 symbolTableEntry* isDeclared(varHashNode* varHashTable[], char* name){

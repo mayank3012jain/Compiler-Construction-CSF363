@@ -639,10 +639,10 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
 
 void printAST(ASTnode* root){
     printASTNode(root);
-    if(root->firstChild){
+    if(root->firstChild!=NULL){
         printAST(root->firstChild);
     }
-    if(root->sibling){
+    if(root->sibling!=NULL){
         printAST(root->sibling);
     }
     return;
