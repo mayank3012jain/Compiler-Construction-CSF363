@@ -18,6 +18,26 @@ int checkKeyword(char *name){
     return -1; //Change  if req    
 }
 
+symbolTableNode* allocateSymbolTable(symbolTableNode* parent, int offset){
+
+    symbolTableNode* stable = (symbolTableNode*)malloc(sizeof(symbolTableNode));
+
+    int i = 0;
+    while(i<VAR_SYMBOLTABLE_SIZE){
+        stable->varHashTable[i] = NULL;
+        i++;
+    }
+    i=0;
+    while(i<MAX_SCOPES){
+        stable->childList[i] = NULL;
+        i++;
+    }
+    stable->parent = parent;
+    stable->running_offset = offset;
+
+    return stable;
+}
+
 int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset, int isAssigned, int isReturn){
 
     //check in keywords
@@ -82,7 +102,6 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     }
     int ind = hashGivenIndex(name, 1, MAX_MODULES-1);
     moduleHashNode* temp = symbolForest[ind];
-    symbolTableNode* stable;
 
     if(temp!=NULL){
 
@@ -138,13 +157,11 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     strcpy(temp->key, name);
     temp->isUsed = 0;
     temp->isDefined = 1;
-    temp->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode)); // change value to tablePtr
-    stable = temp->tablePtr;
-    stable->parent = NULL;
+    temp->tablePtr = allocateSymbolTable(NULL,0);
     temp->next = NULL;
     temp->moduleAst= moduleRoot;
 
-    return stable;
+    return temp->tablePtr;
 }
 
 //Returns error if module already declared
@@ -157,7 +174,6 @@ void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast){
 
     int ind = hashGivenIndex(name, 1, MAX_MODULES-1);
     moduleHashNode* temp = symbolForest[ind];
-    symbolTableNode* stable;
 
     if(temp!=NULL){
 
@@ -188,9 +204,7 @@ void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast){
     strcpy(temp->key, name);
     temp->isUsed = 0;
     temp->isDefined = 0;
-    temp->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode));
-    stable = temp->tablePtr;
-    stable->parent = NULL;
+    temp->tablePtr = allocateSymbolTable(NULL, 0);
     temp->next = NULL;
     temp->moduleAst = ast;
 }
@@ -216,7 +230,7 @@ symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name){
     //check in all hashtables
     symbolTableNode* tempST = stNode;
     while(tempST != NULL){
-        symbolTableEntry* ans = isDeclared(stNode->varHashTable, name);
+        symbolTableEntry* ans = isDeclared(tempST->varHashTable, name);
         if(ans == NULL){
             tempST = tempST->parent;
         }

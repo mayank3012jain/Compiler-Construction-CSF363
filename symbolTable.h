@@ -17,6 +17,7 @@ int checkFunctionParameterType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symb
 void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast);
 int check_type(ASTnode* root, symbolTableNode* stable);
 int hashGivenIndex(char str[], int lowerIndex, int higherIndex);
+symbolTableNode* allocateSymbolTable(symbolTableNode* parent, int offset);
 
 
 #define VAR_SYMBOLTABLE_SIZE 100

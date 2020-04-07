@@ -2,7 +2,7 @@ declare module readArr;
 **the following function computes the sum of first n elements of the array**
 <<module arraySum>>
 takes input[list:array[1..15] of    real, n:integer];
-**returns  [sum:real];**
+returns  [sum:real];
 start
 	declare index:integer;
 	declare t:boolean;
@@ -12,7 +12,7 @@ start
 		t:= index<=n;
 		switch(t)
 		start
-			case true: print(index);
+			case true: print(list[index]);
 				   sum:=sum+list[index];
 				   break;
 			case false: print(sum);

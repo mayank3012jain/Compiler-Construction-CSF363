@@ -19,14 +19,9 @@ void traverse_ast(ASTnode* root){
     for(int i=0; i<MAX_MODULES; i++){
         symbolForest[i] = NULL;
     }
-    // symbolForest[0] = (moduleHashNode*)malloc(sizeof(moduleHashNode));
-    // symbolForest[0]->tablePtr = (symbolTableNode*)malloc(sizeof(symbolTableNode));
+    
     symbolTableNode* stable = NULL;
-    // stable->parent = NULL;
-    // stable->running_offset = 0;
-    // symbolForest[0]->next = NULL;
-    // symbolForest[0]->moduleAst= root;
-    //change
+    
     traverse_ast_recurse(root,stable,symbolForest);
 }
 
@@ -95,7 +90,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             // Checking is the returned parameters are assigned or not.
             ASTnode* ret = root->firstChild->sibling->sibling->firstChild;
             while(ret!= NULL){
-                symbolTableEntry* entr = isDeclared(stable->varHashTable, ret->firstChild->syntaxTreeNode->lexeme);
+                symbolTableEntry* entr = isDeclared(temp->varHashTable, ret->firstChild->syntaxTreeNode->lexeme);
                 if(entr != NULL && entr->isAssigned == 0){
                     //Raise Error
                     printf("Returned parameters not assigned\n");
@@ -133,10 +128,9 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 
     // If new scope
     if(root->label == WHILEITERATIVESTMT_NODE){       
-        symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
-        temp->parent = stable;
-        temp->running_offset = 0;
+        symbolTableNode* temp = allocateSymbolTable(stable,0);
         int i = 0;
+
         while(i<MAX_SCOPES){
             if(stable->childList[i] == NULL)
                 break;
@@ -167,7 +161,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         
         if(getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme) == NULL){
             //Raise Error
-            printf("ID not declared before SWITCH scope");
+            printf("ID [%s] not declared before SWITCH scope", root->firstChild->syntaxTreeNode->lexeme);
             return;
         }
 
@@ -177,10 +171,9 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             return;
         }
 
-        symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
-        temp->parent = stable;
-        temp->running_offset = 0;
+        symbolTableNode* temp = allocateSymbolTable(stable,0);
         int i = 0;
+
         while(i<MAX_SCOPES){
             if(stable->childList[i] == NULL)
                 break;
@@ -246,15 +239,15 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     }// If new scope
 
     if(root->label== FORITERATIVESTMT_NODE){       
-        symbolTableNode* temp = (symbolTableNode*)malloc(sizeof(symbolTableNode));
-        temp->parent = stable;
-        temp->running_offset = 0;
+        symbolTableNode* temp = allocateSymbolTable(stable,0);
         int i = 0;
+        
         while(i<MAX_SCOPES){
             if(stable->childList[i] == NULL)
                 break;
             i++;
         }
+        
         stable->childList[i] = temp;
         
         //check loop variable not changed inside
@@ -262,12 +255,15 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         symbolTableEntry* loopVarEntry = getSymbolTableEntry(stable, loopVar);
         int tempIsAssigned = loopVarEntry->isAssigned;
         loopVarEntry->isAssigned = 0;
-        traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
+        traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest);//kya in teeno me firstchild hi statements hai?//sibling added
         if(loopVarEntry->isAssigned==1){
             printf("Loop variable %s is changed inside the loop", loopVar);
         }
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
+        }
+        else{
+            return;//added
         }
     }
 
@@ -295,7 +291,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         return traverse_ast_recurse(root->sibling,stable,symbolForest);
     }
     // check for assignment before declaration;
-    if((root->label == ASSIGNOP_NODE && root->firstChild->label == ID) || (root->label ==  GET_STMT_NODE)){
+    if((root->label == ASSIGNOP_NODE && root->firstChild->label == ID_NODE) || (root->label ==  GET_STMT_NODE)){
         // pass root(AST), 
         symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
         if(entry == NULL){
@@ -303,6 +299,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             printf("ID %s not declared before use\n", root->firstChild->syntaxTreeNode->lexeme);
         }
         else{
+            // printf("\n[%s]\n", root->firstChild->syntaxTreeNode->lexeme);
             entry->isAssigned = 1;
         }
     }

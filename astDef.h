@@ -32,7 +32,7 @@ typedef struct ASTnode{
 
 typedef struct symbolTableNode{
     struct varHashNode* varHashTable[VAR_SYMBOLTABLE_SIZE]; //change this
-    struct symbolTableNode* childList[VAR_SYMBOLTABLE_SIZE]; //change this
+    struct symbolTableNode* childList[MAX_SCOPES]; //change this
     struct symbolTableNode* parent;
     int running_offset;
 } symbolTableNode;
