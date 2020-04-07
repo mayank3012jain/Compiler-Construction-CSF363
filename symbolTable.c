@@ -340,6 +340,12 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     if(root->label == AND_NODE || root->label == OR_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==-1 || op2==-1){
+            if (root->sibling != NULL)
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            else
+                return;
+        }            
         if(op1!=BOOL || op2!=BOOL)
             printf("Error: bool mismatch\n");
         if (root->sibling != NULL)
@@ -351,6 +357,12 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         || root->label == LT_NODE || root->label == EQ_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==-1 || op2==-1){
+            if (root->sibling != NULL)
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            else
+                return;
+        } 
         if(op1==BOOL || op2==BOOL)
             printf("Error: relop type mismatch\n");
         if (root->sibling != NULL)    
@@ -361,6 +373,12 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     if(root->label == MUL_NODE || root->label == DIV_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==-1 || op2==-1){
+            if (root->sibling != NULL)
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            else
+                return;
+        } 
         if(op1==BOOL || op2==BOOL)
             printf("Error: MUL/DIV type mismatch\n");
         if (root->sibling != NULL)
@@ -371,6 +389,12 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 
     if(root->label == PLUS_NODE || root->label == MINUS_NODE){
         int op1 = check_type(root->firstChild, stable);
+        if(op1==-1){
+            if (root->sibling != NULL)
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            else
+                return;
+        } 
         // unary
         if(root->firstChild->sibling == NULL){
             if(op1 == BOOL)
@@ -383,6 +407,12 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         // binary
         else{
             int op2 = check_type(root->firstChild->sibling, stable);
+            if(op2==-1){
+                if (root->sibling != NULL)
+                    return traverse_ast_recurse(root->sibling, stable, symbolForest);
+                else
+                    return;
+            } 
             if(op1==BOOL || op2==BOOL)
                 printf("Error: binary PLUS/MINUS type mismatch\n");
             if (root->sibling != NULL)

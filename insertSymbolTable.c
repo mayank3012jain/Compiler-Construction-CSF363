@@ -242,8 +242,56 @@ symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name){
 }
 
 int check_type(ASTnode* root, symbolTableNode* stable){
+    if(root->label == VARIDNUM_NODE){
+        symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
+        // If undeclared
+        // both varidnum and its child id have lexeme
+        if(!temp){
+            printf("Undeclared variable: %s", root->syntaxTreeNode->lexeme);
+            return -1;
+        }
+        // If array
+        if(root->firstChild->sibling){
+            // If array indexed by variable
+            if(root->firstChild->sibling->label==ID_NODE){    
+                symbolTableEntry* index = getSymbolTableEntry(stable, 
+                        root->firstChild->sibling->syntaxTreeNode->lexeme);
+                // If indexing variable doesn't exist in scope
+                if(index == NULL)
+                    return -1; //print error
+                // If indexing variable exists and is not int
+                if(index->type != INT)
+                    return -1; //print error
+                // Bound check
+                if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex)
+                    return -1; //print error
+                // If everything ok
+                return temp->type;
+            }
+            // If array indexed by int constant
+            else if(root->firstChild->sibling->label==NUM_NODE){
+                int num = root->firstChild->sibling->syntaxTreeNode->value.num;
+                // Bound check error
+                if(num<temp->startIndex || num>temp->endIndex)
+                    return -1; // print error
+                return temp->type;
+            }
+            // If array indexed by real or float constant
+            else
+                return -1; // print error
+        }
+        // If not array
+        else
+            return temp->type;
+    }
+    
+    // Probably wont be executed
     if(root->label == ID_NODE){
         symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
+        if(!temp){
+            printf("Undeclared variable: %s", root->syntaxTreeNode->lexeme);
+            return -1;
+        }
         return temp->type;
     }
     
@@ -253,9 +301,14 @@ int check_type(ASTnode* root, symbolTableNode* stable){
     if(root->label == NUM_NODE)
         return INT;
     
+    if(root->label == TRUE_NODE || root->label == FALSE_NODE)
+        return BOOL;
+
     if(root->label == AND_NODE || root->label == OR_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==-1 || op2==-1)
+            return -1;
         if(op1==BOOL && op2==BOOL)
             return BOOL;
         else
@@ -266,6 +319,8 @@ int check_type(ASTnode* root, symbolTableNode* stable){
         || root->label == LT_NODE || root->label == EQ_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==-1 || op2==-1)
+            return -1;
         if(op1==BOOL || op2==BOOL)
             return -1;
         else
@@ -275,6 +330,8 @@ int check_type(ASTnode* root, symbolTableNode* stable){
     if(root->label == MUL_NODE || root->label == DIV_NODE){
         int op1 = check_type(root->firstChild, stable);
         int op2 = check_type(root->firstChild->sibling, stable);
+        if(op1==-1 || op2==-1)
+            return -1;
         if(op1==BOOL || op2==BOOL)
             return -1;
         if(op1==INT && op2==INT)
@@ -287,6 +344,8 @@ int check_type(ASTnode* root, symbolTableNode* stable){
         int op1 = check_type(root->firstChild, stable);
         // unary
         if(root->firstChild == NULL){
+            if(op1==-1)
+                return -1;
             if(op1 == BOOL)
                 return -1;
             else
@@ -295,6 +354,8 @@ int check_type(ASTnode* root, symbolTableNode* stable){
         // binary
         else{
             int op2 = check_type(root->firstChild->sibling, stable);
+            if(op1==-1 || op2==-1)
+                return -1;
             if(op1==BOOL || op2==BOOL)
                 return -1;
             if(op1==FLOAT || op2==FLOAT)
@@ -303,6 +364,7 @@ int check_type(ASTnode* root, symbolTableNode* stable){
                 return INT;
         }
     }
+    return -1;
 }
 
 int hashGivenIndex(char str[], int lowerIndex, int higherIndex){
