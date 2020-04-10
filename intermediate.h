@@ -3,5 +3,5 @@
 
 #include "intermediateDef.h"
 #include "symbolTable.h"
-
+extern int LABEL_NO, VARIABLE_NO;
 #endif

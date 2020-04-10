@@ -3,6 +3,8 @@
 
 #include "astDef.h"
 
+enum imterim_label {PRINT,GET,FOR,LAB,GOTO,LABEL};
+
 typedef struct tuple{
     int label; //astNode label or operator as required
     
