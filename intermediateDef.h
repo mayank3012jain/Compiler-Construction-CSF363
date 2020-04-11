@@ -3,7 +3,7 @@
 
 #include "astDef.h"
 
-enum imterim_label {PRINT,GET,FOR,LAB,GOTO,LABEL};
+enum imterim_label {PRINT_L,GET_L,FOR_L,GOTO_L,LABEL_L,WHILE_L,CASE_L,SWITCH_L};
 
 typedef struct tuple{
     int label; //astNode label or operator as required
