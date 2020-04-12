@@ -4,14 +4,14 @@
 #include "symbolTable.h"
 #include "astDef.h"
 
-int checkKeyword(char *name){
+int checkKeyword(char *name, ASTnode* ast){
     
     int ind = hash(name);
     hashNode* temp = symbolTable[ind];
     while(temp!=NULL){
         if(strcmp(temp->key, name)==0){
             //Raise Error
-            printf("ID same as Keyword");
+            printf("Line %d Error - ID same as Keyword\n", ast->syntaxTreeNode->lineNumber);
         }
         temp = temp->next;
     }
@@ -38,10 +38,10 @@ symbolTableNode* allocateSymbolTable(symbolTableNode* parent, int offset){
     return stable;
 }
 
-int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset, int isAssigned, int isReturn){
+int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset, int isAssigned, int isReturn, ASTnode* ast){
 
     //check in keywords
-    if(checkKeyword(name)!=-1){
+    if(checkKeyword(name, ast)!=-1){
         return -1;
     }
     int ind = hashGivenIndex(name, 0, VAR_SYMBOLTABLE_SIZE-1);
@@ -51,15 +51,15 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
         while(temp->next != NULL){
             if(strcmp(temp->key, name)==0){
                 //Raise Error
-                printf("ID declared again [%s]\n", name);
-                return -1;
+                printf("Line: %d: Error - ID declared again [%s]\n", ast->syntaxTreeNode->lineNumber,name);
+                return 0;
             }
             temp = temp->next;
         }
         if(strcmp(temp->key, name)==0){
             //Raise Error
-            printf("ID declared again [%s]\n", name);
-            return -1;
+            printf("Line: %d: Error - ID declared again [%s]\n", ast->syntaxTreeNode->lineNumber,name);
+            return 0;
         }
         temp->next = (varHashNode*)malloc(sizeof(varHashNode));
         temp = temp->next;
@@ -97,10 +97,11 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
 
 symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[], ASTnode* moduleRoot){
 
-    if(checkKeyword(name)!=-1){
+    if(checkKeyword(name, moduleRoot)!=-1){
         return NULL;
     }
     int ind = hashGivenIndex(name, 1, MAX_MODULES-1);
+    int flag = 0;
     moduleHashNode* temp = symbolForest[ind];
 
     if(temp!=NULL){
@@ -111,41 +112,44 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
                 
                 if(temp->isDefined == 1){
                     //Raise Error
-                    printf("Module defined again.\n");
+                    printf("Line %d: Error - Module [%s] defined again.\n", moduleRoot->firstChild->syntaxTreeNode->lineNumber, name);
                     return NULL;
                 }
                 else if(temp->isUsed == 0){
                     //Raise Error
-                    printf("Module declared but not used before Definition\n");
+                    printf("Line %d: Error - Module [%s] declared but not used before Definition\n", moduleRoot->firstChild->syntaxTreeNode->lineNumber, name);
                     return NULL;
                 }
                 else{
                     temp->isDefined == 1;
-                    return temp->tablePtr;
+                    flag=1;
+                    break;
                 }
             }
             temp = temp->next;
         }
-        if(strcmp(temp->key, name)==0){
+        if(strcmp(temp->key, name)==0  && flag == 0){
 
             if(temp->isDefined == 1){
                 //Raise Error
-                printf("Module defined again.\n");
+                printf("Line %d: Error - Module [%s] defined again.\n", moduleRoot->firstChild->syntaxTreeNode->lineNumber, name);
                 return NULL;
             }
             else if(temp->isUsed == 0){
                 //Raise Error
-                printf("Module Declared but not Used before Definition\n");
+                printf("Line %d: Error - Module [%s] declared but not used before Definition\n", moduleRoot->firstChild->syntaxTreeNode->lineNumber, name);
                 return NULL;
             }
             else{
                 temp->isDefined == 1;
-                return temp->tablePtr;
+                flag=1;
+                // return temp->tablePtr;
             }
         }
-
-        temp->next = (moduleHashNode*)malloc(sizeof(moduleHashNode));
-        temp = temp->next;
+        if(flag == 0){
+            temp->next = (moduleHashNode*)malloc(sizeof(moduleHashNode));
+            temp = temp->next;
+        }
         // printf("temp wasnt null for %s", keywords[i]);
     }
     else{
@@ -168,7 +172,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
 //Creates a new node otherwise
 void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast){
     
-    if(checkKeyword(name)!=-1){
+    if(checkKeyword(name, ast)!=-1){
         return;
     }
 
@@ -181,14 +185,14 @@ void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast){
 
             if(strcmp(temp->key, name)==0){
                 //Raise Error
-                printf("Declaration Repeated\n");
+                printf("Line %d: Error - Module [%s] Declaration Repeated\n", ast->syntaxTreeNode->lineNumber, name);
                 return;
             }
             temp = temp->next;
         }
         if(strcmp(temp->key, name)==0){
             //Raise Error
-            printf("Declaration Repeated\n");
+            printf("Line %d: Error - Module [%s] Declaration Repeated\n", ast->syntaxTreeNode->lineNumber, name);
             return;
         }
 
@@ -206,7 +210,7 @@ void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast){
     temp->isDefined = 0;
     temp->tablePtr = allocateSymbolTable(NULL, 0);
     temp->next = NULL;
-    temp->moduleAst = ast;
+    temp->moduleAst = NULL;
 }
 
 symbolTableEntry* isDeclared(varHashNode* varHashTable[], char* name){
@@ -243,11 +247,11 @@ symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name){
 
 int check_type(ASTnode* root, symbolTableNode* stable){
     if(root->label == VARIDNUM_NODE){
-        symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
+        symbolTableEntry* temp = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
         // If undeclared
         // both varidnum and its child id have lexeme
-        if(!temp){
-            printf("Undeclared variable: %s", root->syntaxTreeNode->lexeme);
+        if(temp == NULL){
+            printf("Line %d: Error - Undeclared variable: [%s]\n", root->firstChild->syntaxTreeNode->lineNumber, root->firstChild->syntaxTreeNode->lexeme);
             return -1;
         }
         // If array
@@ -257,14 +261,20 @@ int check_type(ASTnode* root, symbolTableNode* stable){
                 symbolTableEntry* index = getSymbolTableEntry(stable, 
                         root->firstChild->sibling->syntaxTreeNode->lexeme);
                 // If indexing variable doesn't exist in scope
-                if(index == NULL)
+                if(index == NULL){
+                    printf("Line %d: Error - Indexing variable [%s] doesn't exist in scope\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->lexeme);
                     return -1; //print error
+                }
                 // If indexing variable exists and is not int
-                if(index->type != INT)
+                if(index->type != INT){
+                    printf("Line %d: Error - indexing variable [%s] exists and is not int\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->lexeme);
                     return -1; //print error
+                }
                 // Bound check
-                if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex)
-                    return -1; //print error
+                // if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex){
+                //     printf("Line %d: Error - Index Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
+                //     return -1; //print error
+                // }
                 // If everything ok
                 return temp->type;
             }
@@ -272,13 +282,17 @@ int check_type(ASTnode* root, symbolTableNode* stable){
             else if(root->firstChild->sibling->label==NUM_NODE){
                 int num = root->firstChild->sibling->syntaxTreeNode->value.num;
                 // Bound check error
-                if(num<temp->startIndex || num>temp->endIndex)
+                if(num<temp->startIndex || num>temp->endIndex){
+                    printf("Line %d: Error - NUM %d Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->value.num);
                     return -1; // print error
+                }
                 return temp->type;
             }
             // If array indexed by real or float constant
-            else
+            else{
+                printf("Line %d: Error - Indexed passed is not an Integer\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
                 return -1; // print error
+            }
         }
         // If not array
         else
@@ -288,8 +302,8 @@ int check_type(ASTnode* root, symbolTableNode* stable){
     // Probably wont be executed
     if(root->label == ID_NODE){
         symbolTableEntry* temp = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
-        if(!temp){
-            printf("Undeclared variable: %s", root->syntaxTreeNode->lexeme);
+        if(temp == NULL){
+            printf("Line %d: Error - Undeclared variable: [%s]\n", root->syntaxTreeNode->lineNumber,root->syntaxTreeNode->lexeme);
             return -1;
         }
         return temp->type;
@@ -311,8 +325,10 @@ int check_type(ASTnode* root, symbolTableNode* stable){
             return -1;
         if(op1==BOOL && op2==BOOL)
             return BOOL;
-        else
+        else{
+            printf("Line %d: Error - Type Mismatch\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
             return -1;
+        }
     }
 
     if(root->label == GE_NODE || root->label == LE_NODE || root->label == GT_NODE 
@@ -321,8 +337,10 @@ int check_type(ASTnode* root, symbolTableNode* stable){
         int op2 = check_type(root->firstChild->sibling, stable);
         if(op1==-1 || op2==-1)
             return -1;
-        if(op1==BOOL || op2==BOOL)
+        if(op1==BOOL || op2==BOOL){
+            printf("Line %d: Error - Type Mismatch\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
             return -1;
+        }
         else
             return BOOL;
     }
@@ -332,8 +350,10 @@ int check_type(ASTnode* root, symbolTableNode* stable){
         int op2 = check_type(root->firstChild->sibling, stable);
         if(op1==-1 || op2==-1)
             return -1;
-        if(op1==BOOL || op2==BOOL)
+        if(op1==BOOL || op2==BOOL){
+            printf("Line %d: Error - Type Mismatch\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
             return -1;
+        }
         if(op1==INT && op2==INT)
             return INT;
         if(op1==FLOAT || op2==FLOAT)
@@ -343,7 +363,7 @@ int check_type(ASTnode* root, symbolTableNode* stable){
     if(root->label == PLUS_NODE || root->label == MINUS_NODE){
         int op1 = check_type(root->firstChild, stable);
         // unary
-        if(root->firstChild == NULL){
+        if(root->firstChild->sibling == NULL){
             if(op1==-1)
                 return -1;
             if(op1 == BOOL)
@@ -356,8 +376,10 @@ int check_type(ASTnode* root, symbolTableNode* stable){
             int op2 = check_type(root->firstChild->sibling, stable);
             if(op1==-1 || op2==-1)
                 return -1;
-            if(op1==BOOL || op2==BOOL)
+            if(op1==BOOL || op2==BOOL){
+                printf("Line %d: Error - Type Mismatch\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
                 return -1;
+            }
             if(op1==FLOAT || op2==FLOAT)
                 return FLOAT;      
             if(op1==INT && op2==INT)
@@ -376,4 +398,84 @@ int hashGivenIndex(char str[], int lowerIndex, int higherIndex){
     }
     ans %= (higherIndex-lowerIndex)+1;
     return ans+lowerIndex;
+}
+
+void printSymbolForest(moduleHashNode* symbolForest[]){
+
+    for(int i=0; i<MAX_MODULES; i++){
+        if(symbolForest[i] != NULL){
+            printModuleHashNode(symbolForest[i]);
+        }
+    }    
+}
+
+void printModuleHashNode(moduleHashNode* modhash){
+
+    if(modhash == NULL){
+        return;
+    }
+    moduleHashNode* temp = modhash;
+
+    while(temp != NULL){
+        printf("*******Module Name: [%s], isUsed: [%d], isDefined: [%d] astNode: [%s]*******\n",temp->key, temp->isUsed, temp->isDefined, nodeNameString[temp->moduleAst->label]);
+        printSymbolTableNode(temp->tablePtr);
+        temp = temp->next;
+    }
+    return;
+}
+
+void printSymbolTableNode(symbolTableNode* symNode){
+    if(symNode == NULL){
+        return;
+    }
+    printVarHashTable(symNode->varHashTable);
+    int i = 0;
+
+    while(i<MAX_SCOPES){
+        if(symNode->childList[i] != NULL){
+            printSymbolTableNode(symNode->childList[i]);
+        }
+        i++;
+    }
+
+    return;
+}
+
+void printVarHashTable(varHashNode* varht[]){
+
+    if(varht == NULL){
+        return;
+    }
+    
+    for(int i=0; i<VAR_SYMBOLTABLE_SIZE; i++){
+        if(varht[i] != NULL){
+            printVarHashNode(varht[i]);
+        }
+    }
+
+    return;
+}
+
+void printVarHashNode(varHashNode* varhn){
+
+    if (varhn == NULL)
+        return;
+
+    printSymbolTableEntry(varhn->entryPtr);
+    varHashNode *temp = varhn;
+    while(temp->next != NULL){
+        temp = temp->next;
+        printVarHashNode(temp);
+    }
+    return; 
+}
+
+void printSymbolTableEntry(symbolTableEntry* symEntry){
+
+    if(symEntry == NULL){
+        return;
+    }
+
+    printf("Var Name: [%s], Type: [%d], isArray: [%d], startIndex: [%d], endIndex: [%d], offset: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, symEntry->type, symEntry->isArray, symEntry->startIndex, symEntry->endIndex, symEntry->offset, symEntry->isAssigned, symEntry->isReturn);
+    return;
 }

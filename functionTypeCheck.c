@@ -8,26 +8,30 @@ int checkFunctionReturnType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolT
         symbolTableEntry* apEntry = getSymbolTableEntry(stable, actualPar->syntaxTreeNode->lexeme);
         if(apEntry==NULL){
             //ERROR
-            printf("Variable %s assigned before declaration", actualPar->syntaxTreeNode->lexeme);
+            printf("Line %d: Error - Variable %s assigned before declaration\n", actualPar->syntaxTreeNode->lineNumber, actualPar->syntaxTreeNode->lexeme);
+            formalPar = formalPar->sibling;
+            actualPar = actualPar->sibling;
+            if((actualPar == NULL && formalPar!=NULL) || (actualPar != NULL && formalPar ==NULL)){
+                printf("Line %d: Error - Number of return parameters differ.\n", reuseStmtRoot->firstChild->sibling->syntaxTreeNode->lineNumber);
+                return -1;
+            }
+            continue;
         }
         symbolTableEntry* fpEntry = getSymbolTableEntry(moduleST, formalPar->firstChild->syntaxTreeNode->lexeme);
 
         if(fpEntry->type != apEntry->type){
             //ERROR
-            printf("Type of %s differs from return type of function",actualPar->syntaxTreeNode->lexeme);
+            printf("Line %d: Error - Type of %s differs from return type of function\n",actualPar->syntaxTreeNode->lineNumber, actualPar->syntaxTreeNode->lexeme);
         }
 
         formalPar = formalPar->sibling;
         actualPar = actualPar->sibling;
-        if(actualPar == NULL){
-            printf("Number of return parameters differ.");
+        if((actualPar == NULL && formalPar!=NULL) || (actualPar != NULL && formalPar ==NULL)){
+            printf("Line %d: Error - Number of return parameters differ.\n", reuseStmtRoot->firstChild->sibling->syntaxTreeNode->lineNumber);
             return -1;
         }
     }
-    if(actualPar != NULL){
-        printf("Number of return parameters differ.");
-        return -1;
-    }
+    
     return 1;
 }
 
@@ -39,13 +43,20 @@ int checkFunctionParameterType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symb
         symbolTableEntry* apEntry = getSymbolTableEntry(stable, actualPar->syntaxTreeNode->lexeme);
         if(apEntry==NULL){
             //ERROR
-            printf("Variable %s used before declaration", actualPar->syntaxTreeNode->lexeme);
+            printf("Line %d: Error - Variable %s used before declaration\n", actualPar->syntaxTreeNode->lineNumber, actualPar->syntaxTreeNode->lexeme);
+            formalPar = formalPar->sibling;
+            actualPar = actualPar->sibling;
+            if((actualPar == NULL && formalPar!=NULL) || (actualPar != NULL && formalPar ==NULL)){
+                printf("Line %d: Error - Number of input parameters differ.\n", reuseStmtRoot->firstChild->sibling->syntaxTreeNode->lineNumber);
+                return -1;
+            }
+            continue;
         }
         symbolTableEntry* fpEntry = getSymbolTableEntry(moduleST, formalPar->firstChild->sibling->syntaxTreeNode->lexeme);
 
         if(fpEntry->type != apEntry->type){
             //ERROR
-            printf("Type of %s differs from return type of function",actualPar->syntaxTreeNode->lexeme);
+            printf("Line %d: Error - Type of %s differs from input type of function\n", actualPar->syntaxTreeNode->lineNumber, actualPar->syntaxTreeNode->lexeme);
         }else{
             if(fpEntry->isArray != apEntry->isArray){
                 //ERROR
@@ -55,15 +66,12 @@ int checkFunctionParameterType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symb
 
         formalPar = formalPar->sibling;
         actualPar = actualPar->sibling;
-        if(actualPar == NULL){
-            printf("Number of return parameters differ.");
+        if((actualPar == NULL && formalPar!=NULL) || (actualPar != NULL && formalPar ==NULL)){
+            printf("Line %d: Error - Number of input parameters differ.\n", reuseStmtRoot->firstChild->sibling->syntaxTreeNode->lineNumber);
             return -1;
         }
     }
-    if(actualPar != NULL){
-        printf("Number of return parameters differ.");
-        return -1;
-    }
+    
     return 1;
 }
 
