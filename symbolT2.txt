@@ -1,0 +1,37 @@
+
+PARSED SUCCESSFULLY
+
+
+***************starting second traversal************
+
+traverse 2 called on nullModule Name: [empty], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in empty**	Var Name: [a], Scope: [empty, 8-10], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [empty, 8-10], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [1], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [c], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [5], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in empty**	Var Name: [a], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [b], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [9], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [c], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [11], nesting level: [1], isAssigned: [0], isReturn: [0]
+Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**
+ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
+	1.Grammar Table constructed from Grammar.txt
+	2.First and Follow sets are automated from grammar table
+	3.Parse Table generated from First and Follow sets
+	4.Both Lexical and Syntax Analysis modules implemented
+	5.Error Recovery also implemented
+
+Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  Module Name: [empty], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in empty**	Var Name: [a], Scope: [empty, 8-10], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [empty, 8-10], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [1], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [c], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [5], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in empty**	Var Name: [a], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [b], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [9], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [c], Scope: [empty, 8-10], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [11], nesting level: [1], isAssigned: [0], isReturn: [0]
+Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  

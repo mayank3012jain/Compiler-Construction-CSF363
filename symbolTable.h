@@ -2,30 +2,33 @@
 #define symboltable_h
  
 #include "astDef.h"
+#include "symbolTableDef.h"
 #include "ast.h"
 
-void traverse_ast(ASTnode* root);
+void traverse_ast(ASTnode* root, moduleHashNode* symbolForest[]);
 int checkKeyword(char *name, ASTnode* ast);
-int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, int offset, int isAssigned, int isReturn, ASTnode* ast);
+int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int isArray, int startIndex, int endIndex, symbolTableEntry* startIndexDyn, symbolTableEntry* endIndexDyn, int offset, int isAssigned, int isReturn, int isStatic,ASTnode* ast);
 void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[]);
 symbolTableEntry* getSymbolTableEntry(symbolTableNode* stNode, char* name);
 symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolForest[],ASTnode* moduleRoot);
 symbolTableEntry* isDeclared(varHashNode* varHashTable[], char* name);
-moduleHashNode* getModuleHashNode(char *name, moduleHashNode* symbolForest[]);
+moduleHashNode* getModuleHashNode(char *name, moduleHashNode* symbolForest[],int lineNumb);
 int checkFunctionReturnType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolTableNode* stable, moduleHashNode* symbolForest[]);
 int checkFunctionParameterType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolTableNode* stable, moduleHashNode* symbolForest[]);
 // symbolTableNode* getSymbolTableNode(char *name, moduleHashNode* symbolForest[]);
 void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast);
 int check_type(ASTnode* root, symbolTableNode* stable);
 int hashGivenIndex(char str[], int lowerIndex, int higherIndex);
-symbolTableNode* allocateSymbolTable(symbolTableNode* parent, int offset);
+symbolTableNode* allocateSymbolTable(symbolTableNode* parent, int offset, int scopeStart, char key[]);
 void traverse_ast_recurse2(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[], int scope);
+
+//print
 void printSymbolForest(moduleHashNode* symbolForest[]);
 void printModuleHashNode(moduleHashNode* modhash);
-void printSymbolTableNode(symbolTableNode* symNode);
-void printVarHashTable(varHashNode* varht[]);
-void printVarHashNode(varHashNode* varhn);
-void printSymbolTableEntry(symbolTableEntry* symEntry);
+void printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash);
+void printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHashNode* modhash);
+void printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash);
+void printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash);
 
 
 

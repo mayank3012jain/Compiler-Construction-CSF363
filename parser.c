@@ -339,6 +339,7 @@ ptree_node* create_tree_node(char* lexeme, int rule, int lineNumber, int token, 
     node->isLeaf=1-isLeaf;
     strcpy(node->symbol,symbol);
     node->parentNode = parent;
+    PARSETREENODES++;
     return node;
 }
 
@@ -457,30 +458,30 @@ ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first,
     return tree_root;
 }
 
-void printNode(ptree_node* node, FILE* fout ){
+void printNode(ptree_node* node){
     if (node->parentNode == NULL)
-        fprintf(fout, "Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule, node->lexeme, node->lineNumber, node->token,"-----", "ROOT", " NO", node->symbol);
+        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule, node->lexeme, node->lineNumber, node->token,"-----", "ROOT", " NO", node->symbol);
     else if(node->isLeaf == 1 && node->token==RNUM){
-        fprintf(fout, "Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5f\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.rnum, node->parentNode->symbol, "YES", node->symbol);
+        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5f\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.rnum, node->parentNode->symbol, "YES", node->symbol);
     }else if(node->isLeaf == 1 && node->token==NUM){
-        fprintf(fout, "Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5d\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.num, node->parentNode->symbol, "YES", node->symbol);
+        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5d\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.num, node->parentNode->symbol, "YES", node->symbol);
     }else if(node->isLeaf == 1)
-        fprintf(fout, "Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, "-----", node->parentNode->symbol, "YES", node->symbol);
+        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, "-----", node->parentNode->symbol, "YES", node->symbol);
     else{
-        fprintf(fout, "Rule: %d\tLexeme: %25s\tLinenumber: %5s\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,"------", "-----", node->token, "-----", node->parentNode->symbol, " NO", node->symbol);
+        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5s\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,"------", "-----", node->token, "-----", node->parentNode->symbol, " NO", node->symbol);
     }
 }
 
-void printTree(ptree_node* head, FILE *fout){
+void printTree(ptree_node* head){
     if(head==NULL){
         return;
     }
     ptree_node* temp = head;
     // printTree(temp->children[0], fout);
-    printNode(temp, fout);  
+    printNode(temp);  
       
     for(int i=0; i<CHILDREN_SIZE;i++){
-        printTree(temp->children[i],fout);
+        printTree(temp->children[i]);
     }
     return;
 }

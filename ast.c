@@ -11,6 +11,7 @@ ASTnode* allocateAstNode(int label, ASTnode* parent, ASTnode* firstChild, ASTnod
     node->firstChild = firstChild;
     node->sibling = sibling;
     node->syntaxTreeNode = pt;
+    ASTNODES++;
     return node;	
 }
 
@@ -373,7 +374,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             current->firstChild->firstChild = populateAST(root->children[0], current->firstChild);
             current->firstChild->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, NULL, NULL, NULL);
             current->firstChild->sibling->firstChild = populateAST(root->children[1], current->firstChild->sibling);
-            current->firstChild->sibling->sibling = allocateAstNode(DRIVER_MOD_NODE, current, NULL, NULL, NULL);
+            current->firstChild->sibling->sibling = allocateAstNode(DRIVER_MOD_NODE, current, NULL, NULL, root->children[2]->children[4]->children[0]);
             current->firstChild->sibling->sibling->firstChild = populateAST(root->children[2], current->firstChild->sibling->sibling);
             current->firstChild->sibling->sibling->sibling = allocateAstNode(OTHERMOD_HEADER_NODE, current, NULL, NULL, NULL);
             current->firstChild->sibling->sibling->sibling->firstChild = populateAST(root->children[3], current->firstChild->sibling->sibling->sibling);
@@ -388,7 +389,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
             current->firstChild->sibling->firstChild = populateAST(root->children[7], current->firstChild->sibling);
             current->firstChild->sibling->sibling = allocateAstNode(RET_HEADER_NODE, current, NULL, NULL, root);
             current->firstChild->sibling->sibling->firstChild = populateAST(root->children[10], current->firstChild->sibling->sibling);
-            current->firstChild->sibling->sibling->sibling = allocateAstNode(MODULEDEF_HEADER_NODE, current, NULL, NULL, root);
+            current->firstChild->sibling->sibling->sibling = allocateAstNode(MODULEDEF_HEADER_NODE, current, NULL, NULL, root->children[11]->children[0]);
             current->firstChild->sibling->sibling->sibling->firstChild = populateAST(root->children[11], current->firstChild->sibling->sibling->sibling);
             break;
 

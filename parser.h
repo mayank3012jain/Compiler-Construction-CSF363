@@ -22,7 +22,7 @@ stack_node* pop(stack_node* head);
 stack_node* push(gnode* arr[], ptree_node* ptrs[], int len, stack_node* head);
 ptree_node* create_tree_node(char* lexeme, int rule,int lineNumber, int token, char* symbol, unsigned int isLeaf, ptree_node* parent);
 ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first, FOLLOW follow, FILE* fin);
-void printNode(ptree_node* node, FILE *fout);
-void printTree(ptree_node* head, FILE *fout);
+void printNode(ptree_node* node);
+void printTree(ptree_node* head);
 
 #endif

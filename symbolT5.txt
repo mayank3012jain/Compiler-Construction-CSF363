@@ -1,0 +1,37 @@
+
+PARSED SUCCESSFULLY
+
+
+***************starting second traversal************
+Module Name: [arraySum], isUsed: [1], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in arraySum**	Var Name: [n], Scope: [arraySum, 6-26], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [33554492], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [list], Scope: [arraySum, 6-26], Width: [33554493], isArray: YES, static array [1065353216-15], Type: [REAL_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [sum], Scope: [arraySum, 6-26], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [33554494], nesting level: [0], isAssigned: [1], isReturn: [1]
+
+**new stable started in arraySum**	Var Name: [t], Scope: [arraySum, 6-26], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [2], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [index], Scope: [arraySum, 6-26], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [0], isReturn: [0]
+
+**new stable started in arraySum**
+**new stable started in arraySum**Module Name: [readArr], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in readArr**	Var Name: [k], Scope: [readArr, 45-55], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [33554492], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [arr1], Scope: [readArr, 45-55], Width: [33554493], isArray: YES, static array [1065353216-15], Type: [REAL_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in readArr**	Var Name: [i], Scope: [readArr, 45-55], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [tempvar], Scope: [readArr, 45-55], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+
+**new stable started in readArr**Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**	Var Name: [k], Scope: [driverFunctionNode, 28-36], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [33554492], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [s], Scope: [driverFunctionNode, 28-36], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [33554494], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [A], Scope: [driverFunctionNode, 28-36], Width: [33554493], isArray: YES, static array [1065353216-15], Type: [REAL_NODE], offset: [0], nesting level: [0], isAssigned: [0], isReturn: [0]
+
+ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
+	1.Grammar Table constructed from Grammar.txt
+	2.First and Follow sets are automated from grammar table
+	3.Parse Table generated from First and Follow sets
+	4.Both Lexical and Syntax Analysis modules implemented
+	5.Error Recovery also implemented
+
+Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  

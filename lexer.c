@@ -529,7 +529,7 @@ lex number_dfa(char input[], int* indx, int lineNumber){
         ls.token = NUM;
         strncpy(ls.lexeme, &input[id_base], *indx-id_base);
         ls.lexeme[*indx-id_base] = '\0';
-        ls.value.rnum = atoi(ls.lexeme);
+        ls.value.num = atoi(ls.lexeme);
         // printf("\nLexical error. Line number: %d. Lexeme: %s\n", lineNumber, ls.lexeme);
         return ls;
     }

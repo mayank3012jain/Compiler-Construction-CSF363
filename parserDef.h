@@ -20,6 +20,8 @@
 #define NON_TERMINAL 1
 #define CHILDREN_SIZE 15
 
+extern int PARSETREENODES;
+
 //Type definitions
 typedef struct gnode{
     int term;

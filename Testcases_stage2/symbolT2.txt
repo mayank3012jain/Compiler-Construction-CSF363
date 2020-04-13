@@ -1,0 +1,54 @@
+
+PARSED SUCCESSFULLY
+Line 14: Error - Undeclared variable: [h]
+Line: 16: Error - ID declared again [b]
+Line 34: Error - ID D not declared before use
+Line: 38: Error - ID declared again [A]
+Line 40: Error - Undeclared variable: [E]
+Line 53: Error - ID v_1_2_43 not declared before use
+Line: 58: Error - ID declared again [B]
+
+
+***************starting second traversal************
+Line 56: Error - Variable k assigned before declaration
+Module Name: [f1], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in f1**	Var Name: [m], Scope: [f1, 26-42], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [84], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [n], Scope: [f1, 26-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [85], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [a], Scope: [f1, 26-42], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [f1, 26-42], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [40], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [c], Scope: [f1, 26-42], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [80], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in f1**	Var Name: [x], Scope: [f1, 26-42], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [y], Scope: [f1, 26-42], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [4], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [A], Scope: [f1, 26-42], Width: [13], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [8], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [B], Scope: [f1, 26-42], Width: [13], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [20], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [C], Scope: [f1, 26-42], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [32], nesting level: [1], isAssigned: [1], isReturn: [0]
+Module Name: [var_demo_array], isUsed: [1], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in var_demo_array**	Var Name: [k], Scope: [var_demo_array, 8-20], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [44], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [m], Scope: [var_demo_array, 8-20], Width: [37], isArray: YES, static array [2-20], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [n], Scope: [var_demo_array, 8-20], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [42], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [p], Scope: [var_demo_array, 8-20], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [38], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [x], Scope: [var_demo_array, 8-20], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in var_demo_array**	Var Name: [p], Scope: [var_demo_array, 8-20], Width: [37], isArray: YES, static array [2-20], Type: [INTEGER_NODE], offset: [4], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [a], Scope: [var_demo_array, 8-20], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [var_demo_array, 8-20], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [1], isAssigned: [1], isReturn: [0]
+Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**	Var Name: [v_1_2_3], Scope: [driverFunctionNode, 47-59], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [p], Scope: [driverFunctionNode, 47-59], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [5], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [u1], Scope: [driverFunctionNode, 47-59], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [4], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [A], Scope: [driverFunctionNode, 47-59], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [B], Scope: [driverFunctionNode, 47-59], Width: [37], isArray: YES, static array [2-20], Type: [INTEGER_NODE], offset: [9], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [C], Scope: [driverFunctionNode, 47-59], Width: [37], isArray: YES, static array [2-20], Type: [INTEGER_NODE], offset: [45], nesting level: [0], isAssigned: [0], isReturn: [0]
+
+ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
+	1.Grammar Table constructed from Grammar.txt
+	2.First and Follow sets are automated from grammar table
+	3.Parse Table generated from First and Follow sets
+	4.Both Lexical and Syntax Analysis modules implemented
+	5.Error Recovery also implemented
+
+Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  

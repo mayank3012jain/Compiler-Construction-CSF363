@@ -20,6 +20,8 @@ char* termString[] = {"EPSILON","DOLLAR","INTEGER","REAL","BOOLEAN","OF","ARRAY"
 char* NtermString[] = {"program","moduledeclarations","moduledeclaration","othermodules","drivermodule","module","ret","inputplist","n1","outputplist","n2","datatype","rangearrays","type","moduledef","statements","statement","iostmt","boolconstt","varidnum","var","whichid","simplestmt","assignstmt","whichstmt","lvalueidstmt","lvaluearrstmt","ind","modulereusestmt","optional","idlist","n3","expression", "u","newnt","arithmeticorbooleanexpr","n7","anyterm","n8","arithmeticexpr","n4","term","n5","factor","op1","op2","logicalop","relationalop","declarestmt","conditionalstmt","casestmts","n9","value","dflt","iterativestmt","range","countnt"};
 char* nodeNameString[] = {"BOOLEAN_NODE","REAL_NODE","INTEGER_NODE","INPUTPLIST_HEADER_NODE","RET_HEADER_NODE","MODULEDEF_HEADER_NODE","MODULEDEC_HEADER_NODE","OTHERMOD_HEADER_NODE","DRIVER_MOD_NODE","TRUE_NODE","FALSE_NODE","NUM_NODE","RNUM_NODE","ID_NODE","PLUS_NODE","MINUS_NODE","MUL_NODE","DIV_NODE","AND_NODE","OR_NODE","LT_NODE","LE_NODE","GT_NODE","GE_NODE","EQ_NODE","NE_NODE","PROGRAM_NODE","MODULE_NODE","DATATYPE_ARRAY_NODE","RANGEARRAYS_NODE","MODULEREUSESTMT_NODE","GET_STMT_NODE","PRINT_STMT_NODE","VARIDNUM_NODE","ASSIGNOP_NODE","ASSIGNOP_ARRAY_NODE","ID_ARRAY_NODE","U_NODE","DECLARESTMT_NODE","CONDITIONALSTMT_NODE","FORITERATIVESTMT_NODE","WHILEITERATIVESTMT_NODE","RANGE_NODE","RELATIONALOP_NODE","LOGICALOP_NODE","IDLIST_NODE","OPTIONAL_RETURN_NODE","INPUTPLIST_NODE","CASESTMTS_HEADER_NODE"};
 int DATA_TYPE_SIZES[] = {1, 4, 2};
+int ASTNODES = 0;
+int PARSETREENODES = 0;
 
 int main(int argc, char* argv[]){
 
@@ -45,6 +47,8 @@ int main(int argc, char* argv[]){
     GRAMMAR gr;
     PARSE_TABLE pt;
     ptree_node* syntaxTree;
+    ASTnode* ast;
+    moduleHashNode* symbolForest[MAX_MODULES];
 
     while(read_ptr<BUFFER_SIZE-1 && (read_char = fgetc(fin)) != EOF){
         read_buffer[read_ptr] = read_char;
@@ -64,6 +68,9 @@ int main(int argc, char* argv[]){
     populateFirst(first,grammarIndex, gr);
     allFollow(first, grammarIndex, gr, follow);
     populate_parse_table(gr,first, follow, pt);
+    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
+    ast = populateAST(syntaxTree, NULL);
+    traverse_ast(ast, symbolForest);
 
     printf("\nALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES\n");
     printf("\t1.Grammar Table constructed from Grammar.txt\n");
@@ -79,32 +86,46 @@ int main(int argc, char* argv[]){
 
 		switch(cases){
 
-			case 1: callComments(read_buffer);
+			case 1: 
+                    lexerCall(read_buffer, fin);
 					break;
 
-			case 2: lexerCall(read_buffer, fin);
+			case 2: 
+                    printTree(syntaxTree);
 					break;
 
-			case 3: //ptree_node* root =   
-                    printTree(callBoth(gr,pt, read_buffer, first, follow, fin), fout);
-				break;
+			case 3: 
+                    printAST(ast);
+				    break;
 
-			case 4: callTime(gr, pt, read_buffer, first, follow, fin);
-				break;
-
+            case 4: 
+                    printf("Parse Tree Number of Nodes = %d\n", PARSETREENODES);
+                    printf("Allocated Memory = %lu bytes\n", PARSETREENODES*sizeof(ptree_node));
+                    printf("AST Number of Nodes = %d\n", ASTNODES);
+                    printf("Allocated Memory = %lu bytes\n", ASTNODES*sizeof(ASTnode));
+                    printf("Compression ratio = %lf\n",(((double)PARSETREENODES*sizeof(ptree_node)-ASTNODES*sizeof(ASTnode)) * 100)/(PARSETREENODES*sizeof(ptree_node)));
+                    break;
+			
             case 5:
-                syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
-                printTree(syntaxTree->children[0], fout);
-                ASTnode* ast = populateAST(syntaxTree, NULL);
-                printAST(ast);
-				break;
+                    printSymbolForest(symbolForest);
+				    break;
 
             case 6:
-                syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
-                // printTree(syntaxTree->children[0], fout);
-                ASTnode* astnode = populateAST(syntaxTree, NULL);
-                traverse_ast(astnode);
+                
                 break;
+
+            case 7:
+
+                break;
+
+            case 8: 
+                callTime(gr, pt, read_buffer, first, follow, fin);
+				break;
+
+            case 9:
+
+                break;
+
 
             default: exit(0);//return 0;
 		}

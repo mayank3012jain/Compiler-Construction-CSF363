@@ -7,5 +7,5 @@ stage2ast: driver.c parser.c lexer.c ast.c lexerDef.h lexer.h parser.h parserDef
 stage2astdebug: driver.c parser.c lexer.c ast.c lexerDef.h lexer.h parser.h parserDef.h astDef.h ast.h 
 	gcc -g driver.c parser.c lexer.c ast.c -o stage2ast
 
-stage2symboldebug: driver.c parser.c lexer.c ast.c symbolTable.c insertSymbolTable.c functionTypeCheck.c lexerDef.h lexer.h parser.h parserDef.h astDef.h ast.h symbolTable.h
-	gcc -g driver.c parser.c lexer.c ast.c symbolTable.c insertSymbolTable.c functionTypeCheck.c -o stage2symbol
+stage2symboldebug: driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyser.c lexerDef.h lexer.h parser.h parserDef.h astDef.h symbolTableDef.h ast.h symbolTable.h
+	gcc -g driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyser.c -o stage2symbol

@@ -1,0 +1,36 @@
+
+PARSED SUCCESSFULLY
+Line 21: Error - Type Mismatch
+Line 23: Error - Type Mismatch
+Line 24: Error - Type Mismatch
+Line 24: Error - Undeclared variable: [p]
+
+
+***************starting second traversal************
+Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**	Var Name: [R1_abc], Scope: [driverFunctionNode, 5-14], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [R3_abc], Scope: [driverFunctionNode, 5-14], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [9], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [var_1_], Scope: [driverFunctionNode, 5-14], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [var_2_], Scope: [driverFunctionNode, 5-14], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [var_3_], Scope: [driverFunctionNode, 5-14], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [r2_ABC], Scope: [driverFunctionNode, 5-14], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [1], isReturn: [0]
+Module Name: [compute], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in compute**	Var Name: [res_2__b], Scope: [compute, 19-27], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [9], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [res_2_a], Scope: [compute, 19-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [res_1], Scope: [compute, 19-27], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [a], Scope: [compute, 19-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [compute, 19-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [c], Scope: [compute, 19-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in compute**	Var Name: [b], Scope: [compute, 19-27], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [13], nesting level: [1], isAssigned: [1], isReturn: [0]
+
+ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
+	1.Grammar Table constructed from Grammar.txt
+	2.First and Follow sets are automated from grammar table
+	3.Parse Table generated from First and Follow sets
+	4.Both Lexical and Syntax Analysis modules implemented
+	5.Error Recovery also implemented
+
+Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  
