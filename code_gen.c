@@ -161,6 +161,8 @@ int genArithExpr(ASTnode *node, FILE *fptr) {
 	// OR, LT, LE, GT, GE, EQ
 }
 
+
+
 void genAssignStmt(astNode *assignNode, FILE *fptr) {
 	char *rhs = malloc(BUFF_SIZE * sizeof(char));
 	astNode *lhsNode = assignNode->firstChild;
