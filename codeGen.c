@@ -343,7 +343,7 @@ void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scop
     return;
 }
 
-void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
+void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope){
     
     // load r1, ID
     //while temp(casestmt)
