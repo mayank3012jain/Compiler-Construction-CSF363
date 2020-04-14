@@ -14,7 +14,9 @@ Line 56: Error - Variable k assigned before declaration
 Module Name: [f1], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
 
 **new stable started in f1**	Var Name: [m], Scope: [f1, 26-42], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [84], nesting level: [0], isAssigned: [1], isReturn: [1]
-	Var Name: [n], Scope: [f1, 26-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [85], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [n], Scope: [f1, 26-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGERError detected on fd 0
+error detected on stdin
+igned: [1], isReturn: [1]
 	Var Name: [a], Scope: [f1, 26-42], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
 	Var Name: [b], Scope: [f1, 26-42], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [40], nesting level: [0], isAssigned: [1], isReturn: [0]
 	Var Name: [c], Scope: [f1, 26-42], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [80], nesting level: [0], isAssigned: [1], isReturn: [0]

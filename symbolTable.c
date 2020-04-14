@@ -23,7 +23,7 @@ void traverse_ast(ASTnode* root, moduleHashNode* symbolForest[]){
     
     traverse_ast_recurse(root,stable,symbolForest);
     printf("\n\n***************starting second traversal************\n");
-    // traverse_ast_recurse2(root,stable,symbolForest,0);
+    traverse_ast_recurse2(root,stable,symbolForest,0);
     
     printSymbolForest(symbolForest);
 }
@@ -197,7 +197,18 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //4. ID should not be real
         //5. Value type in individual case statement
         //6. **Case value in individual case statement??
-        
+
+
+        symbolTableNode* temp = allocateSymbolTable(stable,0, root->firstChild->syntaxTreeNode->lineNumber +1, stable->key);
+        int i = 0;
+
+        while(i<MAX_SCOPES){
+            if(stable->childList[i] == NULL)
+                break;
+            i++;
+        }
+        stable->childList[i] = temp;
+
         if(getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme) == NULL){
             //Raise Error
             printf("Line %d: Error - ID [%s] not declared before SWITCH scope", root->firstChild->syntaxTreeNode->lineNumber,root->firstChild->syntaxTreeNode->lexeme);
@@ -219,16 +230,6 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
                 return;
             }
         }
-
-        symbolTableNode* temp = allocateSymbolTable(stable,0, root->firstChild->syntaxTreeNode->lineNumber +1, stable->key);
-        int i = 0;
-
-        while(i<MAX_SCOPES){
-            if(stable->childList[i] == NULL)
-                break;
-            i++;
-        }
-        stable->childList[i] = temp;
 
         if(check_type(root->firstChild,stable) == INT){
 
@@ -558,7 +559,7 @@ void traverse_ast_recurse2(ASTnode* root, symbolTableNode* stable, moduleHashNod
         // stable = stable->childList[scope];
         traverse_ast_recurse2(root->firstChild->sibling->sibling, stable->childList[scope], symbolForest, 0);
         if(root->sibling){
-           return traverse_ast_recurse2(root->sibling, stable->childList[scope], symbolForest, scope +1);
+           return traverse_ast_recurse2(root->sibling, stable, symbolForest, scope +1);
         }else
             return;
     }
@@ -567,18 +568,22 @@ void traverse_ast_recurse2(ASTnode* root, symbolTableNode* stable, moduleHashNod
         // stable = stable->childList[scope];
         traverse_ast_recurse2(root->firstChild->sibling, stable->childList[scope], symbolForest, 0);
         if(root->sibling){
-           return traverse_ast_recurse2(root->sibling, stable->childList[scope], symbolForest, scope +1);
+           return traverse_ast_recurse2(root->sibling, stable, symbolForest, scope +1);
         }else
             return;
     }
 
     if(root->label == CONDITIONALSTMT_NODE){
         // stable = stable->childList[scope];
-        traverse_ast_recurse2(root->firstChild->sibling, stable->childList[scope], symbolForest, 0);
+        if((getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme) != NULL) && (check_type(root->firstChild,stable) != FLOAT)){
+            traverse_ast_recurse2(root->firstChild->sibling, stable->childList[scope], symbolForest, 0);
+        }
+
         if(root->sibling){
-           return traverse_ast_recurse2(root->sibling, stable->childList[scope], symbolForest, scope +1);
+            return traverse_ast_recurse2(root->sibling, stable, symbolForest, scope +1);
         }else
             return;
+        
     }
 
     if(root->label == MODULEDEF_HEADER_NODE){

@@ -1,7 +1,9 @@
 
 PARSED SUCCESSFULLY
 Line 33: Error - Case Statement of Integer Switch has not integer value
-Line 0: Error - Returned parameters not assigned
+Line 41: Error - Switch value has a real variable
+Line 68: Error - Default statement exists with a BOOLEAN value.
+Line 57: - Error: Case Not Valid
 Line 84: Error - Loop variable [k] is changed inside the loop
 Line 93: Error - Default statement does not exist with a INT value.
 
@@ -18,28 +20,34 @@ Module Name: [for_loop_demo], isUsed: [1], isDefined: [1] astNode: [MODULE_NODE]
 
 **new stable started in for_loop_demo**Module Name: [switch_var_demo1], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
 
-**new stable started in switch_var_demo1**	Var Name: [u], Scope: [switch_var_demo1, 11-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [0], isReturn: [1]
-	Var Name: [x], Scope: [switch_var_demo1, 11-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
-	Var Name: [y], Scope: [switch_var_demo1, 11-0], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
-	Var Name: [z], Scope: [switch_var_demo1, 11-0], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [0], isAssigned: [1], isReturn: [0]
+**new stable started in switch_var_demo1**	Var Name: [u], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [x], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [y], Scope: [switch_var_demo1, 11-68], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [z], Scope: [switch_var_demo1, 11-68], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [0], isAssigned: [1], isReturn: [0]
 
-**new stable started in switch_var_demo1**	Var Name: [h], Scope: [switch_var_demo1, 11-0], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [1], isAssigned: [0], isReturn: [0]
-	Var Name: [k], Scope: [switch_var_demo1, 11-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [1], isAssigned: [0], isReturn: [0]
-	Var Name: [m], Scope: [switch_var_demo1, 11-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [0], isReturn: [0]
-	Var Name: [n], Scope: [switch_var_demo1, 11-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [1], isAssigned: [1], isReturn: [0]
-	Var Name: [p], Scope: [switch_var_demo1, 11-0], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [7], nesting level: [1], isAssigned: [0], isReturn: [0]
+**new stable started in switch_var_demo1**	Var Name: [h], Scope: [switch_var_demo1, 11-68], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [k], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [m], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [n], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [p], Scope: [switch_var_demo1, 11-68], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [7], nesting level: [1], isAssigned: [0], isReturn: [0]
 
-**new stable started in switch_var_demo1**	Var Name: [A], Scope: [switch_var_demo1, 18-32], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [0], nesting level: [2], isAssigned: [1], isReturn: [0]
-	Var Name: [B], Scope: [switch_var_demo1, 18-32], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [6], nesting level: [2], isAssigned: [1], isReturn: [0]
-	Var Name: [E], Scope: [switch_var_demo1, 18-32], Width: [13], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [46], nesting level: [2], isAssigned: [1], isReturn: [0]
-	Var Name: [Q], Scope: [switch_var_demo1, 18-32], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [2], isAssigned: [1], isReturn: [0]
+**new stable started in switch_var_demo1**	Var Name: [A], Scope: [switch_var_demo1, 18-36], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [0], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [B], Scope: [switch_var_demo1, 18-36], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [6], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [E], Scope: [switch_var_demo1, 18-36], Width: [13], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [46], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [Q], Scope: [switch_var_demo1, 18-36], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [2], isAssigned: [1], isReturn: [0]
 
-**new stable started in switch_var_demo1**Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+**new stable started in switch_var_demo1**
+**new stable started in switch_var_demo1**
+**new stable started in switch_var_demo1**	Var Name: [A], Scope: [switch_var_demo1, 50-67], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [0], nesting level: [2], isAssigned: [0], isReturn: [0]
+	Var Name: [B], Scope: [switch_var_demo1, 50-67], Width: [41], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [6], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [E], Scope: [switch_var_demo1, 50-67], Width: [13], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [46], nesting level: [2], isAssigned: [0], isReturn: [0]
+	Var Name: [Q], Scope: [switch_var_demo1, 50-67], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [2], isAssigned: [0], isReturn: [0]
+Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
 
-**new stable started in driverFunctionNode**	Var Name: [d], Scope: [driverFunctionNode, 88-0], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [8], nesting level: [0], isAssigned: [0], isReturn: [0]
-	Var Name: [a], Scope: [driverFunctionNode, 88-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
-	Var Name: [b], Scope: [driverFunctionNode, 88-0], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [0], isReturn: [0]
-	Var Name: [c], Scope: [driverFunctionNode, 88-0], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [4], nesting level: [0], isAssigned: [0], isReturn: [0]
+**new stable started in driverFunctionNode**	Var Name: [d], Scope: [driverFunctionNode, 88-103], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [8], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [a], Scope: [driverFunctionNode, 88-103], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [driverFunctionNode, 88-103], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [c], Scope: [driverFunctionNode, 88-103], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [4], nesting level: [0], isAssigned: [0], isReturn: [0]
 
 **new stable started in driverFunctionNode**
 ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES

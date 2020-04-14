@@ -134,7 +134,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
                     break;
                 }
                 else{
-                    temp->isDefined == 1;
+                    temp->isDefined = 1;
                     flag=1;
                     break;
                 }
@@ -155,7 +155,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
                 // return NULL;
             }
             else{
-                temp->isDefined == 1;
+                temp->isDefined = 1;
                 flag=1;
                 // return temp->tablePtr;
             }
@@ -173,6 +173,9 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     }
 
     strcpy(temp->key, name);
+    if(flag==0){
+        temp->next = NULL;
+    }
     temp->isUsed = 0;
     temp->isDefined = 1;
     if(strcmp("driverFunctionNode", name)==0){
@@ -180,7 +183,7 @@ symbolTableNode* insert_into_moduleHashNode(char *name, moduleHashNode* symbolFo
     }
     else
         temp->tablePtr = allocateSymbolTable(NULL,0,moduleRoot->firstChild->sibling->sibling->sibling->syntaxTreeNode->lineNumber, name);
-    temp->next = NULL;
+    
     temp->moduleAst= moduleRoot;
 
     return temp->tablePtr;
