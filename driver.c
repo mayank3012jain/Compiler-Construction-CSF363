@@ -28,6 +28,7 @@ int main(int argc, char* argv[]){
 	int cases= 1;
 
 	FILE *fin = fopen(argv[1], "r");
+
     if (fin == NULL){
         printf("Error opening input file\n");
         exit(0);
@@ -123,7 +124,7 @@ int main(int argc, char* argv[]){
 				break;
 
             case 9:
-
+                    initialize(ast,fout,symbolForest);
                 break;
 
 

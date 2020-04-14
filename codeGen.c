@@ -6,7 +6,7 @@ int LABEL_NO = 1;
 int VARIABLE_NO = 1;
 int GLOBALOFFSET =0;
 
-void intitialize(FILE* fptr, moduleHashNode* symbolForest[]){
+void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]){
     
 
     fprintf(fptr, "\textern\tscanf\n");
@@ -22,9 +22,10 @@ void intitialize(FILE* fptr, moduleHashNode* symbolForest[]){
     fprintf(fptr, "\tglobal\tmain\nmain:\n");
 
     // generate();
+    traverse_code_gen(root, fptr, symbolForest);
 
     fprintf(fptr,"SECTION\t.bss\n");
-    
+    printSymbolForestCodeGen(symbolForest, fptr);
     
 
 }
@@ -102,7 +103,16 @@ void printVarHashNodeCodeGen(varHashNode* varhn, symbolTableNode* symNode, modul
 }
 
 void printSymbolTableEntryCodeGen(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash, FILE* fptr){
-    fprintf(fptr,"\t%s\t%d\n",generateBssLexeme(symNode,symEntry->name), DATA_TYPE_SIZES[symEntry->type]);
+
+    if(DATA_TYPE_SIZES[symEntry->type] == 1){
+        fprintf(fptr,"\t%s\tres%c\t%d\n",generateBssLexeme(symNode,symEntry->name), 'b',1);
+    }
+    else if(DATA_TYPE_SIZES[symEntry->type] == 2){
+        fprintf(fptr,"\t%s\tres%c\t%d\n",generateBssLexeme(symNode,symEntry->name), 'w',1);
+    }
+    else if(DATA_TYPE_SIZES[symEntry->type] == 4){
+        fprintf(fptr,"\t%s\tres%c\t%d\n",generateBssLexeme(symNode,symEntry->name), 'd',1);
+    }
 }
 
 char* generateBssLexeme(symbolTableNode* stable, char* name){
@@ -151,15 +161,14 @@ void traverse_code_gen(ASTnode* root, FILE *fptr, moduleHashNode* symbolForest[]
     ASTnode * temp = root->firstChild;
 	while(temp != NULL){	
 		if(temp->label == DRIVER_MOD_NODE){
-            eHashNode("driverFunctionNode", symbolForest, temp->syntaxTreeNode->lineNumber);
+            stable = getModuleHashNode("driverFunctionNode", symbolForest, temp->syntaxTreeNode->lineNumber);
             int scope = 0;
 			ASTnode* node = temp->firstChild;
 			while(node != NULL){
-                    statements(node, fptr, stable, &scope);
-					node = node->sibling;
-                    // scope++;
-				}
-			}
+                statements(node, fptr, stable, &scope);
+                node = node->sibling;
+                // scope++;
+            }
 		}
 		else if(temp->label==MODULE_NODE){
 			// call func start code
@@ -167,40 +176,39 @@ void traverse_code_gen(ASTnode* root, FILE *fptr, moduleHashNode* symbolForest[]
             stable = getModuleHashNode(temp->firstChild->syntaxTreeNode->lexeme, symbolForest, temp->firstChild->syntaxTreeNode->lineNumber);
 			ASTnode* node = temp->firstChild;
 			while(node != NULL){
-                    statements(node, fptr, stable, &scope);
-					node = node->sibling;
-				}
-			}
+                statements(node, fptr, stable, &scope);
+                node = node->sibling;
+            }
+        }
 			// call return code
-		}
 		temp = temp->sibling;
 	}
 }
 
 void statements(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope){
     if (root->label == PRINT_STMT_NODE){
-        printStmt(root, fptr, stable->childList[scope]);
+        printStmt(root, fptr, stable->childList[*scope]);
     }
     else if (root->label == GET_STMT_NODE){
-        getStmt(root, fptr, stable->childList[scope]);
+        getStmt(root, fptr, stable->childList[*scope]);
     }
     else if (root->label == FORITERATIVESTMT_NODE){
-        forIterStmt(root, fptr, stable->childList[scope]);
-        scope++;
+        forIterStmt(root, fptr, stable->childList[*scope]);
+        (*scope)++;
     }
     else if (root->label == WHILEITERATIVESTMT_NODE){
-        whileIterStmt(root, fptr, stable->childList[scope]);
+        whileIterStmt(root, fptr, stable->childList[*scope]);
         scope++;
     }
     else if (root->label == CONDITIONALSTMT_NODE){
-        conditionalStmt(root, fptr, stable->childList[scope]);
+        conditionalStmt(root, fptr, stable->childList[*scope]);
         scope++;
     }
     else if (root->label == MODULEREUSESTMT_NODE){
-        modulereuseStmt(root, fptr, stable->childList[scope]);
+        modulereuseStmt(root, fptr, stable->childList[*scope]);
     }
     else if (root->label == DECLARESTMT_NODE){
-        declareStmt(root, fptr, stable->childList[scope]);
+        declareStmt(root, fptr, stable->childList[*scope]);
     }
 }
 
@@ -255,7 +263,7 @@ void getStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
     }
 }
 
-void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
+void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope){
 
     //mov r1, startRange
     char* startRange = root->firstChild->sibling->firstChild->syntaxTreeNode->lexeme;
@@ -278,7 +286,7 @@ void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
 
     //for loop statements
     //TODO:call recursive function
-    statements(root->firstChild->sibling->sibling, fptr, stable);
+    statements(root->firstChild->sibling->sibling, fptr, stable, &scope);
 
     //load r1, ID
     fprintf(fptr, "\tmov\tr8w,\t%d\n", offset);
@@ -298,7 +306,7 @@ void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
     return;
 }
 
-void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
+void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope){
 
     //label1
     //call for boolean() - it gets back "1" or "0"
@@ -324,7 +332,7 @@ void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
     fprintf(fptr, "\tjl\t%s\n", label2);
 
     // call statements
-    statements(root->firstChild->sibling->sibling, fptr, stable);
+    statements(root->firstChild->sibling->sibling, fptr, stable, &scope);
 
     //jmp label1
     fprintf(fptr, "\tjmp\t%s\n", label1);
@@ -371,7 +379,7 @@ void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable){
         fprintf(fptr, "jne\t%s\n", label);
 
         // call statements
-        statements(temp->firstChild, fptr, stable);
+        statements(temp->firstChild, fptr, stable, &scope);
 
         //jmp nextStmt
         fprintf(fptr, "jne\t%s\n", labelNextStmt);
