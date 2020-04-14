@@ -17,8 +17,8 @@ void traverse_code_gen(ASTnode* root, FILE *fptr, moduleHashNode* symbolForest[]
 void statements(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
 void printStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
 void getStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
-void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
-void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
-void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
+void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
+void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
+void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
 
 #endif

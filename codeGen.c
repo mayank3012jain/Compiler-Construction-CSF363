@@ -193,15 +193,15 @@ void statements(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope){
         getStmt(root, fptr, stable->childList[*scope]);
     }
     else if (root->label == FORITERATIVESTMT_NODE){
-        forIterStmt(root, fptr, stable->childList[*scope]);
+        forIterStmt(root, fptr, stable->childList[*scope], scope);
         (*scope)++;
     }
     else if (root->label == WHILEITERATIVESTMT_NODE){
-        whileIterStmt(root, fptr, stable->childList[*scope]);
+        whileIterStmt(root, fptr, stable->childList[*scope], scope);
         scope++;
     }
     else if (root->label == CONDITIONALSTMT_NODE){
-        conditionalStmt(root, fptr, stable->childList[*scope]);
+        conditionalStmt(root, fptr, stable->childList[*scope], scope);
         scope++;
     }
     else if (root->label == MODULEREUSESTMT_NODE){
@@ -390,7 +390,7 @@ void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *sc
         temp= temp->sibling;
     }
     //call default
-    statements(root->firstChild->sibling->sibling, fptr, stable);
+    statements(root->firstChild->sibling->sibling, fptr, stable, &scope);
     //nextStmt:
     fprintf(fptr, "\n%s:\n", labelNextStmt);
 }
