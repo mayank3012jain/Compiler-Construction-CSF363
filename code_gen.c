@@ -1,11 +1,7 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <string.h>
 #include "common_defs.h"
 #include "code_gen.h"
 #include "ast.h"
-#include "semantic_analyser.h"
+#include "symbolTable.h"
 
 #define BUFF_SIZE 100
 
