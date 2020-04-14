@@ -14,11 +14,11 @@ char* generateBssLexeme(symbolTableNode* stable, char* name);
 char* new_label();
 char* new_variable();
 void traverse_code_gen(ASTnode* root, FILE *fptr, moduleHashNode* symbolForest[]);
-void statements(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
-void printStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
-void getStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable);
-void forIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
-void whileIterStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
-void conditionalStmt(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope);
+void statementsCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope,moduleHashNode* symbolForest[]);
+void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable,moduleHashNode* symbolForest[]);
+void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable,moduleHashNode* symbolForest[]);
+void forIterStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope,moduleHashNode* symbolForest[]);
+void whileIterStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope,moduleHashNode* symbolForest[]);
+void conditionalStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope,moduleHashNode* symbolForest[]);
 
 #endif

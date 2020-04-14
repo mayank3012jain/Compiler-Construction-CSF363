@@ -8,6 +8,7 @@
 #include "parser.h"
 #include "ast.h"
 #include "symbolTable.h"
+#include "codeGen.h"
 #include <time.h>
 #include<stdio.h>
 #include<stdlib.h>
@@ -124,7 +125,7 @@ int main(int argc, char* argv[]){
 				break;
 
             case 9:
-                    initialize(ast,fout,symbolForest);
+                    initializeCodeGen(ast,fout,symbolForest);
                 break;
 
 

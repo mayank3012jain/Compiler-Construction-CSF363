@@ -1,0 +1,18 @@
+extern	scanf
+exter	printf
+SECTION	.data
+lol
+	printI	db	%d', 10, 0
+	printR	db	%f', 10, 0
+	getI	db	%d', 10, 0
+	getR	db	%f', 10, 0
+SECTION	.text
+	global	main
+main:
+SECTION	.bss
+	x_driverFunctionNode	resw	1
+	y_driverFunctionNode	resw	1
+	z_driverFunctionNode	resw	1
+	a_driverFunctionNode	resw	1
+	b_driverFunctionNode	resw	1
+	c_driverFunctionNode	resw	1

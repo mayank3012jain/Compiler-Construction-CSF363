@@ -1,21 +1,29 @@
-**a := 10;**
-declare module mod1;
-<<driver Program>>
-start
-declare v, w, r :integer;
-get_value(v);
-w:=5;
-declare m:real;
-[r,m] := use mod1 with parameters v, w;
-print(r);
-print(m);
-end
-<<module mod1>>
-takes input [a: integer, b: integer];
-returns [x: integer, abc: real];
-start
-declare c: real;
-c:=10.4;
-x:=a+b-10;
-abc:=b/5+c;
-end
+extern	scanf
+extern	printf
+SECTION	.data
+	printI	db	'%d', 10, 0
+	printR	db	'%f', 10, 0
+	getI	db	'%d', 10, 0
+	getR	db	'%f', 10, 0
+SECTION	.text
+	global	main
+main:
+	mov	r8w	x_driverFunctionNode
+	push	r8w
+	push	 getI
+	call	_scanf
+	mov	r8w	y_driverFunctionNode
+	push	r8w
+	push	 getI
+	call	_scanf
+	mov	r8w,	esp-z_driverFunctionNode
+	push	r8w
+	push	printI
+	call	printf
+SECTION	.bss
+	x_driverFunctionNode	resw	1
+	y_driverFunctionNode	resw	1
+	z_driverFunctionNode	resw	1
+	a_driverFunctionNode	resw	1
+	b_driverFunctionNode	resw	1
+	c_driverFunctionNode	resw	1
