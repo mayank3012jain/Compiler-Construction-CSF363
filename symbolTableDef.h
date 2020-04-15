@@ -48,4 +48,10 @@ typedef struct varHashNode{
     struct varHashNode* next;
 }varHashNode;
 
+typedef struct whileList{
+    symbolTableEntry* varEntry;
+    int oldIsAssigned;
+    struct whileList* next;
+}whileList;
+
 #endif

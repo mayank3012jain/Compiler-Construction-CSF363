@@ -166,6 +166,9 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
 
     // If new scope
     if(root->label == WHILEITERATIVESTMT_NODE){       
+        whileList* exprnCheckList = NULL;
+        exprnCheckList = checkWhileExprn(root->firstChild, stable, exprnCheckList);
+        
         symbolTableNode* temp = allocateSymbolTable(stable,0, root->firstChild->syntaxTreeNode->lineNumber+1, stable->key);
         int i = 0;
 
@@ -179,7 +182,10 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //Check for a valid boolean expression
         // ASTnode* node = root->firstChild;
 
-        traverse_ast_recurse(root->firstChild, temp, symbolForest);//kya in teeno me firstchild hi statements hai?
+        traverse_ast_recurse(root->firstChild, temp, symbolForest);
+
+        checkWhileIsAssigned(stable, exprnCheckList);
+
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }else{

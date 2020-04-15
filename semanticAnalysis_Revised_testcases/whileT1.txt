@@ -1,0 +1,41 @@
+
+PARSED SUCCESSFULLY
+Line 0 ERROR- While variable not changed
+Line 36: Error - ID v_1_2_43 not declared before use
+Line: 41: Error - ID declared again [u1]
+
+
+***************starting second traversal************
+Module Name: [while_demo], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in while_demo**	Var Name: [m], Scope: [while_demo, 8-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [n], Scope: [while_demo, 8-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [9], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [p], Scope: [while_demo, 8-27], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [3], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [u], Scope: [while_demo, 8-27], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [11], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [w], Scope: [while_demo, 8-27], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [x], Scope: [while_demo, 8-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+
+**new stable started in while_demo**	Var Name: [value], Scope: [while_demo, 8-27], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [4], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [q], Scope: [while_demo, 8-27], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [8], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [r], Scope: [while_demo, 8-27], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [12], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [w], Scope: [while_demo, 8-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [16], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [a], Scope: [while_demo, 8-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [while_demo, 8-27], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [1], isAssigned: [1], isReturn: [0]
+
+**new stable started in while_demo**Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**	Var Name: [v_1_2_3], Scope: [driverFunctionNode, 34-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [u1], Scope: [driverFunctionNode, 34-42], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [12], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [v7], Scope: [driverFunctionNode, 34-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [result_], Scope: [driverFunctionNode, 34-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [v9], Scope: [driverFunctionNode, 34-42], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [6], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [v10], Scope: [driverFunctionNode, 34-42], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [8], nesting level: [0], isAssigned: [0], isReturn: [0]
+
+ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
+	1.Grammar Table constructed from Grammar.txt
+	2.First and Follow sets are automated from grammar table
+	3.Parse Table generated from First and Follow sets
+	4.Both Lexical and Syntax Analysis modules implemented
+	5.Error Recovery also implemented
+
+Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  

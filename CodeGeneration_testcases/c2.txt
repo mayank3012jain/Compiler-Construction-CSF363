@@ -8,7 +8,7 @@ start
 	declare a, b, c:integer;
 	declare u, v: boolean;
 	u:= true;
-	a:= 5;
+	a:= 6;
 	b:= 9;
 	get_value(x);
 	get_value(y);

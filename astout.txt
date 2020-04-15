@@ -90,12 +90,12 @@ exit0:
 	 mov ?? [t30], [y]
 	 mov word r8w, [t29]
 	 cmp r8w, [t30]
-	 jl true32625 
-	 jge false32625 
-false32625: mov byte [t31], 0
-	jmp exit32625
-true32625: mov byte [t31], 1
-exit32625:
+	 jl true32617 
+	 jge false32617 
+false32617: mov byte [t31], 0
+	jmp exit32617
+true32617: mov byte [t31], 1
+exit32617:
 	 mov ?? [t32], [u]
 	 mov byte r8b, [t31]
 	 and r8b, [t32]

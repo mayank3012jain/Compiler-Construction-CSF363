@@ -688,3 +688,43 @@ moduleHashNode* getModuleHashNode(char *name, moduleHashNode* symbolForest[], in
     printf("Line %d: Error - Module [%s] Not Found\n", lineNumb, name);
     return NULL;
 }
+
+
+
+whileList* checkWhileExprn(ASTnode* root, symbolTableNode* stable, whileList* list){
+    // ASTnode* exprn = root->firstChild;
+    if(root->label == ID_NODE){
+        whileList* temp = (whileList*)malloc(sizeof(whileList));
+        temp->varEntry = getSymbolTableEntry(stable, root->syntaxTreeNode->lexeme);
+        temp->oldIsAssigned = temp->varEntry->isAssigned;
+        temp->next = list;
+        temp->varEntry->isAssigned = 0;
+        return temp;
+    }
+    if(root->firstChild){
+        list = checkWhileExprn(root->firstChild, stable, list);
+    }
+    if (root->sibling!=NULL && root->parent->label!=WHILEITERATIVESTMT_NODE){
+        list = checkWhileExprn(root->sibling, stable, list);
+    }
+    return list;
+    
+}
+
+void checkWhileIsAssigned(symbolTableNode* stable, whileList* list){
+    whileList* temp = list;
+    int flag =0;
+    while(temp){
+        char* var = temp->varEntry->name;
+        symbolTableEntry* newEntry = getSymbolTableEntry(stable, var);
+        if(newEntry->isAssigned==1){
+            flag=1;
+        }
+        newEntry->isAssigned=temp->oldIsAssigned;
+        temp = temp->next;
+    }
+    if(flag==0){
+        printf("Line %d ERROR- While variable not changed\n", stable->scopeEnd);
+    }
+    return;
+}
