@@ -7,14 +7,14 @@ start
 	declare x, y, z:integer;
 	declare a, b, c:integer;
 	declare u, v: boolean;
-	u:= true;
+	**u:= true;**
 	a:= 6;
 	b:= 9;
 	get_value(x);
 	get_value(y);
 	z:= x + y*b +(a-b)*y+ a*2 - b*x;
 	v:= z > 10 OR a<=b AND x<y AND u;	**follows left to right associativity**
-        print(z);
+    print(z);
 	print(u);
 end
 

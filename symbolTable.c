@@ -61,7 +61,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             if(ast->firstChild->label == INTEGER_NODE || ast->firstChild->label == BOOLEAN_NODE || 
                 ast->firstChild->label == REAL_NODE){
                 int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
-                        ast->firstChild->label, 0, 0, 0, NULL, NULL, stable->running_offset, 1,0, 0, ast->firstChild);
+                        ast->firstChild->label, 0, 0, 0, NULL, NULL, stable->running_offset, 1,2, 0, ast->firstChild);
                 stable->running_offset += x;//check once again
             }
             //array
@@ -76,14 +76,14 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
                     }
                     int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
                         ast->firstChild->firstChild->sibling->label, 1, 0, 0,
-                        startIn, endIn, stable->running_offset, 1,0, 0, ast->firstChild->sibling);
+                        startIn, endIn, stable->running_offset, 1,2, 0, ast->firstChild->sibling);
                 }
                 //static
                 else{
                     int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
                             ast->firstChild->firstChild->sibling->label, 1, 
                             ast->firstChild->firstChild->firstChild->syntaxTreeNode->value.num, 
-                            ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->value.num,NULL, NULL, stable->running_offset, 1,0,1, ast->firstChild->sibling);
+                            ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->value.num,NULL, NULL, stable->running_offset, 1,2,1, ast->firstChild->sibling);
                     stable->running_offset += x;
                 }
             }
@@ -495,6 +495,21 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     }
 
     if(root->label == PRINT_STMT_NODE){
+        // if(root->firstChild->firstChild != NULL){//id_node
+        //     symbolTableEntry* symEntry = getSymbolTableEntry(stable, root->firstChild->firstChild->syntaxTreeNode->lexeme);
+        //     if(symEntry == NULL){
+        //         printf("Line %d: Error - ID [%s] not found\n", root->firstChild->firstChild->syntaxTreeNode->lexeme);
+        //     }
+        //     if(root->firstChild->firstChild->sibling != NULL){
+        //         if(root->firstChild->firstChild->sibling == ID_NODE){
+        //             if(getSymbolTableEntry(stable, root->firstChild->firstChild->syntaxTreeNode->lexeme) == NULL){
+
+        //             }
+        //         }
+        //     }
+        // }
+        check_type(root->firstChild, stable);
+        
         if(root->sibling==NULL){
             stable->scopeEnd = root->syntaxTreeNode->lineNumber+1;
         }

@@ -96,8 +96,10 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
     int width = 0;
     if(isArray){
         int size = DATA_TYPE_SIZES[type];
-        width = ((endIndex - startIndex) * size) +1;
-        if(isStatic==0){
+        width = ((endIndex - startIndex + 1) * size) +1;
+        if(isReturn==2){
+            width=5;
+        }else if(isStatic==0){
             width=1;
         }
     }
@@ -105,7 +107,7 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
         width = DATA_TYPE_SIZES[type];
     }
    
-
+    temp->entryPtr->width = width;
     return width;
 } 
 
@@ -692,7 +694,6 @@ moduleHashNode* getModuleHashNode(char *name, moduleHashNode* symbolForest[], in
     printf("Line %d: Error - Module [%s] Not Found\n", lineNumb, name);
     return NULL;
 }
-
 
 
 whileList* checkWhileExprn(ASTnode* root, symbolTableNode* stable, whileList* list){

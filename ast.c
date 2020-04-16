@@ -301,7 +301,7 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent){
                 current-> sibling = populateAST(root->children[3], parent);
             
             }else{
-                printf("Eror outputplist");
+                printf("Error outputplist");
             }
             break;
 

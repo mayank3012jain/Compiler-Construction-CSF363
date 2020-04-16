@@ -31,6 +31,7 @@ typedef struct symbolTableEntry {
     int isAssigned;
     int isReturn;
     int isStatic;
+    int width;
 } symbolTableEntry;
 
 typedef struct moduleHashNode{
