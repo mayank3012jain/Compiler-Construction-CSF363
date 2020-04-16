@@ -125,7 +125,7 @@ int main(int argc, char* argv[]){
 				break;
 
             case 9:
-                    initializeCodeGen(ast,fout,symbolForest);
+                    // initializeCodeGen(ast,fout,symbolForest);
                 break;
 
 

@@ -169,7 +169,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         whileList* exprnCheckList = NULL;
         exprnCheckList = checkWhileExprn(root->firstChild, stable, exprnCheckList);
         
-        symbolTableNode* temp = allocateSymbolTable(stable,0, root->firstChild->syntaxTreeNode->lineNumber+1, stable->key);
+        symbolTableNode* temp = allocateSymbolTable(stable,stable->running_offset, root->firstChild->syntaxTreeNode->lineNumber+1, stable->key);
         int i = 0;
 
         while(i<MAX_SCOPES){
@@ -205,7 +205,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //6. **Case value in individual case statement??
 
 
-        symbolTableNode* temp = allocateSymbolTable(stable,0, root->firstChild->syntaxTreeNode->lineNumber +1, stable->key);
+        symbolTableNode* temp = allocateSymbolTable(stable,stable->running_offset, root->firstChild->syntaxTreeNode->lineNumber +1, stable->key);
         int i = 0;
 
         while(i<MAX_SCOPES){
@@ -303,7 +303,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
     }// If new scope
 
     if(root->label== FORITERATIVESTMT_NODE){       
-        symbolTableNode* temp = allocateSymbolTable(stable,0, root->firstChild->syntaxTreeNode->lineNumber +1, stable->key);
+        symbolTableNode* temp = allocateSymbolTable(stable,stable->running_offset, root->firstChild->syntaxTreeNode->lineNumber +1, stable->key);
         int i = 0;
         
         while(i<MAX_SCOPES){
