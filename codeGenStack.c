@@ -14,15 +14,25 @@ void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]
 
     fprintf(fptr, "section\t.data\n");
 
+    fprintf(fptr, "\tprintTRUE\tdb\t\'TRUE\', 10, 0\n");
+    fprintf(fptr, "\tprintFALSE\tdb\t\'FALSE\', 10, 0\n");
     fprintf(fptr, "\tprintI\tdb\t\'%%d\', 10, 0\n");
     fprintf(fptr, "\tprintR\tdb\t\'%%f\', 10, 0\n");
+
+    fprintf(fptr, "\tprintIArr\tdb\t\'%%d \', 0\n");
+    fprintf(fptr, "\tprintRArr\tdb\t\'%%f \', 0\n");
+
     fprintf(fptr, "\tgetI\tdb\t\'%%d\', 0\n");
     fprintf(fptr, "\tgetR\tdb\t\'%%f\', 0\n");
-    fprintf(fptr, "\tprintTRUE\tdb\t\'TRUE\', 10, 0\n");
-    fprintf(fptr, "\tprintFALSE\tdb\t\'FALSE\', 10, 0\n\n");
+
+    fprintf(fptr, "\tprintTRUEArr\tdb\t\'TRUE \', 0\n");
+    fprintf(fptr, "\tprintFALSEArr\tdb\t\'FALSE \', 0\n\n");
+    
+    fprintf(fptr,"\tbufferInt\tdb\t0\n");
+	fprintf(fptr,"\toutputInt\tdb\t0\n");
     
     for(int i=0; i<40; i++){
-        fprintf(fptr, "\tt%d\tdb\t0\n",i);
+        fprintf(fptr, "\tt%d\tdw\t0\n",i);
     }
 
     fprintf(fptr,"\nsection\t.bss\n\n");
@@ -128,6 +138,8 @@ void statementsCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *
         printf("Called on NULL\n");
         return;
     }
+    
+    fprintf(fptr, "\n");
 
     if(root->label == DECLARESTMT_NODE){
         declareStmtCodeGen(root, fptr, stable, retOffset);
@@ -173,45 +185,94 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
 
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
-    if(entry->type==INT){
-        fprintf(fptr, "\tmov rax, rbp\n");
-        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
-        fprintf(fptr, "\tmov r8, rax\n");
-        fprintf(fptr, "\tmov rsi, r8\n");
-        fprintf(fptr, "\tmov rdi,%s\n", "printI");
-        fprintf(fptr, "\txor rax, rax\n");
-        fprintf(fptr, "\tcall printf\n");
-    }else if(entry->type==FLOAT){
-        fprintf(fptr, "\tmov rax, rbp\n");
-        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
-        fprintf(fptr, "\tmov r8, rax\n");
-        fprintf(fptr, "\tmov rsi, r8\n");
-        fprintf(fptr, "\tmov rdi, %s\n", "printR");
-        fprintf(fptr, "\txor rax, rax\n");
-        fprintf(fptr, "\tcall printf\n");
-    }else if(entry->type==BOOL){
-        //mov r8w, offset
-        //sub r8w, 1
-        //jz l1
-        //push TRUE
-        //jmp l2
-        //l1: push FALSE
-        //l2: call printf
-        char *l1 = new_label(), *l2 = new_label();  
-        fprintf(fptr, "\tmov rax, rbp\n");
-        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
-        fprintf(fptr, "\tmov r8, rax\n");
-        fprintf(fptr, "\tsub r8, 1\n");
-        fprintf(fptr, "\tjz %s\n", l1);
-        fprintf(fptr, "\tmov rdi, %s\n", "printFALSE");
-        fprintf(fptr, "\tjmp %s\n", l2);
-        fprintf(fptr, "%s:\n", l1);
-        fprintf(fptr, "\tmov rdi, %s\n", "printTRUE");
-        fprintf(fptr, "%s:\n", l2);
-        fprintf(fptr, "\txor rax, rax\n");
-        fprintf(fptr, "\tcall printf\n");
-        
+    if(entry->isArray == 0){
+        if(entry->type==INT){
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tmov ax, word[%s]\n", offset);
+            fprintf(fptr, "\tmovsx rax, ax\n");
+            fprintf(fptr, "\tmov rdi,%s\n", "printI");
+            fprintf(fptr, "\tmov rsi, rax\n");
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tcall printf\n");
+        }
+        else if(entry->type==FLOAT){
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tmov ax, dword[%s]\n", offset);
+            fprintf(fptr, "\tmovsx rax, ax\n");
+            fprintf(fptr, "\tmov rdi,%s\n", "printR");
+            fprintf(fptr, "\tmov rsi, rax\n");
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tcall printf\n");
+        }
+        else if(entry->type==BOOL){
+            //mov r8w, offset
+            //sub r8w, 1
+            //jz l1
+            //push TRUE
+            //jmp l2
+            //l1: push FALSE
+            //l2: call printf
+            char *l1 = new_label(), *l2 = new_label();  
+            fprintf(fptr, "\tmov r8b, byte[%s]\n", offset);
+            fprintf(fptr, "\tsub r8b, 1\n");
+            fprintf(fptr, "\tjz %s\n", l1);
+            fprintf(fptr, "\tmov rdi, %s\n", "printFALSE");
+            fprintf(fptr, "\tjmp %s\n", l2);
+            fprintf(fptr, "%s:\n", l1);
+            fprintf(fptr, "\tmov rdi, %s\n", "printTRUE");
+            fprintf(fptr, "%s:\n", l2);
+            fprintf(fptr, "\tmov rsi, 0\n");
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tcall printf\n");
+        }
     }    
+    else{
+        if(entry->isStatic == 1){
+
+            char* label = new_label();
+            char* label2 = new_label();
+
+            fprintf(fptr, "\tmov r13, %d\n", 0);
+            fprintf(fptr, "\tmov r12, rbp\n");
+            fprintf(fptr, "\tsub r12, %d\n", entry->offset);
+            fprintf(fptr, "%s:\n", label);
+            fprintf(fptr, "\tcmp r13, %d\n",entry->endIndex-entry->startIndex+1);
+            fprintf(fptr, "\tjge %s\n", label2);
+            fprintf(fptr, "\tmov rax, 0\n");
+
+            if(entry->type == INT){
+                fprintf(fptr, "\tmov ax, word[r12]\n");
+                fprintf(fptr, "\tmovsx rax, ax\n");
+                fprintf(fptr, "\tmov rdi,%s\n", "printI");
+                fprintf(fptr, "\tmov rsi, rax\n");
+            }
+            else if(entry->type == BOOL){
+                char *l1 = new_label(), *l2 = new_label();
+                fprintf(fptr, "\tmov r8b, byte[%s]\n", offset);
+                fprintf(fptr, "\tsub r8b, 1\n");
+                fprintf(fptr, "\tjz %s\n", l1);
+                fprintf(fptr, "\tmov rdi, %s\n", "printFALSE");
+                fprintf(fptr, "\tjmp %s\n", l2);
+                fprintf(fptr, "%s:\n", l1);
+                fprintf(fptr, "\tmov rdi, %s\n", "printTRUE");
+                fprintf(fptr, "%s:\n", l2);
+                fprintf(fptr, "\tmov rsi, 0\n");
+            }
+            else if(entry->type == FLOAT){
+                fprintf(fptr, "\tmov ax, dword[r12]\n");
+                fprintf(fptr, "\tmovsx rax, ax\n");
+                fprintf(fptr, "\tmov rdi,%s\n", "printR");
+                fprintf(fptr, "\tmov rsi, rax\n");
+            }
+
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tcall printf\n");
+            fprintf(fptr, "\tsub r12, %d\n", DATA_TYPE_SIZES[entry->type]);
+            fprintf(fptr, "\tadd r13, 1\n");
+            fprintf(fptr, "\tjmp %s\n", label);
+            fprintf(fptr, "%s:\n", label2);
+        }
+    }
 }
 
 void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHashNode* symbolForest[], int *retOffset){
@@ -222,26 +283,62 @@ void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHa
 
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
+    if(entry->isArray == 0){
 
-    if(entry->type==INT || entry->type==BOOL){
-        fprintf(fptr, "\tmov rax,rbp\n");
-        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
-        fprintf(fptr, "\tmov r8, rax\n");
-        fprintf(fptr, "\tmov rsi,\tr8\n");
+        fprintf(fptr, "\tmov rsi,\tbufferInt\n");
         fprintf(fptr, "\tmov rdi, getI\n");
         fprintf(fptr, "\tmov al, 0\n");
-        //add msg in data fptr also "%d",10, 0
-        fprintf(fptr, "\tcall scanf\n");    
+        fprintf(fptr, "\tcall scanf\n");  
+        
+        if(entry->type==INT){
+            fprintf(fptr, "\tmov bx, word[bufferInt]\n");
+            fprintf(fptr, "\tmov word [%s], bx\n", offset);
 
-    }else if(entry->type==REAL){
-        fprintf(fptr, "\tmov rax,rbp\n");
-        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
-        fprintf(fptr, "\tmov r8, rax\n");
-        fprintf(fptr, "\tmov rsi,\tr8\n");
-        fprintf(fptr, "\tmov rdi, getR\n");
-        fprintf(fptr, "\tmov al, 0\n");
-        //add msg in data fptr also "%d",10, 0
-        fprintf(fptr, "\tcall scanf\n");     
+        }
+        else if (entry->type==BOOL){
+            fprintf(fptr, "\tmov bx, byte[bufferInt]\n");
+            fprintf(fptr, "\tmov byte [%s], bx\n", offset);
+        }    
+        else if(entry->type==FLOAT){
+            fprintf(fptr, "\tmov bx, dword[bufferInt]\n");
+            fprintf(fptr, "\tmov dword [%s], bx\n", offset);
+        }
+    }
+    else{
+        if(entry->isStatic == 1){
+
+            char* label = new_label();
+            char* label2 = new_label();
+
+            fprintf(fptr, "\tmov r13, %d\n", 0);
+            fprintf(fptr, "\tmov r12, rbp\n");
+            fprintf(fptr, "\tsub r12, %d\n", entry->offset);
+            fprintf(fptr, "%s:\n", label);
+            fprintf(fptr, "\tcmp r13, %d\n",entry->endIndex-entry->startIndex+1);
+            fprintf(fptr, "\tjge %s\n", label2);
+            fprintf(fptr, "\tmov rsi,\tbufferInt\n");
+            fprintf(fptr, "\tmov rdi, getI\n");
+            fprintf(fptr, "\tmov al, 0\n");
+            fprintf(fptr, "\tcall scanf\n");
+
+            if(entry->type == INT){
+                fprintf(fptr, "\tmov bx, word[bufferInt]\n");
+                fprintf(fptr, "\tmov word [r12], bx\n");
+            }
+            else if(entry->type == BOOL){
+                fprintf(fptr, "\tmov bx, byte[bufferInt]\n");
+                fprintf(fptr, "\tmov byte [r12], bx\n");
+            }
+            else if(entry->type == FLOAT){
+                fprintf(fptr, "\tmov bx, dword[bufferInt]\n");
+                fprintf(fptr, "\tmov dword [r12], bx\n");
+            }
+
+            fprintf(fptr, "\tsub r12, %d\n", DATA_TYPE_SIZES[entry->type]);
+            fprintf(fptr, "\tadd r13, 1\n");
+            fprintf(fptr, "\tjmp %s\n", label);
+            fprintf(fptr, "%s:\n", label2);
+        }
     }
 }
 
@@ -257,7 +354,7 @@ void forIterStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int 
 
     //store ID,r1
     char* offset = getReturnOffset(id->name, stable, retOffset);
-    fprintf(fptr, "\tmov\t[%s],\tr8w\n", offset);
+    fprintf(fptr, "\tmov\tword[%s],\tr8w\n", offset);
     
     //l1: cmp r1, endindex
     char* label = new_label();
@@ -272,13 +369,13 @@ void forIterStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int 
     statementsCodeGen(root->firstChild->sibling->sibling, fptr, stable, scope, symbolForest, retOffset);
 
     //load r1, ID
-    fprintf(fptr, "\tmov\tr8w,\t[%s]\n", offset);
+    fprintf(fptr, "\tmov\tr8w,\tword[%s]\n", offset);
 
     //inc r1
     fprintf(fptr, "\tinc\tr8w\n");
 
     //store ID, r1
-    fprintf(fptr, "\tmov\t[%s],\tr8w\n", offset);
+    fprintf(fptr, "\tmov\tword[%s],\tr8w\n", offset);
 
     //jump l1
     fprintf(fptr, "\tjmp\t%s\n", label);
@@ -335,20 +432,51 @@ void assignopCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *sc
     genExpr(root->firstChild->sibling, fptr, 0, stable, retOffset);
 
     if(symEntry->isArray == 0){
-
         if(symEntry->type==INT){
             
             fprintf(fptr, "\tmov\tr8w, [t%d]\n",0);
-            fprintf(fptr, "\tmov\t[%s], r8w\n",offset);
+            fprintf(fptr, "\tmov\tword[%s], r8w\n",offset);
         }
         else if(symEntry->type==FLOAT){
             fprintf(fptr, "\tmov\tr8d, [t%d]\n",0);
-            fprintf(fptr, "\tmov\t[%s], r8d\n",offset);
+            fprintf(fptr, "\tmov\tdword[%s], r8d\n",offset);
         }
         else{
             fprintf(fptr, "\tmov\tr8b, [t%d]\n",0);
-            fprintf(fptr, "\tmov\t[%s], r8b\n",offset);
+            fprintf(fptr, "\tmov\tbyte[%s], r8b\n",offset);
         }
+    }
+    else{
+        char* label = new_label();
+        char* label2 = new_label();
+        symbolTableEntry* symEntryExpr = getSymbolTableEntry(stable, root->firstChild->sibling->firstChild->syntaxTreeNode->lexeme);
+        fprintf(fptr,"\tmov r12, rbp\n");
+        fprintf(fptr,"\tmov r13, rbp\n");
+        fprintf(fptr,"\tsub r12, %d\n", symEntry->offset);
+        fprintf(fptr,"\tsub r13, %d\n", symEntryExpr->offset);
+        fprintf(fptr,"\tmov r14, 0\n");
+        
+        fprintf(fptr,"%s:\n", label);
+        fprintf(fptr,"\tcmp r14, %d\n", symEntry->endIndex-symEntry->startIndex+1);
+        fprintf(fptr, "\tjge %s\n", label2);
+        
+        if(symEntry->type == INT){
+            fprintf(fptr,"\tmov r8w, word[r13]\n");
+            fprintf(fptr,"\tmov word[r12], r8w\n");
+        }
+        else if (symEntry->type == FLOAT){
+            fprintf(fptr,"\tmov r8d, dword[r13]\n");
+            fprintf(fptr,"\tmov dword[r12], r8d\n");
+        }
+        else{
+            fprintf(fptr,"\tmov r8b, byte[r13]\n");
+            fprintf(fptr,"\tmov byte[r12], r8b\n");
+        }
+        
+        fprintf(fptr,"\tsub r12, %d\n", DATA_TYPE_SIZES[symEntry->type]);
+        fprintf(fptr,"\tsub r13, %d\n", DATA_TYPE_SIZES[symEntryExpr->type]);
+        fprintf(fptr,"\tadd r14, 1\n");
+        fprintf(fptr,"%s:\n", label2);
     }
 }
 
@@ -356,25 +484,43 @@ void assignopArrayCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, in
     //check generateBssLexeme
 
     symbolTableEntry* symEntry = getSymbolTableEntry(stable, root->firstChild->firstChild->syntaxTreeNode->lexeme);
+    symbolTableEntry* symEntryInd = getSymbolTableEntry(stable, root->firstChild->firstChild->sibling->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(symEntry->name, stable, retOffset);
     genExpr(root->firstChild->sibling, fptr, 0, stable, retOffset);
 
-    if(symEntry->isArray == 0){
+    fprintf(fptr,"\tmov r12, rbp\n");
 
-        if(symEntry->type==INT){
-            
-            fprintf(fptr, "\tmov\tr8w, [t%d]\n",0);
-            fprintf(fptr, "\tmov\t[%s], r8w\n",offset);//offset is wrong, add number of element
-        }
-        else if(symEntry->type==FLOAT){
-            fprintf(fptr, "\tmov\tr8d, [t%d]\n",0);
-            fprintf(fptr, "\tmov\t[%s], r8d\n",offset);
-        }
-        else{
-            fprintf(fptr, "\tmov\tr8b, [t%d]\n",0);
-            fprintf(fptr, "\tmov\t[%s], r8b\n",offset);
-        }
+    if(root->firstChild->firstChild->sibling->label == NUM_NODE){
+        fprintf(fptr,"\tsub r12, %d\n", symEntry->offset); //For array
+        fprintf(fptr,"\tsub r12, %d\n", (root->firstChild->firstChild->sibling->syntaxTreeNode->value.num - symEntry->startIndex)*DATA_TYPE_SIZES[symEntry->type]); //For index
     }
+    else{
+        //Out of bound case handle nahi kiya
+        //Pata nahi jump karenge ya kya
+        fprintf(fptr, "\tmov r13, rbp\n");
+        fprintf(fptr,"\tsub r13, %d\n", symEntryInd->offset);
+        fprintf(fptr,"\tmov r14, word[r13]\n");
+        fprintf(fptr, "\tsub r14, %d\n", symEntry->startIndex);
+        fprintf(fptr, "\timul r14, %d\n", DATA_TYPE_SIZES[symEntry->type]);
+        fprintf(fptr, "\tsub r12, %d\n", symEntry->offset);
+        fprintf(fptr, "\tsub r12, r14\n");
+    }
+
+    if(symEntry->type == INT){
+        fprintf(fptr,"\tmov r8w, word[t0]\n");
+        fprintf(fptr,"\tmov word[r12], r8w\n");
+    }
+    else if(symEntry->type == FLOAT){
+        fprintf(fptr,"\tmov r8d, dword[t0]\n");
+        fprintf(fptr,"\tmov dword[r12], r8d\n");
+    }
+    else{
+        fprintf(fptr,"\tmov r8b, byte[t0]\n");
+        fprintf(fptr,"\tmov byte[r12], r8b\n");
+    }
+        // fprint(fptr,"\t\n");
+    
+    return;
 }
 
 void conditionalStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *scope, moduleHashNode* symbolForest[], int* retOffset){
@@ -396,7 +542,11 @@ void conditionalStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, 
     symbolTableEntry* switchVar = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     // load r1, ID
     char* offset = getReturnOffset(switchVar->name, stable, retOffset);
-    fprintf(fptr, "\tmov\tr8w,\t[%s]\n", offset);
+
+    if(switchVar->type == INT)
+        fprintf(fptr, "\tmov\tr8w,\tword[%s]\n", offset);
+    else
+        fprintf(fptr, "\tmov\tr8b,\tbyte[%s]\n", offset);
     // storeIntoReg("r8w",NULL,switchVarOffset,stable,symbolForest,fptr);
     
     while(temp){
@@ -408,7 +558,10 @@ void conditionalStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, 
         }
 
         //cmp r1, val
-        fprintf(fptr, "\tcmp\tr8w,\t%d\n", caseValue);
+        if(switchVar->type == INT)
+            fprintf(fptr, "\tcmp\tr8w,\t%d\n", caseValue);
+        else
+            fprintf(fptr, "\tcmp\tr8b,\t%d\n", caseValue);
 
         char* label = new_label();
         //jne nextCase
@@ -425,7 +578,9 @@ void conditionalStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, 
         temp= temp->sibling;
     }
     //call default
-    statementsCodeGen(root->firstChild->sibling->sibling, fptr, stable, scope, symbolForest, retOffset);
+    if(switchVar->type == INT){
+        statementsCodeGen(root->firstChild->sibling->sibling, fptr, stable, scope, symbolForest, retOffset);
+    }
     //nextStmt:
     fprintf(fptr, "\n%s:\n", labelNextStmt);
 }
@@ -441,15 +596,18 @@ void modulereuseStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, 
 void declareStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int* retOffset){
     
     ASTnode* typeNode = root->firstChild;
+    
+    
     ASTnode* temp = typeNode->sibling;
     int size = 0;
+    int datasize= getSymbolTableEntry(stable, temp->syntaxTreeNode->lexeme)->width;
     while(temp){
 
         size++;
         
         temp=temp->sibling;
     }
-    size *= DATA_TYPE_SIZES[typeNode->label];
+    size *= datasize;
     fprintf(fptr, "\tsub\trsp, %d\n", size);
 }
 

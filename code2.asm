@@ -71,6 +71,12 @@ main:
 
 	sub	rsp, 6
 
+	sub	rsp, 2
+
+	 mov byte[t0], 1
+	mov	r8b, [t0]
+	mov	byte[rbp - 12], r8b
+
 	 mov word[t0], 5
 	mov	r8w, [t0]
 	mov	word[rbp - 6], r8w
@@ -146,11 +152,69 @@ main:
 	mov	r8w, [t0]
 	mov	word[rbp - 4], r8w
 
+	 mov word  r8w, [rbp - 4]
+	 mov word [t2], r8w
+	 mov word[t3], 10
+	 mov word r8w, [t2]
+	 cmp r8w, [t3]
+	 jg true_L1 
+	 mov byte [t1], 0
+	 jmp exit_L1
+true_L1: mov byte [t1], 1
+exit_L1:
+	 mov word  r8w, [rbp - 6]
+	 mov word [t4], r8w
+	 mov word  r8w, [rbp - 8]
+	 mov word [t5], r8w
+	 mov word r8w, [t4]
+	 cmp r8w, [t5]
+	 jle true_L2 
+	 mov byte [t3], 0
+	 jmp exit_L2
+true_L2: mov byte [t3], 1
+exit_L2:
+	 mov word  r8w, [rbp - 0]
+	 mov word [t6], r8w
+	 mov word  r8w, [rbp - 2]
+	 mov word [t7], r8w
+	 mov word r8w, [t6]
+	 cmp r8w, [t7]
+	 jl true_L3 
+	 mov byte [t5], 0
+	 jmp exit_L3
+true_L3: mov byte [t5], 1
+exit_L3:
+	 mov byte  r8b, [rbp - 12]
+	 mov byte [t6], r8b
+	 mov byte r8b, [t5]
+	 and r8b, [t6]
+	 mov byte [t4], r8b
+	 mov byte r8b, [t3]
+	 and r8b, [t4]
+	 mov byte [t2], r8b
+	 mov byte r8b, [t1]
+	 or r8b, [t2]
+	 mov byte [t0], r8b
+	mov	r8b, [t0]
+	mov	byte[rbp - 13], r8b
+
 	mov rax, 0
 	mov ax, word[rbp - 4]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
+	mov rax, 0
+	call printf
+
+	mov r8b, byte[rbp - 12]
+	sub r8b, 1
+	jz _L4
+	mov rdi, printFALSE
+	jmp _L5
+_L4:
+	mov rdi, printTRUE
+_L5:
+	mov rsi, 0
 	mov rax, 0
 	call printf
 

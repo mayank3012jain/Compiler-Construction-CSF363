@@ -136,14 +136,14 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 		// If unary
 		else{
 			if(type==INT){
-				int rand1;
 				fprintf(fptr, "\t mov word r9w, [t%d]\n",interm_counter+1);
 				fprintf(fptr, "\t cmp r9w, 0\n");
-				fprintf(fptr, "\t jge positive_%d\n",rand1);
+				char* rand1 = new_label();
+				fprintf(fptr, "\t jge positive_%s\n",rand1);
 				fprintf(fptr, "\t xor r8w, r8w\n");
 				fprintf(fptr, "\t sub r8w, r9w\n");
 				fprintf(fptr, "\t mov r9w, r8w\n");
-				fprintf(fptr, "positive_%d:\n",rand1);
+				fprintf(fptr, "positive_%s:\n",rand1);
 				fprintf(fptr, "\t mov word r9w, [t%d]\n",interm_counter);
 				return type;
 			}
@@ -263,12 +263,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 		if(type==INT){	
 			fprintf(fptr, "\t mov word r8w, [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t cmp r8w, [t%d]\n",interm_counter+2);
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jl true%d \n",rand1);
+			char* rand1 = new_label();
+			fprintf(fptr, "\t jl true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
 		else if(type==FLOAT){
@@ -276,12 +276,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+2);
 			fprintf(fptr, "\t fcomi st0, st1 ;compare and set eflags\n");
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jl true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t jl true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
     }
@@ -291,12 +291,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 		if(type==INT){	
 			fprintf(fptr, "\t mov word r8w, [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t cmp r8w, [t%d]\n",interm_counter+2);
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jle true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t jle true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
 		else if(type==FLOAT){
@@ -304,12 +304,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+2);
 			fprintf(fptr, "\t fcomi st0, st1 ;compare and set eflags\n");
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jle true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t jle true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
     }
@@ -319,12 +319,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 		if(type==INT){	
 			fprintf(fptr, "\t mov word r8w, [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t cmp r8w, [t%d]\n",interm_counter+2);
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jg true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t jg true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n", interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
 		else if(type==FLOAT){
@@ -332,12 +332,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+2);
 			fprintf(fptr, "\t fcomi st0, st1 ;compare and set eflags\n");
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jg true%d \n",rand1);
+			char* rand1 = new_label();
+			fprintf(fptr, "\t jg true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n", interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
     }
@@ -347,12 +347,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 		if(type==INT){	
 			fprintf(fptr, "\t mov word r8w, [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t cmp r8w, [t%d]\n",interm_counter+2);
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jge true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t jge true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n", interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
 		else if(type==FLOAT){
@@ -360,12 +360,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+2);
 			fprintf(fptr, "\t fcomi st0, st1 ;compare and set eflags\n");
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t jge true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t jge true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
     }
@@ -375,12 +375,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 		if(type==INT){	
 			fprintf(fptr, "\t mov word r8w, [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t cmp r8w, [t%d]\n",interm_counter+2);
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t je true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t je true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
 		else if(type==FLOAT){
@@ -388,12 +388,12 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+1);
 			fprintf(fptr, "\t fld dword [t%d]\n",interm_counter+2);
 			fprintf(fptr, "\t fcomi st0, st1 ;compare and set eflags\n");
-			int rand1; // init with rand nos
-			fprintf(fptr, "\t je true%d \n",rand1);
+			char* rand1 = new_label(); // init with rand nos
+			fprintf(fptr, "\t je true%s \n",rand1);
 			fprintf(fptr, "\t mov byte [t%d], 0\n",interm_counter);
-			fprintf(fptr, "\t jmp exit%d\n",rand1);
-			fprintf(fptr, "true%d: mov byte [t%d], 1\n",rand1,interm_counter);
-			fprintf(fptr, "exit%d:\n",rand1);
+			fprintf(fptr, "\t jmp exit%s\n",rand1);
+			fprintf(fptr, "true%s: mov byte [t%d], 1\n",rand1,interm_counter);
+			fprintf(fptr, "exit%s:\n",rand1);
 			return BOOL;
 		}
     }
