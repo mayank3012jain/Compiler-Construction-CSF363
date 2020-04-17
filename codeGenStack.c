@@ -5,14 +5,14 @@
 
 int LABEL_NO = 1;
 int VARIABLE_NO = 1;
-int GLOBALOFFSET =0;
+int GLOBAL =0;
 
 void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]){
 
     fprintf(fptr, "extern\tscanf\n");
     fprintf(fptr, "extern\tprintf\n\n");
 
-    fprintf(fptr, "SECTION\t.data\n");
+    fprintf(fptr, "section\t.data\n");
 
     fprintf(fptr, "\tprintI\tdb\t\'%%d\', 10, 0\n");
     fprintf(fptr, "\tprintR\tdb\t\'%%f\', 10, 0\n");
@@ -20,32 +20,38 @@ void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]
     fprintf(fptr, "\tgetR\tdb\t\'%%f\', 10, 0\n");
     fprintf(fptr, "\tprintTRUE\tdb\t\'TRUE\', 10, 0\n");
     fprintf(fptr, "\tprintFALSE\tdb\t\'FALSE\', 10, 0\n\n");
+    
+    for(int i=0; i<40; i++){
+        fprintf(fptr, "\tt%d\tdb\t0\n",i);
+    }
 
-    fprintf(fptr, "SECTION\t.text\n");
-    // fprintf(fptr, "\tbits 64\n\n");
-    fprintf(fptr, "\tglobal\tmain\n\nmain:\n");
+    fprintf(fptr,"\nsection\t.bss\n\n");
+
+    fprintf(fptr, "section\t.text\n");
+    fprintf(fptr, "bits 64\n\n");
+    fprintf(fptr, "global\tmain\n\nmain:\n");
 
     // generate();
     traverse_code_gen(root, fptr, symbolForest);
 
-    fprintf(fptr,"\nSECTION\t.bss\n");
-    printSymbolForestCodeGen(symbolForest, fptr);
+    // printSymbolForestCodeGen(symbolForest, fptr);
 
 }
 
 char* getReturnOffset(char* name, symbolTableNode* symNode, int* retOffset){
 
     symbolTableEntry* symEntry = getSymbolTableEntry(symNode, name);
-    char* retc;
-    
+
+    char* retc = (char*)malloc(sizeof(char)*STRING_SIZE);
+
     if(symEntry->isReturn == 1){ //outputplist
-        sprintf(retc, "_%s_ret - %d", symNode->key, symEntry->offset- *retOffset);
+        sprintf(retc, "%s - %d", "rbx", symEntry->offset- *retOffset);//ebp
     }
     else if (symEntry->isReturn == 2){ //inputplist
-        sprintf(retc, "_%s_ret + %d", symNode->key, symEntry->offset+8);
+        sprintf(retc, "%s + %d", "rbx", symEntry->offset+12);
     }
     else{ //local
-        sprintf(retc, "_%s_local - %d", symNode->key, symEntry->offset);
+        sprintf(retc, "%s - %d", "rbp", symEntry->offset);//rbp
     }
     
     return retc;
@@ -83,6 +89,8 @@ void traverse_code_gen(ASTnode* root, FILE *fptr, moduleHashNode* symbolForest[]
         stable = getModuleHashNode("driverFunctionNode", symbolForest, temp->syntaxTreeNode->lineNumber)->tablePtr;
         scope = 0;
         ASTnode* node = temp->firstChild;
+        fprintf(fptr,"\tpush rbp\n");
+        fprintf(fptr,"\tmov rbp, rsp\n");
         while(node != NULL){
             statementsCodeGen(node, fptr, stable, &scope, symbolForest,0);
             node = node->sibling;
@@ -163,15 +171,15 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
     if(entry->type==INT){
-        fprintf(fptr, "\tmov r8w, %s\n", offset);
-        fprintf(fptr, "\tpush r8w\n");
+        fprintf(fptr, "\tmov r8, %s\n", offset);
+        fprintf(fptr, "\tpush r8\n");
         fprintf(fptr, "\tpush %s\n", "printI");
-        fprintf(fptr, "\tcall _printf\n");
+        fprintf(fptr, "\tcall printf\n");
     }else if(entry->type==FLOAT){
-        fprintf(fptr, "\tmov r8w, %s\n", offset);
-        fprintf(fptr, "\tpush r8w\n");
+        fprintf(fptr, "\tmov r8, %s\n", offset);
+        fprintf(fptr, "\tpush r8\n");
         fprintf(fptr, "\tpush %s\n", "printR");
-        fprintf(fptr, "\tcall _printf\n");
+        fprintf(fptr, "\tcall printf\n");
     }else if(entry->type==BOOL){
         //mov r8w, offset
         //sub r8w, 1
@@ -181,15 +189,15 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
         //l1: push FALSE
         //l2: call printf
         char *l1 = new_label(), *l2 = new_label();  
-        fprintf(fptr, "\tmov r8w, %s\n", offset);
-        fprintf(fptr, "\tsub r8w, 1\n");
+        fprintf(fptr, "\tmov r8, %s\n", offset);
+        fprintf(fptr, "\tsub r8, 1\n");
         fprintf(fptr, "\tjz %s\n", l1);
         fprintf(fptr, "\tpush %s\n", "printFALSE");
         fprintf(fptr, "\tjmp %s\n", l2);
         fprintf(fptr, "%s:\n", l1);
         fprintf(fptr, "\tpush %s\n", "printTRUE");
         fprintf(fptr, "%s:\n", l2);
-        fprintf(fptr, "\tcall _printf\n");
+        fprintf(fptr, "\tcall printf\n");
         
     }    
 }
@@ -203,18 +211,18 @@ void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHa
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
     if(entry->type==INT || entry->type==BOOL){
-        fprintf(fptr, "\tmov r8w,\t%s\n", offset);
-        fprintf(fptr, "\tpush r8w\n");
+        fprintf(fptr, "\tmov r8,\t%s\n", offset);
+        fprintf(fptr, "\tpush r8\n");
         fprintf(fptr, "\tpush getI\n");
         //add msg in data fptr also "%d",10, 0
-        fprintf(fptr, "\tcall _scanf\n");    
+        fprintf(fptr, "\tcall scanf\n");    
 
     }else if(entry->type==REAL){
-        fprintf(fptr, "\tmov w,\t%s\n", offset);
-        fprintf(fptr, "\tpush r8w\n");
+        fprintf(fptr, "\tmov r8,\t%s\n", offset);
+        fprintf(fptr, "\tpush r8\n");
         fprintf(fptr, "\tpush getR\n");
         //add msg in data fptr also  msgReal: db "%f",10, 0
-        fprintf(fptr, "\tcall _scanf\n");    
+        fprintf(fptr, "\tcall scanf\n");    
     }
 }
 
@@ -408,7 +416,7 @@ void modulereuseStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, 
     printIDList(fptr, root->firstChild->sibling->sibling->firstChild, stable, symbolForest, retOffset);
 
     fprintf(fptr, "\tcall\t%s\n", root->firstChild->sibling->syntaxTreeNode->lexeme);
-    // fprintf(fptr, "\tadd\tesp, %d\n", offset);
+    // fprintf(fptr, "\tadd\trsp, %d\n", offset);
 }
 
 void declareStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int* retOffset){
@@ -423,15 +431,15 @@ void declareStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int*
         temp=temp->sibling;
     }
     size *= DATA_TYPE_SIZES[typeNode->label];
-    fprintf(fptr, "\tsub\tesp, %d\n", size);
+    fprintf(fptr, "\tsub\trsp, %d\n", size);
 }
 
 void moduleCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHashNode* symbolForest[], int *scope){
     //push ebp    
-    //mov ebp, esp
-    //store esp in modulebss_1
+    //mov ebp, rsp
+    //store rsp in modulebss_1
     //call on return_node
-    //store esp in modulebss_2
+    //store rsp in modulebss_2
     //call Statements
     //leave
     //ret
@@ -439,11 +447,12 @@ void moduleCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHas
     int returnOffset = 0;
     ASTnode* temp = root->firstChild->sibling->sibling->sibling->firstChild;
     fprintf(fptr, "%s:\n", root->firstChild->syntaxTreeNode->lexeme);
-    fprintf(fptr, "\tpush\tebp\n");
-    fprintf(fptr, "\tmov\tebp, esp\n");
-    fprintf(fptr,"\tmov\t_%s_ret, %s", root->firstChild->syntaxTreeNode->lexeme, "esp");
+    fprintf(fptr, "\tpush\trbx\n");
+    fprintf(fptr, "\tpush\trbp\n");
+    fprintf(fptr, "\tmov\trbx, rsp\n");
+    // fprintf(fptr,"\tmov\t_%s_ret, %s", root->firstChild->syntaxTreeNode->lexeme, "rsp");
     returnCodeGen(root->firstChild->sibling->sibling, fptr, stable, symbolForest, scope, &returnOffset);//check scope
-    fprintf(fptr,"\tmov\t_%s_local, %s", root->firstChild->syntaxTreeNode->lexeme, "esp");
+    fprintf(fptr,"\tmov rbx, %s", "rsp");
 
     while(temp != NULL){
         statementsCodeGen(temp, fptr, stable, scope, symbolForest, &returnOffset);
@@ -481,7 +490,7 @@ void returnCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHas
         temp=temp->sibling;
     }
     
-    fprintf(fptr, "\tsub\tesp, %d\n", size);
+    fprintf(fptr, "\tsub\trsp, %d\n", size);
     return;
 }
 
@@ -502,7 +511,6 @@ void printIDList(FILE *fptr, ASTnode* node, symbolTableNode *stable, moduleHashN
         }
         else{
             //fatt jayegi
-
         }
         // *offset += 5;
     }
