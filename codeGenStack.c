@@ -36,6 +36,9 @@ void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]
 
     // printSymbolForestCodeGen(symbolForest, fptr);
 
+    fprintf(fptr, "\n\n; Exit\n\tmov rax, 1\n\tmov rbx, 0\n\tint 80h\n");
+	
+	
 }
 
 char* getReturnOffset(char* name, symbolTableNode* symNode, int* retOffset){
@@ -171,14 +174,20 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
     if(entry->type==INT){
-        fprintf(fptr, "\tmov r8, %s\n", offset);
-        fprintf(fptr, "\tpush r8\n");
-        fprintf(fptr, "\tpush %s\n", "printI");
+        fprintf(fptr, "\tmov rax, rbp\n");
+        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
+        fprintf(fptr, "\tmov r8, rax\n");
+        fprintf(fptr, "\tmov rsi, r8\n");
+        fprintf(fptr, "\tmov rdi,%s\n", "printI");
+        fprintf(fptr, "\txor rax, rax\n");
         fprintf(fptr, "\tcall printf\n");
     }else if(entry->type==FLOAT){
-        fprintf(fptr, "\tmov r8, %s\n", offset);
-        fprintf(fptr, "\tpush r8\n");
-        fprintf(fptr, "\tpush %s\n", "printR");
+        fprintf(fptr, "\tmov rax, rbp\n");
+        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
+        fprintf(fptr, "\tmov r8, rax\n");
+        fprintf(fptr, "\tmov rsi, r8\n");
+        fprintf(fptr, "\tmov rdi, %s\n", "printR");
+        fprintf(fptr, "\txor rax, rax\n");
         fprintf(fptr, "\tcall printf\n");
     }else if(entry->type==BOOL){
         //mov r8w, offset
@@ -189,14 +198,17 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
         //l1: push FALSE
         //l2: call printf
         char *l1 = new_label(), *l2 = new_label();  
-        fprintf(fptr, "\tmov r8, %s\n", offset);
+        fprintf(fptr, "\tmov rax, rbp\n");
+        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
+        fprintf(fptr, "\tmov r8, rax\n");
         fprintf(fptr, "\tsub r8, 1\n");
         fprintf(fptr, "\tjz %s\n", l1);
-        fprintf(fptr, "\tpush %s\n", "printFALSE");
+        fprintf(fptr, "\tmov rdi, %s\n", "printFALSE");
         fprintf(fptr, "\tjmp %s\n", l2);
         fprintf(fptr, "%s:\n", l1);
-        fprintf(fptr, "\tpush %s\n", "printTRUE");
+        fprintf(fptr, "\tmov rdi, %s\n", "printTRUE");
         fprintf(fptr, "%s:\n", l2);
+        fprintf(fptr, "\txor rax, rax\n");
         fprintf(fptr, "\tcall printf\n");
         
     }    
@@ -211,18 +223,24 @@ void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHa
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
     if(entry->type==INT || entry->type==BOOL){
-        fprintf(fptr, "\tmov r8,\t%s\n", offset);
-        fprintf(fptr, "\tpush r8\n");
-        fprintf(fptr, "\tpush getI\n");
+        fprintf(fptr, "\tmov rax,rbp\n");
+        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
+        fprintf(fptr, "\tmov r8, rax\n");
+        fprintf(fptr, "\tmov rsi,\tr8\n");
+        fprintf(fptr, "\tmov rdi, getI\n");
+        fprintf(fptr, "\tmov al, 0\n");
         //add msg in data fptr also "%d",10, 0
         fprintf(fptr, "\tcall scanf\n");    
 
     }else if(entry->type==REAL){
-        fprintf(fptr, "\tmov r8,\t%s\n", offset);
-        fprintf(fptr, "\tpush r8\n");
-        fprintf(fptr, "\tpush getR\n");
-        //add msg in data fptr also  msgReal: db "%f",10, 0
-        fprintf(fptr, "\tcall scanf\n");    
+        fprintf(fptr, "\tmov rax,rbp\n");
+        fprintf(fptr, "\tsub rax, %d\n", entry->offset);
+        fprintf(fptr, "\tmov r8, rax\n");
+        fprintf(fptr, "\tmov rsi,\tr8\n");
+        fprintf(fptr, "\tmov rdi, getR\n");
+        fprintf(fptr, "\tmov al, 0\n");
+        //add msg in data fptr also "%d",10, 0
+        fprintf(fptr, "\tcall scanf\n");     
     }
 }
 

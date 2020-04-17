@@ -4,8 +4,8 @@ extern	printf
 section	.data
 	printI	db	'%d', 10, 0
 	printR	db	'%f', 10, 0
-	getI	db	'%d', 0
-	getR	db	'%f', 0
+	getI	db	'%d', 10, 0
+	getR	db	'%f', 10, 0
 	printTRUE	db	'TRUE', 10, 0
 	printFALSE	db	'FALSE', 10, 0
 
@@ -15,8 +15,8 @@ section	.data
 	t3	db	0
 	t4	db	0
 	t5	db	0
-	t_6	db	0
-	t_7	db	0
+	t6	db	0
+	t7	db	0
 	t8	db	0
 	t9	db	0
 	t10	db	0
@@ -68,20 +68,17 @@ main:
 	 mov word[t0], 9
 	mov	r8w, [t0]
 	mov	[rbp - 8], r8w
-	;
-	mov rax, rbp
+	mov rax,rbp
+	sub rax, 0
 	mov r8, rax
-	push r8
-	push getI
+	mov rsi,	r8
+	mov rdi, getI
 	mov al, 0
 	call scanf
-	;
-	mov rax, rbp
+	mov rax,rbp
 	sub rax, 2
-	mov r8,	rax
-	; push r8
-	; push getI
-	mov rsi, r8
+	mov r8, rax
+	mov rsi,	r8
 	mov rdi, getI
 	mov al, 0
 	call scanf
@@ -96,16 +93,16 @@ main:
 	 imul r8w, r9w
 	 mov word [t3], r8w
 	 mov word  r8w, [rbp - 6]
-	 mov word [t_7], r8w
+	 mov word [t7], r8w
 	 mov word  r8w, [rbp - 8]
 	 mov word [t8], r8w
-	 mov word r8w, [t_7]
+	 mov word r8w, [t7]
 	 sub r8w, [t8]
-	 mov word [t_6], r8w
+	 mov word [t6], r8w
 	 mov word  r8w, [rbp - 2]
-	 mov word [t_7], r8w
-	 mov word r8w, [t_6]
-	 mov word r9w, [t_7]
+	 mov word [t7], r8w
+	 mov word r8w, [t6]
+	 mov word r9w, [t7]
 	 imul r8w, r9w
 	 mov word [t5], r8w
 	 mov word  r8w, [rbp - 6]
@@ -114,7 +111,7 @@ main:
 	 mov word r8w, [t8]
 	 mov word r9w, [t9]
 	 imul r8w, r9w
-	 mov word [t_7], r8w
+	 mov word [t7], r8w
 	 mov word  r8w, [rbp - 8]
 	 mov word [t9], r8w
 	 mov word  r8w, [rbp - 0]
@@ -123,11 +120,11 @@ main:
 	 mov word r9w, [t10]
 	 imul r8w, r9w
 	 mov word [t8], r8w
-	 mov word r8w, [t_7]
+	 mov word r8w, [t7]
 	 sub r8w, [t8]
-	 mov word [t_6], r8w
+	 mov word [t6], r8w
 	 mov word r8w, [t5]
-	 add r8w, [t_6]
+	 add r8w, [t6]
 	 mov word [t4], r8w
 	 mov word r8w, [t3]
 	 add r8w, [t4]
@@ -137,10 +134,16 @@ main:
 	 mov word [t0], r8w
 	mov	r8w, [t0]
 	mov	[rbp - 4], r8w
-	;
-	sub rbp, 2
-	mov r8, rbp
-	push r8
-	push printI
+	mov rax, rbp
+	sub rax, 4
+	mov r8, rax
+	mov rsi, r8
+	mov rdi,printI
 	xor rax, rax
 	call printf
+
+
+; Exit
+	mov rax, 1
+	mov rbx, 0
+	int 80h
