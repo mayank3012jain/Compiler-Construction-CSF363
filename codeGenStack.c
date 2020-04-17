@@ -16,8 +16,8 @@ void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]
 
     fprintf(fptr, "\tprintI\tdb\t\'%%d\', 10, 0\n");
     fprintf(fptr, "\tprintR\tdb\t\'%%f\', 10, 0\n");
-    fprintf(fptr, "\tgetI\tdb\t\'%%d\', 10, 0\n");
-    fprintf(fptr, "\tgetR\tdb\t\'%%f\', 10, 0\n");
+    fprintf(fptr, "\tgetI\tdb\t\'%%d\', 0\n");
+    fprintf(fptr, "\tgetR\tdb\t\'%%f\', 0\n");
     fprintf(fptr, "\tprintTRUE\tdb\t\'TRUE\', 10, 0\n");
     fprintf(fptr, "\tprintFALSE\tdb\t\'FALSE\', 10, 0\n\n");
     
@@ -222,6 +222,7 @@ void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHa
 
     symbolTableEntry* entry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
     char* offset = getReturnOffset(entry->name, stable, retOffset);
+
     if(entry->type==INT || entry->type==BOOL){
         fprintf(fptr, "\tmov rax,rbp\n");
         fprintf(fptr, "\tsub rax, %d\n", entry->offset);
