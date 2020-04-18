@@ -1,0 +1,374 @@
+
+PARSED SUCCESSFULLY
+Line 33: Error - Case Statement of Integer Switch has not integer value
+Line 41: Error - Switch value has a real variable
+Line 68: Error - Default statement exists with a BOOLEAN value.
+Line 57: - Error: Case Not Valid
+Line 84: Error - Loop variable [k] is changed inside the loop
+Line 93: Error - Default statement does not exist with a INT value.
+
+
+***************starting second traversal************
+Module Name: [for_loop_demo], isUsed: [1], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in for_loop_demo**	Var Name: [u], Scope: [for_loop_demo, 77-85], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [x], Scope: [for_loop_demo, 77-85], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [2]
+	Var Name: [y], Scope: [for_loop_demo, 77-85], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [2]
+	Var Name: [z], Scope: [for_loop_demo, 77-85], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [0], isAssigned: [1], isReturn: [2]
+
+**new stable started in for_loop_demo**	Var Name: [k], Scope: [for_loop_demo, 77-85], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+
+**new stable started in for_loop_demo**Module Name: [switch_var_demo1], isUsed: [0], isDefined: [1] astNode: [MODULE_NODE]
+
+**new stable started in switch_var_demo1**	Var Name: [u], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [7], nesting level: [0], isAssigned: [1], isReturn: [1]
+	Var Name: [x], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [2]
+	Var Name: [y], Scope: [switch_var_demo1, 11-68], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [2], nesting level: [0], isAssigned: [1], isReturn: [2]
+	Var Name: [z], Scope: [switch_var_demo1, 11-68], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [0], isAssigned: [1], isReturn: [2]
+
+**new stable started in switch_var_demo1**	Var Name: [h], Scope: [switch_var_demo1, 11-68], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [6], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [k], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [4], nesting level: [1], isAssigned: [0], isReturn: [0]
+	Var Name: [m], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [n], Scope: [switch_var_demo1, 11-68], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [1], isAssigned: [1], isReturn: [0]
+	Var Name: [p], Scope: [switch_var_demo1, 11-68], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [7], nesting level: [1], isAssigned: [0], isReturn: [0]
+
+**new stable started in switch_var_demo1**	Var Name: [A], Scope: [switch_var_demo1, 18-36], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [11], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [B], Scope: [switch_var_demo1, 18-36], Width: [43], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [17], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [E], Scope: [switch_var_demo1, 18-36], Width: [15], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [60], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [Q], Scope: [switch_var_demo1, 18-36], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [15], nesting level: [2], isAssigned: [1], isReturn: [0]
+
+**new stable started in switch_var_demo1**
+**new stable started in switch_var_demo1**
+**new stable started in switch_var_demo1**	Var Name: [A], Scope: [switch_var_demo1, 50-67], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [11], nesting level: [2], isAssigned: [0], isReturn: [0]
+	Var Name: [B], Scope: [switch_var_demo1, 50-67], Width: [43], isArray: YES, static array [10-30], Type: [INTEGER_NODE], offset: [17], nesting level: [2], isAssigned: [1], isReturn: [0]
+	Var Name: [E], Scope: [switch_var_demo1, 50-67], Width: [15], isArray: YES, static array [4-10], Type: [INTEGER_NODE], offset: [60], nesting level: [2], isAssigned: [0], isReturn: [0]
+	Var Name: [Q], Scope: [switch_var_demo1, 50-67], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [15], nesting level: [2], isAssigned: [0], isReturn: [0]
+Module Name: [driverFunctionNode], isUsed: [0], isDefined: [1] astNode: [DRIVER_MOD_NODE]
+
+**new stable started in driverFunctionNode**	Var Name: [d], Scope: [driverFunctionNode, 88-103], Width: [1], isArray: NO, ------ [--], Type: [BOOLEAN_NODE], offset: [8], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [a], Scope: [driverFunctionNode, 88-103], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [0], nesting level: [0], isAssigned: [1], isReturn: [0]
+	Var Name: [b], Scope: [driverFunctionNode, 88-103], Width: [2], isArray: NO, ------ [--], Type: [INTEGER_NODE], offset: [2], nesting level: [0], isAssigned: [0], isReturn: [0]
+	Var Name: [c], Scope: [driverFunctionNode, 88-103], Width: [4], isArray: NO, ------ [--], Type: [REAL_NODE], offset: [4], nesting level: [0], isAssigned: [0], isReturn: [0]
+
+**new stable started in driverFunctionNode**
+ALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES
+	1.Grammar Table constructed from Grammar.txt
+	2.First and Follow sets are automated from grammar table
+	3.Parse Table generated from First and Follow sets
+	4.Both Lexical and Syntax Analysis modules implemented
+	5.Error Recovery also implemented
+
+Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  
+labelEnum: 26 Label:PROGRAM_NODE Parent:-1 NULL
+labelEnum: 6 Label:MODULEDEC_HEADER_NODE Parent:26 PROGRAM_NODE
+labelEnum: 7 Label:OTHERMOD_HEADER_NODE Parent:26 PROGRAM_NODE
+labelEnum: 27 Label:MODULE_NODE Parent:7 OTHERMOD_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:27 MODULE_NODE
+labelEnum: 3 Label:INPUTPLIST_HEADER_NODE Parent:27 MODULE_NODE
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 1 Label:REAL_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 0 Label:BOOLEAN_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 4 Label:RET_HEADER_NODE Parent:27 MODULE_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:4 RET_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:2 INTEGER_NODE
+labelEnum: 5 Label:MODULEDEF_HEADER_NODE Parent:27 MODULE_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 0 Label:BOOLEAN_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 1 Label:REAL_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 31 Label:GET_STMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:31 GET_STMT_NODE
+labelEnum: 39 Label:CONDITIONALSTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 48 Label:CASESTMTS_HEADER_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:11 NUM_NODE
+labelEnum: 1 Label:REAL_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:11 NUM_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:11 NUM_NODE
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:11 NUM_NODE
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:11 NUM_NODE
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:16 MUL_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 12 Label:RNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 31 Label:GET_STMT_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:31 GET_STMT_NODE
+labelEnum: 40 Label:FORITERATIVESTMT_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 42 Label:RANGE_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:11 NUM_NODE
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 15 Label:MINUS_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:15 MINUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:14 PLUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:16 MUL_NODE
+labelEnum: 9 Label:TRUE_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:9 TRUE_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 15 Label:MINUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 15 Label:MINUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:15 MINUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:16 MUL_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 39 Label:CONDITIONALSTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 48 Label:CASESTMTS_HEADER_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:14 PLUS_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 10 Label:FALSE_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 39 Label:CONDITIONALSTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 48 Label:CASESTMTS_HEADER_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 10 Label:FALSE_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:10 FALSE_NODE
+labelEnum: 1 Label:REAL_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:10 FALSE_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:10 FALSE_NODE
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:10 FALSE_NODE
+labelEnum: 28 Label:DATATYPE_ARRAY_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 29 Label:RANGEARRAYS_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 11 Label:NUM_NODE Parent:29 RANGEARRAYS_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:28 DATATYPE_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:10 FALSE_NODE
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:16 MUL_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 12 Label:RNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 31 Label:GET_STMT_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:31 GET_STMT_NODE
+labelEnum: 40 Label:FORITERATIVESTMT_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 42 Label:RANGE_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:11 NUM_NODE
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 15 Label:MINUS_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:15 MINUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:14 PLUS_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:16 MUL_NODE
+labelEnum: 9 Label:TRUE_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:9 TRUE_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 15 Label:MINUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 32 Label:PRINT_STMT_NODE Parent:9 TRUE_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:32 PRINT_STMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 35 Label:ASSIGNOP_ARRAY_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 36 Label:ID_ARRAY_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 13 Label:ID_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 11 Label:NUM_NODE Parent:36 ID_ARRAY_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:35 ASSIGNOP_ARRAY_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 27 Label:MODULE_NODE Parent:7 OTHERMOD_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:27 MODULE_NODE
+labelEnum: 3 Label:INPUTPLIST_HEADER_NODE Parent:27 MODULE_NODE
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 1 Label:REAL_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 47 Label:INPUTPLIST_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 0 Label:BOOLEAN_NODE Parent:3 INPUTPLIST_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:47 INPUTPLIST_NODE
+labelEnum: 4 Label:RET_HEADER_NODE Parent:27 MODULE_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:4 RET_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:2 INTEGER_NODE
+labelEnum: 5 Label:MODULEDEF_HEADER_NODE Parent:27 MODULE_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 40 Label:FORITERATIVESTMT_NODE Parent:5 MODULEDEF_HEADER_NODE
+labelEnum: 13 Label:ID_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 42 Label:RANGE_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE
+labelEnum: 11 Label:NUM_NODE Parent:42 RANGE_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:40 FORITERATIVESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:14 PLUS_NODE
+labelEnum: 8 Label:DRIVER_MOD_NODE Parent:26 PROGRAM_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:8 DRIVER_MOD_NODE
+labelEnum: 2 Label:INTEGER_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:8 DRIVER_MOD_NODE
+labelEnum: 1 Label:REAL_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 38 Label:DECLARESTMT_NODE Parent:8 DRIVER_MOD_NODE
+labelEnum: 0 Label:BOOLEAN_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:38 DECLARESTMT_NODE
+labelEnum: 30 Label:MODULEREUSESTMT_NODE Parent:8 DRIVER_MOD_NODE
+labelEnum: 46 Label:OPTIONAL_RETURN_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:46 OPTIONAL_RETURN_NODE
+labelEnum: 13 Label:ID_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 45 Label:IDLIST_NODE Parent:30 MODULEREUSESTMT_NODE
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE
+labelEnum: 13 Label:ID_NODE Parent:45 IDLIST_NODE
+labelEnum: 39 Label:CONDITIONALSTMT_NODE Parent:8 DRIVER_MOD_NODE
+labelEnum: 13 Label:ID_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 48 Label:CASESTMTS_HEADER_NODE Parent:39 CONDITIONALSTMT_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 14 Label:PLUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:14 PLUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 15 Label:MINUS_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:15 MINUS_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:16 MUL_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 11 Label:NUM_NODE Parent:48 CASESTMTS_HEADER_NODE
+labelEnum: 34 Label:ASSIGNOP_NODE Parent:11 NUM_NODE
+labelEnum: 13 Label:ID_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:34 ASSIGNOP_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 33 Label:VARIDNUM_NODE Parent:17 DIV_NODE
+labelEnum: 13 Label:ID_NODE Parent:33 VARIDNUM_NODE
+labelEnum: 7 Label:OTHERMOD_HEADER_NODE Parent:26 PROGRAM_NODEEnter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  

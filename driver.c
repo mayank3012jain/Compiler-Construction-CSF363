@@ -71,7 +71,7 @@ int main(int argc, char* argv[]){
     allFollow(first, grammarIndex, gr, follow);
     populate_parse_table(gr,first, follow, pt);
     syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
-    ast = populateAST(syntaxTree, NULL);
+    ast = populateAST(syntaxTree, NULL, NULL);
     traverse_ast(ast, symbolForest);
 
     printf("\nALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES\n");
@@ -235,4 +235,8 @@ int activationSizeUtil(symbolTableNode* stable){
         return stable->running_offset;
     }
     return activationSizeUtil(stable->childList[i-1]);
+}
+
+void activationSizePrint(char* name, int size){
+    printf("\nModuleName: %23s , Size: %d", name, size);
 }
