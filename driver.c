@@ -207,3 +207,32 @@ void callTime(GRAMMAR gr, PARSE_TABLE pt, char* read_buffer, FIRST first, FOLLOW
     printf("\n\nTime Taken in seconds: %f\tin ticks: %f\n", total_CPU_time_in_seconds, total_CPU_time);
  // Print both total_CPU_time and total_CPU_time_in_seconds 
 }
+
+void activationSizeAll(moduleHashNode* symbolForest[]){
+    for(int i=0; i<MAX_MODULES; i++){
+        moduleHashNode* temp = symbolForest[i];
+        while(temp != NULL){
+            int ans = activationSizeUtil(temp->tablePtr);
+            if(strcmp(temp->key, "driverFunctionNode")!=0){
+                ans += temp->tablePtr->running_offset;
+            }
+            activationSizePrint(temp->key, ans);
+            temp = temp->next;
+        }
+    }
+    printf("\n");
+}
+
+int activationSizeUtil(symbolTableNode* stable){
+    symbolTableNode* temp;
+    int i=0;
+    for(i=0; i<MAX_SCOPES; i++){
+        if(stable->childList[i] == NULL){
+            break;
+        }
+    }
+    if(i==0){
+        return stable->running_offset;
+    }
+    return activationSizeUtil(stable->childList[i-1]);
+}

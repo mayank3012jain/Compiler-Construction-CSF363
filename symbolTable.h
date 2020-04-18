@@ -35,6 +35,10 @@ void printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHas
 void printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash);
 void printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash);
 
+void activationSizeAll(moduleHashNode* symbolForest[]);
+int activationSizeUtil(symbolTableNode* stable);
+void activationSizePrint(char* name, int size);
+
 
 
 #define VAR_SYMBOLTABLE_SIZE 100

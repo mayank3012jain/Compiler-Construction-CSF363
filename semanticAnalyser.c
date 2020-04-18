@@ -585,7 +585,7 @@ void printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode,
     }
     if(symEntry->isArray == 1){
         if(symEntry->isStatic == 1){
-            printf("\tVar Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, DATA_TYPE_SIZES[symEntry->type]*(symEntry->endIndex-symEntry->startIndex)+1 , symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+            printf("\tVar Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
         }
         else{
             printf("\tVar Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 1,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
