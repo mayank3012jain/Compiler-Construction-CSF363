@@ -15,9 +15,11 @@ start
 	start	
 		get_value(m);
 		get_value(n);
-		x:= A[m]+B[n];
+		; x:= A[m]+B[n];
 		y:= A[p]+B[n];
 		z:= A[m]+B[p];
+		get_value(x);
+		A[x]:= z;
 		print(x);
 		print(y);
 		print(z);                           **As long as there is no run time error with respect to the bounds, x, y, z get printed**

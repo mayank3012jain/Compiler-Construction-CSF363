@@ -63,18 +63,24 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
             if(ind->label==ID_NODE){
 				// Load index
 				char* offset = getReturnOffset(ind->syntaxTreeNode->lexeme, stable, retOffset);
-				fprintf(fptr, "\t xor rsi, rsi\n");//check for id type
-                fprintf(fptr, "\t mov si, word [%s]\n", offset);
+				//check dynamic range
+
+				fprintf(fptr, "\txor rsi, rsi\n");//check for id type
+				fprintf(fptr, "\tmov si, word [%s]\n", offset);
+				fprintf(fptr, "\tcmp si, %d\n", entry->endIndex);
+				fprintf(fptr, "\tjg _exit\n");
+				fprintf(fptr, "\tcmp si, %d\n", entry->startIndex);
+				fprintf(fptr, "\tjl _exit\n");
 			}
 			// If array indexed by NUM
 			else{
 				// Load index
-                fprintf(fptr, "\t xor rsi, rsi\n");
-				fprintf(fptr, "\t mov si, %d\n", ind->syntaxTreeNode->value.num);
+                fprintf(fptr, "\txor rsi, rsi\n");
+				fprintf(fptr, "\tmov si, %d\n", ind->syntaxTreeNode->value.num);
 			}
             // Get actual index
-            fprintf(fptr, "\t sub rsi, %d\n", entry->startIndex);
-			fprintf(fptr, "\timul rsi, 2\n");
+            fprintf(fptr, "\tsub rsi, %d\n", entry->startIndex);
+			fprintf(fptr, "\timul rsi, %d\n", DATA_TYPE_SIZES[entry->type]);
 
 			//load the address of element
 			fprintf(fptr, "\tmov r12, rbp\n");//hardcoded for now

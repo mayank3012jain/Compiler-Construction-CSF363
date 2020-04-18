@@ -67,78 +67,41 @@ main:
 	push rbp
 	mov rbp, rsp
 
-	sub	rsp, 4
+	sub	rsp, 6
 
-	sub	rsp, 33
+	sub	rsp, 1
 
-	mov r13, 0
-	mov r12, rbp
-	sub r12, 4
-_L1:
-	cmp r13, 5
-	jge _L2
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
 	call scanf
 	mov bx, word[bufferInt]
-	mov word [r12], bx
-	sub r12, 2
-	add r13, 1
-	jmp _L1
-_L2:
+	mov word [rbp - 0], bx
 
-	mov r13, 0
-	mov r12, rbp
-	sub r12, 15
-_L3:
-	cmp r13, 5
-	jge _L4
-	mov rsi,	bufferInt
-	mov rdi, getI
-	mov al, 0
-	call scanf
-	mov bx, word[bufferInt]
-	mov word [r12], bx
-	sub r12, 2
-	add r13, 1
-	jmp _L3
-_L4:
+	 mov word[t0], 19
+	mov	r8w, [t0]
+	mov	word[rbp - 2], r8w
 
-	mov r8w, 6
-	mov word[rbp - 0], r8w
-_L5: 
-	cmp r8w, 10
-	jg _L6
+	 mov word[t0], 56
+	mov	r8w, [t0]
+	mov	word[rbp - 4], r8w
 
-	xor rsi, rsi
-	mov si, word [rbp - 0]
-	cmp rsi, 10
-	jg _exit
-	cmp rsi, 6
-	jl _exit
-	sub rsi, 6
-	imul rsi, 2
-	mov r12, rbp
-	sub r12, 4
-	sub r12, rsi
-	 mov r8w, word[r12]
+	mov	r8w,	word[rbp - 0]
+	mov	r8w,	word[rbp - 0]
+	cmp	r8w,	1
+	jne	_L2
+
+	 mov word  r8w, [rbp - 0]
+	 mov word [t2], r8w
+	 mov word[t3], 2
+	 mov word r8w, [t2]
+	 mov word r9w, [t3]
+	 imul r8w, r9w
 	 mov word [t1], r8w
-	xor rsi, rsi
-	mov si, word [rbp - 0]
-	cmp rsi, 10
-	jg _exit
-	cmp rsi, 6
-	jl _exit
-	sub rsi, 6
-	imul rsi, 2
-	mov r12, rbp
-	sub r12, 15
-	sub r12, rsi
-	 mov r8w, word[r12]
+	 mov word  r8w, [rbp - 2]
 	 mov word [t2], r8w
 	 mov word r8w, [t1]
-	 add r8w, [t2]
+	 sub r8w, [t2]
 	 mov word [t0], r8w
 	mov	r8w, [t0]
 	mov	word[rbp - 2], r8w
@@ -150,44 +113,62 @@ _L5:
 	mov rsi, rax
 	mov rax, 0
 	call printf
+	jne	_L1
+_L2:
+	mov	r8w,	word[rbp - 0]
+	cmp	r8w,	2
+	jne	_L3
 
-	 mov word  r8w, [rbp - 2]
+	 mov word  r8w, [rbp - 0]
+	 mov word [t2], r8w
+	 mov word[t3], 3
+	 mov word r8w, [t2]
+	 mov word r9w, [t3]
+	 imul r8w, r9w
+	 mov word [t1], r8w
+	 mov word  r8w, [rbp - 4]
+	 mov word [t2], r8w
+	 mov word r8w, [t1]
+	 sub r8w, [t2]
 	 mov word [t0], r8w
-	mov r12, rbp
-	mov r13, rbp
-	sub r13, 0
-	mov r14, 0
-	mov r14w, word[r13]
-	sub r14, 6
-	imul r14, 2
-	sub r12, 26
-	sub r12, r14
-	mov r8w, word[t0]
-	mov word[r12], r8w
-	mov r8w, word[rbp - 0]
-	inc r8w
-	mov word[rbp - 0], r8w
-	jmp _L5
+	mov	r8w, [t0]
+	mov	word[rbp - 4], r8w
 
-_L6:
-
-	mov r13, 0
-	mov r12, rbp
-	sub r12, 26
-_L7:
-	cmp r13, 5
-	jge _L8
 	mov rax, 0
-	mov ax, word[r12]
+	mov ax, word[rbp - 4]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
 	mov rax, 0
 	call printf
-	sub r12, 2
-	add r13, 1
-	jmp _L7
-_L8:
+	jne	_L1
+_L3:
+
+	mov rax, 0
+	mov ax, word[rbp - 0]
+	movsx rax, ax
+	mov rdi,printI
+	mov rsi, rax
+	mov rax, 0
+	call printf
+
+_L1:
+
+	mov rax, 0
+	mov ax, word[rbp - 2]
+	movsx rax, ax
+	mov rdi,printI
+	mov rsi, rax
+	mov rax, 0
+	call printf
+
+	mov rax, 0
+	mov ax, word[rbp - 4]
+	movsx rax, ax
+	mov rdi,printI
+	mov rsi, rax
+	mov rax, 0
+	call printf
 
 _exit:
 	mov rax, 1
