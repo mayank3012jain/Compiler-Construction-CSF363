@@ -51,44 +51,52 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
         return entry->type;
     }
     else if(node->label == VARIDNUM_NODE){
-        symbolTableEntry* entry = getSymbolTableEntry(stable,node->syntaxTreeNode->lexeme);
+		ASTnode* id = node->firstChild;
+		ASTnode* ind = node->firstChild->sibling;
+
+        symbolTableEntry* entry = getSymbolTableEntry(stable,node->firstChild->syntaxTreeNode->lexeme);
 		// If array
 
 		//TODO:
-        if(node->firstChild->sibling){
-            // // If array indexed by variable
-            // if(node->firstChild->sibling->label==ID_NODE){
-			// 	// Load index
-			// 	fprintf(fptr, "\t xor esi, esi\n");
-            //     fprintf(fptr, "\t mov word si, [%s]\n", node->firstChild->sibling->syntaxTreeNode->lexeme);
-			// }
-			// // If array indexed by NUM
-			// else{
-			// 	// Load index
-            //     fprintf(fptr, "\t xor esi, esi\n");
-			// 	fprintf(fptr, "\t mov word si, %d\n", node->firstChild->sibling->syntaxTreeNode->value.num);
-			// }
-            // // Get actual index
-            // fprintf(fptr, "\t sub esi, %d\n", entry->startIndex);
-			// if(entry->type==INT){				
-			// 	// Load array value
-			// 	fprintf(fptr, "\t mov word r8w, [%s+esi]\n", node->firstChild->syntaxTreeNode->lexeme);
-			// 	fprintf(fptr, "\t mov word [t%d], r8w\n", interm_counter);
-			// 	// fprintf(t_ptr, "t%d, ", interm_counter);
-			// }
-			// if(entry->type==FLOAT){
-			// 	// Load array value
-			// 	fprintf(fptr, "\t mov dword r8d, [%s+esi]\n", node->firstChild->syntaxTreeNode->lexeme);
-			// 	fprintf(fptr, "\t mov dword [t%d], r8d\n", interm_counter);
-			// 	// fprintf(t_ptr, "t%d, ", interm_counter);
-			// }
-			// if(entry->type==BOOL){
-			// 	// Load array value
-			// 	fprintf(fptr, "\t mov byte r8b, [%s+si]\n", node->firstChild->syntaxTreeNode->lexeme);
-			// 	fprintf(fptr, "\t mov byte [t%d], r8b\n", interm_counter);
-			// 	// fprintf(t_ptr, "t%d, ", interm_counter);				
-			// }
-			// return entry->type;
+        if(ind){
+            // If array indexed by variable
+            if(ind->label==ID_NODE){
+				// Load index
+				char* offset = getReturnOffset(ind->syntaxTreeNode->lexeme, stable, retOffset);
+				fprintf(fptr, "\t xor rsi, rsi\n");//check for id type
+                fprintf(fptr, "\t mov si, word [%s]\n", offset);
+			}
+			// If array indexed by NUM
+			else{
+				// Load index
+                fprintf(fptr, "\t xor rsi, rsi\n");
+				fprintf(fptr, "\t mov si, %d\n", ind->syntaxTreeNode->value.num);
+			}
+            // Get actual index
+            fprintf(fptr, "\t sub rsi, %d\n", entry->startIndex);
+			fprintf(fptr, "\timul rsi, 2\n");
+
+			//load the address of element
+			fprintf(fptr, "\tmov r12, rbp\n");//hardcoded for now
+        	fprintf(fptr, "\tsub r12, %d\n", entry->offset);
+        	fprintf(fptr, "\tsub r12, rsi\n");
+			
+			if(entry->type==INT){				
+				// Load array value            
+				fprintf(fptr, "\t mov r8w, word[r12]\n");
+				fprintf(fptr, "\t mov word [t%d], r8w\n", interm_counter);
+			}
+			if(entry->type==FLOAT){
+				// Load array value
+				fprintf(fptr, "\t mov r8d, dword[r12]\n");
+				fprintf(fptr, "\t mov dword [t%d], r8d\n", interm_counter);
+			}
+			if(entry->type==BOOL){
+				// Load array value
+				fprintf(fptr, "\t mov r8b, byte[r12]\n");
+				fprintf(fptr, "\t mov byte [t%d], r8b\n", interm_counter);
+			}
+			return entry->type;
         }
         // If normal ID
         else{

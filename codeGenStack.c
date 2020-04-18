@@ -311,7 +311,7 @@ void getStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, moduleHa
             char* label2 = new_label();
 
             fprintf(fptr, "\tmov r13, %d\n", 0);
-            fprintf(fptr, "\tmov r12, rbp\n");
+            fprintf(fptr, "\tmov r12, rbp\n");//hardcoded for now
             fprintf(fptr, "\tsub r12, %d\n", entry->offset);
             fprintf(fptr, "%s:\n", label);
             fprintf(fptr, "\tcmp r13, %d\n",entry->endIndex-entry->startIndex+1);
@@ -350,35 +350,39 @@ void forIterStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int 
     symbolTableEntry* id = getSymbolTableEntry(stable,root->firstChild->syntaxTreeNode->lexeme);
 
     //mov r1, startRange
-    fprintf(fptr, "\tmov\tr8w,\t%s\n", startRange); //register name???
+    fprintf(fptr, "\tmov r8w, %s\n", startRange); //register name???
 
     //store ID,r1
     char* offset = getReturnOffset(id->name, stable, retOffset);
-    fprintf(fptr, "\tmov\tword[%s],\tr8w\n", offset);
+    fprintf(fptr, "\tmov word[%s], r8w\n", offset);
     
     //l1: cmp r1, endindex
     char* label = new_label();
-    fprintf(fptr, "%s: \n\tcmp\tr8w,\t%s\n", label, endRange);
+    fprintf(fptr, "%s: \n\tcmp r8w, %s\n", label, endRange);
     
     //jg l2 (next statement)
     char* labelNext = new_label();
-    fprintf(fptr, "\tjg\tr8w,\t%s\n", labelNext);
+    fprintf(fptr, "\tjg %s\n", labelNext);
 
     //for loop statements
     //TODO:call recursive function
-    statementsCodeGen(root->firstChild->sibling->sibling, fptr, stable, scope, symbolForest, retOffset);
+    ASTnode* temp = root->firstChild->sibling->sibling;
+    while(temp!= NULL){
+        statementsCodeGen(temp, fptr, stable, scope, symbolForest, retOffset);
+        temp = temp->sibling;
+    }
 
     //load r1, ID
-    fprintf(fptr, "\tmov\tr8w,\tword[%s]\n", offset);
+    fprintf(fptr, "\tmov r8w, word[%s]\n", offset);
 
     //inc r1
-    fprintf(fptr, "\tinc\tr8w\n");
+    fprintf(fptr, "\tinc r8w\n");
 
     //store ID, r1
-    fprintf(fptr, "\tmov\tword[%s],\tr8w\n", offset);
+    fprintf(fptr, "\tmov word[%s], r8w\n", offset);
 
     //jump l1
-    fprintf(fptr, "\tjmp\t%s\n", label);
+    fprintf(fptr, "\tjmp %s\n", label);
    
     //l2: next statement
     fprintf(fptr, "\n%s:\n", labelNext);
@@ -414,8 +418,11 @@ void whileIterStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, in
     fprintf(fptr, "\tjl\t%s\n", label2);
 
     // call statements
-    statementsCodeGen(root->firstChild->sibling->sibling, fptr, stable, scope, symbolForest,retOffset);
-
+    ASTnode* temp = root->firstChild->sibling->sibling;
+    while(temp!= NULL){
+        statementsCodeGen(temp, fptr, stable, scope, symbolForest, retOffset);
+        temp = temp->sibling;
+    }
     //jmp label1
     fprintf(fptr, "\tjmp\t%s\n", label1);
 
@@ -499,7 +506,8 @@ void assignopArrayCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, in
         //Pata nahi jump karenge ya kya
         fprintf(fptr, "\tmov r13, rbp\n");
         fprintf(fptr,"\tsub r13, %d\n", symEntryInd->offset);
-        fprintf(fptr,"\tmov r14, word[r13]\n");
+        fprintf(fptr, "\tmov r14, 0\n");
+        fprintf(fptr,"\tmov r14w, word[r13]\n");
         fprintf(fptr, "\tsub r14, %d\n", symEntry->startIndex);
         fprintf(fptr, "\timul r14, %d\n", DATA_TYPE_SIZES[symEntry->type]);
         fprintf(fptr, "\tsub r12, %d\n", symEntry->offset);
@@ -568,7 +576,11 @@ void conditionalStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, 
         fprintf(fptr, "jne\t%s\n", label);
 
         // call statements
-        statementsCodeGen(temp->firstChild, fptr, stable, scope, symbolForest, retOffset);
+        ASTnode* withinCase = temp->firstChild;
+        while(withinCase){
+            statementsCodeGen(withinCase, fptr, stable, scope, symbolForest, retOffset);
+            withinCase = withinCase->sibling;
+        }
 
         //jmp nextStmt
         fprintf(fptr, "jne\t%s\n", labelNextStmt);
