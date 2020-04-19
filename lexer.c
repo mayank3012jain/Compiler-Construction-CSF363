@@ -128,7 +128,7 @@ void bufferRefill(char input[], FILE* fin){
 
 }
 
-void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet, FILE* fin){
+void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet, FILE* fin, int* err_flag){
 
     if(input[*indx] == '\0'){
         //buffer refill
@@ -139,12 +139,12 @@ void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet, FILE*
     char c = input[*indx];
     lex cur;
     if((c>='a'&&c<='z')||(c>='A'&&c<='Z')){
-        cur = identifier_dfa(input, indx, *lineNumber);
+        cur = identifier_dfa(input, indx, *lineNumber, err_flag);
         cur.line = *lineNumber;
         // return cur;
         memcpy(tokenRet,&cur,sizeof(lex));
     }else if((c>='0' && c<='9')){
-        cur = number_dfa(input, indx, *lineNumber);
+        cur = number_dfa(input, indx, *lineNumber, err_flag);
         cur.line = *lineNumber;
         memcpy(tokenRet,&cur,sizeof(lex));
     }// comment
@@ -159,7 +159,7 @@ void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet, FILE*
                 }
             }while(input[*indx+2] != '\0' && !(input[*indx]== '*' && input[*indx+1]== '*' ));
             *indx = *indx +2;
-            return getNextToken(input, indx, lineNumber, tokenRet, fin);
+            return getNextToken(input, indx, lineNumber, tokenRet, fin, err_flag);
         }else{
             cur.token = MUL;
             cur.lexeme[0] = '*';
@@ -171,12 +171,12 @@ void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet, FILE*
     }// whitespace
     else if(c==' ' || c== '\t'){
         (*indx)++;
-        getNextToken(input,indx,lineNumber,tokenRet, fin);
+        getNextToken(input,indx,lineNumber,tokenRet, fin, err_flag);
     }// newline
     else if(c=='\n'){
         *lineNumber = *lineNumber+1;
         *indx = *indx +1;
-        getNextToken(input,indx,lineNumber,tokenRet, fin);
+        getNextToken(input,indx,lineNumber,tokenRet, fin, err_flag);
     }// EOF
     else if(c==EOF){
         cur.token = DOLLAR;
@@ -185,12 +185,12 @@ void getNextToken(char input[], int* indx, int* lineNumber, lex* tokenRet, FILE*
         memcpy(tokenRet,&cur,sizeof(lex));
     }
     else{
-    	cur = operator_dfa(input,indx,lineNumber);
+    	cur = operator_dfa(input,indx,lineNumber, err_flag);
     	memcpy(tokenRet,&cur,sizeof(lex));
     }
 }
 
-lex operator_dfa(char input[], int* indx,int *lineNumber){
+lex operator_dfa(char input[], int* indx,int *lineNumber, int* err_flag){
     lex cur;
     int base = *indx;
     char errorLexeme[10];
@@ -280,6 +280,7 @@ lex operator_dfa(char input[], int* indx,int *lineNumber){
                         strncpy(errorLexeme, input+base, *indx - base);
                         errorLexeme[*indx - base] = '\0';
                         printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", *lineNumber, errorLexeme);
+                        *err_flag = 1;
                         return cur;
                         break;                            
                 }
@@ -361,6 +362,7 @@ lex operator_dfa(char input[], int* indx,int *lineNumber){
                         strncpy(errorLexeme, input+base, *indx - base);
                         errorLexeme[*indx - base] = '\0';
                         printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", *lineNumber, errorLexeme);
+                        *err_flag = 1;
                         return cur;
                         break;                            
                 }
@@ -417,6 +419,7 @@ lex operator_dfa(char input[], int* indx,int *lineNumber){
                         strncpy(errorLexeme, input+base, *indx - base);
                         errorLexeme[*indx - base] = '\0';
                         printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", *lineNumber, errorLexeme);
+                        *err_flag = 1;
                         return cur;
                         break;
                         
@@ -457,12 +460,13 @@ lex operator_dfa(char input[], int* indx,int *lineNumber){
                 strncpy(errorLexeme, input+base, *indx - base);
                 errorLexeme[*indx - base] = '\0';
                 printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", *lineNumber, errorLexeme);
+                *err_flag = 1;
                 return cur;
             
         }
 }
 
-lex identifier_dfa(char input[], int* indx, int lineNumber){
+lex identifier_dfa(char input[], int* indx, int lineNumber, int* err_flag){
     int tok,id_base = *indx;
     char tok_name[100];
     (*indx)++;
@@ -491,11 +495,12 @@ lex identifier_dfa(char input[], int* indx, int lineNumber){
         ls.token = ERROR;
         strcpy(ls.lexeme,tok_name);
         printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", lineNumber, tok_name);
+        *err_flag = 1;
         return ls;
     }
 }
 
-lex number_dfa(char input[], int* indx, int lineNumber){
+lex number_dfa(char input[], int* indx, int lineNumber, int* err_flag){
     int id_base = *indx;
     (*indx)++;
     // state 36
@@ -567,6 +572,7 @@ lex number_dfa(char input[], int* indx, int lineNumber){
             ls.lexeme[*indx-id_base] = '\0';
             // ls.value.rnum = strtof(ls.lexeme, NULL);
             printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", lineNumber, ls.lexeme);
+            *err_flag = 1;
             return ls;
         }
     }
@@ -588,6 +594,7 @@ lex number_dfa(char input[], int* indx, int lineNumber){
         ls.lexeme[*indx-id_base] = '\0';
         ls.value.rnum = strtof(ls.lexeme, NULL);
         printf("\nLEXICAL ERROR at line %d. Lexeme: %s\n", lineNumber, ls.lexeme);
+        *err_flag = 1;
         return ls;
     }
     // state 46

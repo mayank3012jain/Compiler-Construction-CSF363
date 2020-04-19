@@ -297,10 +297,11 @@ int check_type(ASTnode* root, symbolTableNode* stable){
                     return -1; //print error
                 }
                 // Bound check
-                if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex){
-                    printf("Line %d: Error - Index Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
-                    return -1; //print error
-                }
+
+                // if(index->isAssigned<temp->startIndex || index->isAssigned>temp->endIndex){
+                //     printf("Line %d: Error - Index Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber);
+                //     return -1; //print error
+                // }
                 // If everything ok
                 return temp->type;
             }

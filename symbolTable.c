@@ -216,10 +216,22 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             i++;
         }
         stable->childList[i] = temp;
+        symbolTableEntry* symEntry = getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme);
 
-        if(getSymbolTableEntry(stable, root->firstChild->syntaxTreeNode->lexeme) == NULL){
+        if(symEntry == NULL){
             //Raise Error
             printf("Line %d: Error - ID [%s] not declared before SWITCH scope", root->firstChild->syntaxTreeNode->lineNumber,root->firstChild->syntaxTreeNode->lexeme);
+            if(root->sibling!=NULL){
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            }else{
+                stable->scopeEnd = stable->scopeEnd +1;
+                return;
+            }
+        }
+
+        if(symEntry->isArray == 1){
+            //Raise Error
+            printf("Line %d: Error - Switch value has a Array variable\n", root->firstChild->syntaxTreeNode->lineNumber);
             if(root->sibling!=NULL){
                 return traverse_ast_recurse(root->sibling, stable, symbolForest);
             }else{

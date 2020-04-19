@@ -21,7 +21,7 @@ void populate_parse_table(GRAMMAR gr, FIRST fst, FOLLOW fol, PARSE_TABLE pt);
 stack_node* pop(stack_node* head);
 stack_node* push(gnode* arr[], ptree_node* ptrs[], int len, stack_node* head);
 ptree_node* create_tree_node(char* lexeme, int rule,int lineNumber, int token, char* symbol, unsigned int isLeaf, ptree_node* parent);
-ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first, FOLLOW follow, FILE* fin);
+ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first, FOLLOW follow, FILE* fin, int*);
 void printNode(ptree_node* node);
 void printTree(ptree_node* head);
 

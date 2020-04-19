@@ -12,3 +12,6 @@ stage2symboldebug: driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyse
 
 stage2codedebug: driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyser.c codeGenStack.c exprnCodeGen.c lexerDef.h lexer.h parser.h parserDef.h astDef.h symbolTableDef.h ast.h symbolTable.h codeGen.h
 	gcc -g driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyser.c codeGenStack.c exprnCodeGen.c -o stage2code
+
+stage2code_debug: driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyser.c code_gen.c exprn_code_gen.c lexerDef.h lexer.h parser.h parserDef.h astDef.h symbolTableDef.h ast.h symbolTable.h codeGen.h
+	gcc -g driver.c parser.c lexer.c ast.c symbolTable.c semanticAnalyser.c code_gen.c exprn_code_gen.c -o stage2code

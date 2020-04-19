@@ -16,45 +16,85 @@ section	.data
 	bufferInt	db	0
 	outputInt	db	0
 	t0	dw	0
+	_st0	dq	0
 	t1	dw	0
+	_st1	dq	0
 	t2	dw	0
+	_st2	dq	0
 	t3	dw	0
+	_st3	dq	0
 	t4	dw	0
+	_st4	dq	0
 	t5	dw	0
+	_st5	dq	0
 	t6	dw	0
+	_st6	dq	0
 	t7	dw	0
+	_st7	dq	0
 	t8	dw	0
+	_st8	dq	0
 	t9	dw	0
+	_st9	dq	0
 	t10	dw	0
+	_st10	dq	0
 	t11	dw	0
+	_st11	dq	0
 	t12	dw	0
+	_st12	dq	0
 	t13	dw	0
+	_st13	dq	0
 	t14	dw	0
+	_st14	dq	0
 	t15	dw	0
+	_st15	dq	0
 	t16	dw	0
+	_st16	dq	0
 	t17	dw	0
+	_st17	dq	0
 	t18	dw	0
+	_st18	dq	0
 	t19	dw	0
+	_st19	dq	0
 	t20	dw	0
+	_st20	dq	0
 	t21	dw	0
+	_st21	dq	0
 	t22	dw	0
+	_st22	dq	0
 	t23	dw	0
+	_st23	dq	0
 	t24	dw	0
+	_st24	dq	0
 	t25	dw	0
+	_st25	dq	0
 	t26	dw	0
+	_st26	dq	0
 	t27	dw	0
+	_st27	dq	0
 	t28	dw	0
+	_st28	dq	0
 	t29	dw	0
+	_st29	dq	0
 	t30	dw	0
+	_st30	dq	0
 	t31	dw	0
+	_st31	dq	0
 	t32	dw	0
+	_st32	dq	0
 	t33	dw	0
+	_st33	dq	0
 	t34	dw	0
+	_st34	dq	0
 	t35	dw	0
+	_st35	dq	0
 	t36	dw	0
+	_st36	dq	0
 	t37	dw	0
+	_st37	dq	0
 	t38	dw	0
+	_st38	dq	0
 	t39	dw	0
+	_st39	dq	0
 
 section	.bss
 
@@ -66,96 +106,92 @@ global	main
 main:
 	push rbp
 	mov rbp, rsp
+	 sub rsp, 33
 
-	sub	rsp, 8
 
-	sub	rsp, 6
 
-	sub	rsp, 2
 
-	sub	rsp, 13
-
-	 mov byte[t0], 1
+	mov byte[t0], 1
 	mov	r8b, [t0]
-	mov	byte[rbp - 14], r8b
+	mov byte[rbp - 15], r8b
 
-	 mov word[t0], 5
-	mov	r8w, [t0]
-	mov	word[rbp - 8], r8w
+	mov word[t0], 5
+	mov	bx, [t0]
+	mov word[rbp - 10], bx
 
-	 mov word[t0], 9
-	mov	r8w, [t0]
-	mov	word[rbp - 10], r8w
-
-	mov rsi,	bufferInt
-	mov rdi, getI
-	mov al, 0
-	call scanf
-	mov bx, word[bufferInt]
-	mov word [rbp - 0], bx
+	mov word[t0], 9
+	mov	bx, [t0]
+	mov word[rbp - 12], bx
 
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
 	call scanf
 	mov bx, word[bufferInt]
-	mov word [rbp - 2], bx
+	mov word[rbp - 2], bx
 
-	 mov word  r8w, [rbp - 0]
-	 mov word [t1], r8w
-	 mov word  r8w, [rbp - 2]
-	 mov word [t4], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t5], r8w
-	 mov word r8w, [t4]
-	 mov word r9w, [t5]
-	 imul r8w, r9w
-	 mov word [t3], r8w
-	 mov word  r8w, [rbp - 8]
-	 mov word [t7], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t8], r8w
-	 mov word r8w, [t7]
-	 sub r8w, [t8]
-	 mov word [t6], r8w
-	 mov word  r8w, [rbp - 2]
-	 mov word [t7], r8w
-	 mov word r8w, [t6]
-	 mov word r9w, [t7]
-	 imul r8w, r9w
-	 mov word [t5], r8w
-	 mov word  r8w, [rbp - 8]
-	 mov word [t8], r8w
-	 mov word[t9], 2
-	 mov word r8w, [t8]
-	 mov word r9w, [t9]
-	 imul r8w, r9w
-	 mov word [t7], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t9], r8w
-	 mov word  r8w, [rbp - 0]
-	 mov word [t10], r8w
-	 mov word r8w, [t9]
-	 mov word r9w, [t10]
-	 imul r8w, r9w
-	 mov word [t8], r8w
-	 mov word r8w, [t7]
-	 sub r8w, [t8]
-	 mov word [t6], r8w
-	 mov word r8w, [t5]
-	 add r8w, [t6]
-	 mov word [t4], r8w
-	 mov word r8w, [t3]
-	 add r8w, [t4]
-	 mov word [t2], r8w
-	 mov word r8w, [t1]
-	 add r8w, [t2]
-	 mov word [t0], r8w
-	mov	r8w, [t0]
-	mov	word[rbp - 4], r8w
+	mov rsi,	bufferInt
+	mov rdi, getI
+	mov al, 0
+	call scanf
+	mov bx, word[bufferInt]
+	mov word[rbp - 4], bx
+
+	mov word  r8w, [rbp - 2]
+	mov word [t4], r8w
+	mov word  r8w, [rbp - 4]
+	mov word [t6], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t7], r8w
+	mov word r8w, [t6]
+	mov word r9w, [t7]
+	imul r8w, r9w
+	mov word [t5], r8w
+	mov word r8w, [t4]
+	add r8w, [t5]
+	mov word [t3], r8w
+	mov word  r8w, [rbp - 10]
+	mov word [t6], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t7], r8w
+	mov word r8w, [t6]
+	sub r8w, [t7]
+	mov word [t5], r8w
+	mov word  r8w, [rbp - 4]
+	mov word [t6], r8w
+	mov word r8w, [t5]
+	mov word r9w, [t6]
+	imul r8w, r9w
+	mov word [t4], r8w
+	mov word r8w, [t3]
+	add r8w, [t4]
+	mov word [t2], r8w
+	mov word  r8w, [rbp - 10]
+	mov word [t4], r8w
+	mov word[t5], 2
+	mov word r8w, [t4]
+	mov word r9w, [t5]
+	imul r8w, r9w
+	mov word [t3], r8w
+	mov word r8w, [t2]
+	add r8w, [t3]
+	mov word [t1], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t3], r8w
+	mov word  r8w, [rbp - 2]
+	mov word [t4], r8w
+	mov word r8w, [t3]
+	mov word r9w, [t4]
+	imul r8w, r9w
+	mov word [t2], r8w
+	mov word r8w, [t1]
+	sub r8w, [t2]
+	mov word [t0], r8w
+	mov	bx, [t0]
+	mov word[rbp - 6], bx
 
 	mov rax, 0
-	mov ax, word[rbp - 4]
+	mov ax, word[rbp - 6]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
@@ -163,184 +199,183 @@ main:
 	call printf
 
 	mov r8w, 10
-	mov word[rbp - 6], r8w
+	mov word[rbp - 8], r8w
 _L1: 
 	cmp r8w, 15
 	jg _L2
 
-	sub	rsp, 4
 
-	 mov word[t0], 7
-	mov	r8w, [t0]
-	mov	word[rbp - 29], r8w
+	mov word[t0], 7
+	mov	bx, [t0]
+	mov word[rbp - 31], bx
 
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
 	call scanf
 	mov bx, word[bufferInt]
-	mov word [rbp - 31], bx
+	mov word[rbp - 33], bx
 
-	 mov word  r8w, [rbp - 29]
-	 mov word [t1], r8w
-	 mov word  r8w, [rbp - 31]
-	 mov word [t2], r8w
-	 mov word r8w, [t1]
-	 add r8w, [t2]
-	 mov word [t0], r8w
-	mov	r8w, [t0]
-	mov	word[rbp - 29], r8w
+	mov word  r8w, [rbp - 31]
+	mov word [t1], r8w
+	mov word  r8w, [rbp - 33]
+	mov word [t2], r8w
+	mov word r8w, [t1]
+	add r8w, [t2]
+	mov word [t0], r8w
+	mov	bx, [t0]
+	mov word[rbp - 31], bx
 
 	mov rax, 0
-	mov ax, word[rbp - 29]
+	mov ax, word[rbp - 31]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
 	mov rax, 0
 	call printf
 
-	 mov word  r8w, [rbp - 4]
-	 mov word [t1], r8w
-	 mov word  r8w, [rbp - 6]
-	 mov word [t3], r8w
-	 mov word  r8w, [rbp - 29]
-	 mov word [t5], r8w
-	 mov word[t6], 2
-	 mov word r8w, [t5]
-	 mov word r9w, [t6]
-	 imul r8w, r9w
-	 mov word [t4], r8w
-	 mov word r8w, [t3]
-	 add r8w, [t4]
-	 mov word [t2], r8w
-	 mov word r8w, [t1]
-	 add r8w, [t2]
-	 mov word [t0], r8w
-	mov	r8w, [t0]
-	mov	word[rbp - 4], r8w
+	mov word  r8w, [rbp - 6]
+	mov word [t2], r8w
+	mov word  r8w, [rbp - 8]
+	mov word [t3], r8w
+	mov word r8w, [t2]
+	add r8w, [t3]
+	mov word [t1], r8w
+	mov word  r8w, [rbp - 31]
+	mov word [t3], r8w
+	mov word[t4], 2
+	mov word r8w, [t3]
+	mov word r9w, [t4]
+	imul r8w, r9w
+	mov word [t2], r8w
+	mov word r8w, [t1]
+	add r8w, [t2]
+	mov word [t0], r8w
+	mov	bx, [t0]
+	mov word[rbp - 6], bx
 
 	mov rax, 0
-	mov ax, word[rbp - 4]
+	mov ax, word[rbp - 6]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
 	mov rax, 0
 	call printf
-	mov r8w, word[rbp - 6]
+	mov r8w, word[rbp - 8]
 	inc r8w
-	mov word[rbp - 6], r8w
+	mov word[rbp - 8], r8w
 	jmp _L1
 
 _L2:
 
-	 mov word  r8w, [rbp - 0]
-	 mov word [t1], r8w
-	 mov word  r8w, [rbp - 2]
-	 mov word [t4], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t5], r8w
-	 mov word r8w, [t4]
-	 mov word r9w, [t5]
-	 imul r8w, r9w
-	 mov word [t3], r8w
-	 mov word  r8w, [rbp - 8]
-	 mov word [t7], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t8], r8w
-	 mov word r8w, [t7]
-	 sub r8w, [t8]
-	 mov word [t6], r8w
-	 mov word  r8w, [rbp - 2]
-	 mov word [t7], r8w
-	 mov word r8w, [t6]
-	 mov word r9w, [t7]
-	 imul r8w, r9w
-	 mov word [t5], r8w
-	 mov word  r8w, [rbp - 8]
-	 mov word [t8], r8w
-	 mov word[t9], 2
-	 mov word r8w, [t8]
-	 mov word r9w, [t9]
-	 imul r8w, r9w
-	 mov word [t7], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t9], r8w
-	 mov word  r8w, [rbp - 0]
-	 mov word [t10], r8w
-	 mov word r8w, [t9]
-	 mov word r9w, [t10]
-	 imul r8w, r9w
-	 mov word [t8], r8w
-	 mov word r8w, [t7]
-	 sub r8w, [t8]
-	 mov word [t6], r8w
-	 mov word r8w, [t5]
-	 add r8w, [t6]
-	 mov word [t4], r8w
-	 mov word r8w, [t3]
-	 add r8w, [t4]
-	 mov word [t2], r8w
-	 mov word r8w, [t1]
-	 add r8w, [t2]
-	 mov word [t0], r8w
-	mov	r8w, [t0]
-	mov	word[rbp - 4], r8w
+	mov word  r8w, [rbp - 2]
+	mov word [t4], r8w
+	mov word  r8w, [rbp - 4]
+	mov word [t6], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t7], r8w
+	mov word r8w, [t6]
+	mov word r9w, [t7]
+	imul r8w, r9w
+	mov word [t5], r8w
+	mov word r8w, [t4]
+	add r8w, [t5]
+	mov word [t3], r8w
+	mov word  r8w, [rbp - 10]
+	mov word [t6], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t7], r8w
+	mov word r8w, [t6]
+	sub r8w, [t7]
+	mov word [t5], r8w
+	mov word  r8w, [rbp - 4]
+	mov word [t6], r8w
+	mov word r8w, [t5]
+	mov word r9w, [t6]
+	imul r8w, r9w
+	mov word [t4], r8w
+	mov word r8w, [t3]
+	add r8w, [t4]
+	mov word [t2], r8w
+	mov word  r8w, [rbp - 10]
+	mov word [t4], r8w
+	mov word[t5], 2
+	mov word r8w, [t4]
+	mov word r9w, [t5]
+	imul r8w, r9w
+	mov word [t3], r8w
+	mov word r8w, [t2]
+	add r8w, [t3]
+	mov word [t1], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t3], r8w
+	mov word  r8w, [rbp - 2]
+	mov word [t4], r8w
+	mov word r8w, [t3]
+	mov word r9w, [t4]
+	imul r8w, r9w
+	mov word [t2], r8w
+	mov word r8w, [t1]
+	sub r8w, [t2]
+	mov word [t0], r8w
+	mov	bx, [t0]
+	mov word[rbp - 6], bx
 
-	 mov word  r8w, [rbp - 4]
-	 mov word [t2], r8w
-	 mov word[t3], 10
-	 mov word r8w, [t2]
-	 cmp r8w, [t3]
-	 jg true_L3 
-	 mov byte [t1], 0
-	 jmp exit_L3
-true_L3: mov byte [t1], 1
+	mov word  r8w, [rbp - 6]
+	mov word [t4], r8w
+	mov word[t5], 10
+	mov word r8w, [t4]
+	cmp r8w, [t5]
+	jg true_L3 
+	mov byte [t3], 0
+	jmp exit_L3
+true_L3: mov byte [t3], 1
 exit_L3:
-	 mov word  r8w, [rbp - 8]
-	 mov word [t4], r8w
-	 mov word  r8w, [rbp - 10]
-	 mov word [t5], r8w
-	 mov word r8w, [t4]
-	 cmp r8w, [t5]
-	 jle true_L4 
-	 mov byte [t3], 0
-	 jmp exit_L4
-true_L4: mov byte [t3], 1
+	mov word  r8w, [rbp - 10]
+	mov word [t5], r8w
+	mov word  r8w, [rbp - 12]
+	mov word [t6], r8w
+	mov word r8w, [t5]
+	cmp r8w, [t6]
+	jle true_L4 
+	mov byte [t4], 0
+	jmp exit_L4
+true_L4: mov byte [t4], 1
 exit_L4:
-	 mov word  r8w, [rbp - 0]
-	 mov word [t6], r8w
-	 mov word  r8w, [rbp - 2]
-	 mov word [t7], r8w
-	 mov word r8w, [t6]
-	 cmp r8w, [t7]
-	 jl true_L5 
-	 mov byte [t5], 0
-	 jmp exit_L5
-true_L5: mov byte [t5], 1
+	mov byte r8b, [t3]
+	or r8b, [t4]
+	mov byte [t2], r8b
+	mov word  r8w, [rbp - 2]
+	mov word [t4], r8w
+	mov word  r8w, [rbp - 4]
+	mov word [t5], r8w
+	mov word r8w, [t4]
+	cmp r8w, [t5]
+	jl true_L5 
+	mov byte [t3], 0
+	jmp exit_L5
+true_L5: mov byte [t3], 1
 exit_L5:
-	 mov byte  r8b, [rbp - 14]
-	 mov byte [t6], r8b
-	 mov byte r8b, [t5]
-	 and r8b, [t6]
-	 mov byte [t4], r8b
-	 mov byte r8b, [t3]
-	 and r8b, [t4]
-	 mov byte [t2], r8b
-	 mov byte r8b, [t1]
-	 or r8b, [t2]
-	 mov byte [t0], r8b
+	mov byte r8b, [t2]
+	and r8b, [t3]
+	mov byte [t1], r8b
+	mov byte  r8b, [rbp - 15]
+	mov byte [t2], r8b
+	mov byte r8b, [t1]
+	and r8b, [t2]
+	mov byte [t0], r8b
 	mov	r8b, [t0]
-	mov	byte[rbp - 15], r8b
+	mov byte[rbp - 16], r8b
 
 	mov rax, 0
-	mov ax, word[rbp - 4]
+	mov ax, word[rbp - 6]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
 	mov rax, 0
 	call printf
 
-	mov r8b, byte[rbp - 14]
+	mov r8b, byte[rbp - 15]
 	sub r8b, 1
 	jz _L6
 	mov rdi, printFALSE
@@ -354,7 +389,7 @@ _L7:
 
 	mov r13, 0
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 18
 _L8:
 	cmp r13, 6
 	jge _L9
@@ -369,64 +404,64 @@ _L8:
 	jmp _L8
 _L9:
 
-	 mov word  r8w, [rbp - 8]
-	 mov word [t1], r8w
-	 mov word  r8w, [rbp - 0]
-	 mov word [t3], r8w
-	 xor rsi, rsi
-	 mov si, 13
-	 sub rsi, 10
+	mov word  r8w, [rbp - 10]
+	mov word [t4], r8w
+	mov word  r8w, [rbp - 2]
+	mov word [t5], r8w
+	mov word r8w, [t4]
+	add r8w, [t5]
+	mov word [t3], r8w
+	xor rsi, rsi
+	mov si, 13
+	sub rsi, 10
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 18
 	sub r12, rsi
-	 mov r8w, word[r12]
-	 mov word [t6], r8w
-	 mov word[t7], 2
-	 mov word r8w, [t6]
-	 mov word r9w, [t7]
-	 imul r8w, r9w
-	 mov word [t5], r8w
-	 xor rsi, rsi
-	 mov si, 14
-	 sub rsi, 10
+	mov r8w, word[r12]
+	mov word [t5], r8w
+	mov word[t6], 2
+	mov word r8w, [t5]
+	mov word r9w, [t6]
+	imul r8w, r9w
+	mov word [t4], r8w
+	mov word r8w, [t3]
+	add r8w, [t4]
+	mov word [t2], r8w
+	xor rsi, rsi
+	mov si, 14
+	sub rsi, 10
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 18
 	sub r12, rsi
-	 mov r8w, word[r12]
-	 mov word [t8], r8w
-	 mov word[t9], 3
-	 mov word r8w, [t8]
-	 mov word r9w, [t9]
-	 imul r8w, r9w
-	 mov word [t7], r8w
-	 xor rsi, rsi
-	 mov si, 15
-	 sub rsi, 10
+	mov r8w, word[r12]
+	mov word [t4], r8w
+	mov word[t5], 3
+	mov word r8w, [t4]
+	mov word r9w, [t5]
+	imul r8w, r9w
+	mov word [t3], r8w
+	mov word r8w, [t2]
+	add r8w, [t3]
+	mov word [t1], r8w
+	xor rsi, rsi
+	mov si, 15
+	sub rsi, 10
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 18
 	sub r12, rsi
-	 mov r8w, word[r12]
-	 mov word [t8], r8w
-	 mov word r8w, [t7]
-	 add r8w, [t8]
-	 mov word [t6], r8w
-	 mov word r8w, [t5]
-	 add r8w, [t6]
-	 mov word [t4], r8w
-	 mov word r8w, [t3]
-	 add r8w, [t4]
-	 mov word [t2], r8w
-	 mov word r8w, [t1]
-	 add r8w, [t2]
-	 mov word [t0], r8w
-	mov	r8w, [t0]
-	mov	word[rbp - 2], r8w
+	mov r8w, word[r12]
+	mov word [t2], r8w
+	mov word r8w, [t1]
+	add r8w, [t2]
+	mov word [t0], r8w
+	mov	bx, [t0]
+	mov word[rbp - 4], bx
 
 	mov rax, 0
-	mov ax, word[rbp - 2]
+	mov ax, word[rbp - 4]
 	movsx rax, ax
 	mov rdi,printI
 	mov rsi, rax
@@ -435,7 +470,7 @@ _L9:
 
 	mov r13, 0
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 18
 _L10:
 	cmp r13, 6
 	jge _L11
@@ -450,9 +485,9 @@ _L10:
 	add r13, 1
 	jmp _L10
 _L11:
+	jmp _exit
 
-
-; Exit
+_exit:
 	mov rax, 1
 	mov rbx, 0
 	int 80h

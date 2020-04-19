@@ -2,12 +2,16 @@ extern	scanf
 extern	printf
 
 section	.data
-	printTRUE	db	'TRUE', 10, 0
-	printFALSE	db	'FALSE', 10, 0
-	printI	db	'%d', 10, 0
-	printR	db	'%f', 10, 0
-	printIArr	db	'%d ', 0
-	printRArr	db	'%f ', 0
+	printTRUE	db	'Output: TRUE', 10, 0
+	printFALSE	db	'Output: FALSE', 10, 0
+	printI	db	'Output: %d', 10, 0
+	printR	db	'Output: %f', 10, 0
+	printINPUTINT	db	'Input: Enter an INTEGER value:', 10, 0
+	printINPUTBOOL	db	'Input: Enter a BOOLEAN (0/1) Value:', 10, 0
+	printINPUTINTARR	db	'Input: Enter %d INTEGER values:', 10, 0
+	printINPUTBOOLARR	db	'Input: Enter %d BOOLEAN (0/1) values:', 10, 0
+	printIArr	db	'Output: %d ', 0
+	printRArr	db	'Output: %f ', 0
 	getI	db	'%d', 0
 	getR	db	'%f', 0
 	printTRUEArr	db	'TRUE ', 0
@@ -106,42 +110,33 @@ global	main
 main:
 	push rbp
 	mov rbp, rsp
-	 sub rsp, 47
+	 sub rsp, 21
 
 
-	mov r13, 0
-	mov r12, rbp
-	sub r12, 16
-_L1:
-	cmp r13, 5
-	jge _L2
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
 	call scanf
 	mov bx, word[bufferInt]
-	mov word [r12], bx
-	sub r12, 2
-	add r13, 1
-	jmp _L1
-_L2:
+	mov word[rbp - 16], bx
 
-	mov r13, 0
-	mov r12, rbp
-	sub r12, 27
-_L3:
-	cmp r13, 5
-	jge _L4
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
 	call scanf
 	mov bx, word[bufferInt]
-	mov word [r12], bx
-	sub r12, 2
-	add r13, 1
-	jmp _L3
-_L4:
+	mov word[rbp - 18], bx
+
+
+
 
 	mov word[t0], 7
 	mov	bx, [t0]
@@ -149,10 +144,14 @@ _L4:
 
 	mov r8w, 1
 	mov word[rbp - 8], r8w
-_L5: 
+_L1: 
 	cmp r8w, 3
-	jg _L6
+	jg _L2
 
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
@@ -160,6 +159,10 @@ _L5:
 	mov bx, word[bufferInt]
 	mov word[rbp - 2], bx
 
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
@@ -169,27 +172,27 @@ _L5:
 
 	xor rsi, rsi
 	mov si, word [rbp - 2]
-	cmp si, 10
+	cmp si, 1627389952
 	jg _exit
-	cmp si, 6
+	cmp si, 1627389952
 	jl _exit
-	sub rsi, 6
+	sub rsi, 1627389952
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 20
 	sub r12, rsi
 	mov r8w, word[r12]
 	mov word [t1], r8w
 	xor rsi, rsi
 	mov si, word [rbp - 4]
-	cmp si, 10
+	cmp si, 1627389952
 	jg _exit
-	cmp si, 6
+	cmp si, 1627389952
 	jl _exit
-	sub rsi, 6
+	sub rsi, 1627389952
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 27
+	sub r12, 21
 	sub r12, rsi
 	mov r8w, word[r12]
 	mov word [t2], r8w
@@ -201,27 +204,27 @@ _L5:
 
 	xor rsi, rsi
 	mov si, word [rbp - 6]
-	cmp si, 10
+	cmp si, 1627389952
 	jg _exit
-	cmp si, 6
+	cmp si, 1627389952
 	jl _exit
-	sub rsi, 6
+	sub rsi, 1627389952
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 20
 	sub r12, rsi
 	mov r8w, word[r12]
 	mov word [t1], r8w
 	xor rsi, rsi
 	mov si, word [rbp - 4]
-	cmp si, 10
+	cmp si, 1627389952
 	jg _exit
-	cmp si, 6
+	cmp si, 1627389952
 	jl _exit
-	sub rsi, 6
+	sub rsi, 1627389952
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 27
+	sub r12, 21
 	sub r12, rsi
 	mov r8w, word[r12]
 	mov word [t2], r8w
@@ -233,27 +236,27 @@ _L5:
 
 	xor rsi, rsi
 	mov si, word [rbp - 2]
-	cmp si, 10
+	cmp si, 1627389952
 	jg _exit
-	cmp si, 6
+	cmp si, 1627389952
 	jl _exit
-	sub rsi, 6
+	sub rsi, 1627389952
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 16
+	sub r12, 20
 	sub r12, rsi
 	mov r8w, word[r12]
 	mov word [t1], r8w
 	xor rsi, rsi
 	mov si, word [rbp - 6]
-	cmp si, 10
+	cmp si, 1627389952
 	jg _exit
-	cmp si, 6
+	cmp si, 1627389952
 	jl _exit
-	sub rsi, 6
+	sub rsi, 1627389952
 	imul rsi, 2
 	mov r12, rbp
-	sub r12, 27
+	sub r12, 21
 	sub r12, rsi
 	mov r8w, word[r12]
 	mov word [t2], r8w
@@ -289,9 +292,9 @@ _L5:
 	mov r8w, word[rbp - 8]
 	inc r8w
 	mov word[rbp - 8], r8w
-	jmp _L5
+	jmp _L1
 
-_L6:
+_L2:
 	jmp _exit
 
 _exit:

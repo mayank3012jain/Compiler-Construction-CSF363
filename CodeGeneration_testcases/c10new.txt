@@ -38,6 +38,7 @@ start
 	print(x);
 	print(y);
 	print(z);
+	get_value(k);
 	print(k);
 end
 

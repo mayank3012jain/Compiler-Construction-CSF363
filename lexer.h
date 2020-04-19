@@ -17,11 +17,11 @@ int hash(char str[]);
 int getEnumVal(char key[]);
 void populateLookupTable();
 void populateSymbolTable();
-void getNextToken(char*, int*, int*, lex*, FILE* fin);
+void getNextToken(char*, int*, int*, lex*, FILE* fin, int*);
 int check_keyword(char[],int,int);
-lex operator_dfa(char*, int*, int*);
-lex identifier_dfa(char*, int*, int);
-lex number_dfa(char*, int*, int);
+lex operator_dfa(char*, int*, int*, int*);
+lex identifier_dfa(char*, int*, int, int*);
+lex number_dfa(char*, int*, int, int*);
 void bufferRefill(char input[], FILE* fin);
 
 #endif

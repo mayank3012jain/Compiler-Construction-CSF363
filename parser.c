@@ -343,7 +343,7 @@ ptree_node* create_tree_node(char* lexeme, int rule, int lineNumber, int token, 
     return node;
 }
 
-ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first, FOLLOW follow, FILE* fin){
+ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first, FOLLOW follow, FILE* fin, int* err_flag ){
     
     char* termString[] = {"EPSILON","DOLLAR","INTEGER","REAL","BOOLEAN","OF","ARRAY","START","END","DECLARE","MODULE","DRIVER","PROGRAM","RECORD","TAGGED","UNION","GET_VALUE","PRINT","USE","WITH","PARAMETERS","TRUE","FALSE","TAKES","INPUT","RETURNS","AND","OR","FOR","IN","SWITCH","CASE","BREAK","DEFAULT","WHILE","PLUS","MINUS","MUL","DIV","LT","LE","GE","GT","EQ","NE","DEF","DRIVERDEF","ENDDEF","DRIVERENDDEF","COLON","RANGEOP","SEMICOL","COMMA","ASSIGNOP","SQBO","SQBC","BO","BC","COMMENTMARK","ID","RNUM","NUM","ERROR","COUNTT"};
     char* NtermString[] = {"program","moduledeclarations","moduledeclaration","othermodules","drivermodule","module","ret","inputplist","n1","outputplist","n2","datatype","rangearrays","type","moduledef","statements","statement","iostmt","boolconstt","varidnum","var","whichid","simplestmt","assignstmt","whichstmt","lvalueidstmt","lvaluearrstmt","ind","modulereusestmt","optional","idlist","n3","expression", "u","newnt","arithmeticorbooleanexpr","n7","anyterm","n8","arithmeticexpr","n4","term","n5","factor","op1","op2","logicalop","relationalop","declarestmt","conditionalstmt","casestmts","n9","value","dflt","iterativestmt","range","countnt"};
@@ -362,7 +362,7 @@ ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first,
     // what is non terminal's line number?
     ptree_node* tree_root=create_tree_node("program",0,-1,program,"PROGRAM",1,NULL);
     stack->ptr = tree_root;
-    getNextToken(input,&indx,&lineNumber,tokenReturn, fin);
+    getNextToken(input,&indx,&lineNumber,tokenReturn, fin, err_flag);
     int tokFollow = 0;
     while(1){
         // if stack head is terminal
@@ -379,7 +379,7 @@ ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first,
                 stack = pop(stack);
                 // if (tokFollow == 0 && tokenReturn->token != DOLLAR)
                 do{
-                    getNextToken(input,&indx,&lineNumber,tokenReturn, fin);
+                    getNextToken(input,&indx,&lineNumber,tokenReturn, fin, err_flag);
                 }while(tokenReturn->token == ERROR);
                 // if(tokenReturn->line == 9)printf("After get......%s %s\n", termString[stack->term], tokenReturn->lexeme);
                 // tokFollow = 0;
@@ -390,9 +390,10 @@ ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first,
                 //Works only when a wrong token is present in place of a correct token
                 // printf("ERROR at line %d TOKEN MISMATCH Expected %s Found %s[Stack, Input] -> [%s, %s] \n", tokenReturn->line, termString[stack->term], tokenReturn->lexeme);
                 printf("SYNTAX ERROR at line %d TOKEN MISMATCH Expected %s Found %s\n", tokenReturn->line, termString[stack->term], tokenReturn->lexeme);
+                *err_flag = 1;
                 if (!(stack->tag == TERMINAL && stack->term == DOLLAR))
                     stack = pop(stack);
-                    getNextToken(input,&indx,&lineNumber,tokenReturn, fin);
+                    getNextToken(input,&indx,&lineNumber,tokenReturn, fin, err_flag);
                 // tokFollow = 0;
                 // raise parser error   
             }
@@ -415,13 +416,14 @@ ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first,
                     
                     printf("SYNTAX ERROR at line %d on [Stack, Input] -> [%s, %s] NO RULE FOUND. ", tokenReturn->line, NtermString[stack->term], tokenReturn->lexeme);
                     printf("Expected one of: [");
+                    *err_flag = 1;
                     for (int i=0; i<COUNTT; i++){
                         if (pt[stack->term][i] != -1)
                             printf(" %s", termString[i]);
                     }
                     printf("]\n");
                     
-                    getNextToken(input,&indx,&lineNumber,tokenReturn, fin);
+                    getNextToken(input,&indx,&lineNumber,tokenReturn, fin, err_flag);
                 }
             }
                 // tokMismatch = 0;

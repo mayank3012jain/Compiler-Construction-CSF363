@@ -10,8 +10,8 @@
 #include "symbolTable.h"
 #include "codeGen.h"
 #include <time.h>
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 hashNode* symbolTable[SIZELOOKTBL];
 hashNode* lookupTable[SIZELOOKTBL];
@@ -23,6 +23,7 @@ char* nodeNameString[] = {"BOOLEAN_NODE","REAL_NODE","INTEGER_NODE","INPUTPLIST_
 int DATA_TYPE_SIZES[] = {1, 4, 2};
 int ASTNODES = 0;
 int PARSETREENODES = 0;
+int lex_parse_error_flag = 0;
 
 int main(int argc, char* argv[]){
 
@@ -71,8 +72,11 @@ int main(int argc, char* argv[]){
     allFollow(first, grammarIndex, gr, follow);
     populate_parse_table(gr,first, follow, pt);
     syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
-    ast = populateAST(syntaxTree, NULL, NULL);
-    traverse_ast(ast, symbolForest);
+
+    if(!lex_parse_error_flag)
+        ast = populateAST(syntaxTree, NULL, NULL);
+    
+    // traverse_ast(ast, symbolForest);//prints semantic errors
 
     printf("\nALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES\n");
     printf("\t1.Grammar Table constructed from Grammar.txt\n");
@@ -83,7 +87,7 @@ int main(int argc, char* argv[]){
 
 	while(cases != 0){
 
-        printf("Enter a case [0: To exit], [1: To print without comments], [2: Call Lexer], [3: Call Both Lexer and Parser], [4: Print time to parse]:  ");
+        printf("Enter a case\n[0: To exit]\n[1: Call Lexer]\n[2: Call Parser]\n[3: Generate AST]\n[4: Calculate AST compression ratio]\n[5: Print Symbol Table]\n[6: Print activation record sizes]\n[7: Print sizes of static and dynamic arrays]\n[8: Report compilation errors]\n[9: Generate code]\n ");
 		scanf("%d",&cases);
 
 		switch(cases){
@@ -97,7 +101,11 @@ int main(int argc, char* argv[]){
 					break;
 
 			case 3: 
-                    printAST(ast);
+                    if(!lex_parse_error_flag){
+                        printAST(ast);
+                    }
+                    else
+                        printf("Cannot generate AST. There were syntax/lexical errors");
 				    break;
 
             case 4: 
@@ -109,24 +117,27 @@ int main(int argc, char* argv[]){
                     break;
 			
             case 5:
+                    traverse_ast(ast, symbolForest);
                     printSymbolForest(symbolForest);
 				    break;
 
             case 6:
-                activationSizeAll(symbolForest);
-                break;
+                    traverse_ast(ast, symbolForest);
+                    activationSizeAll(symbolForest);
+                    break;
 
             case 7:
-
-                break;
+                    // Array sizes
+                    break;
 
             case 8: 
-                callTime(gr, pt, read_buffer, first, follow, fin);
-				break;
+                    callTime(gr, pt, read_buffer, first, follow, fin);
+                    break;
 
             case 9:
+                    traverse_ast(ast, symbolForest);
                     initializeCodeGen(ast,fout,symbolForest);
-                break;
+                    break;
 
 
             default: exit(0);//return 0;
@@ -178,7 +189,7 @@ void lexerCall(char read_buffer[], FILE* fin){
     //printf("line no\t\tlexeme\t\ttoken name\n");
 
     while(1){
-        getNextToken(read_buffer, &read_ptr, &LINE_NUMBER, tokenReturn, fin);
+        getNextToken(read_buffer, &read_ptr, &LINE_NUMBER, tokenReturn, fin, &lex_parse_error_flag);
         printf("%d\t%s\t%s\n",tokenReturn->line,tokenReturn->lexeme,termString[tokenReturn->token]);
         if (tokenReturn->token == DOLLAR)
             break;
@@ -187,7 +198,7 @@ void lexerCall(char read_buffer[], FILE* fin){
 
 ptree_node* callBoth(GRAMMAR gr, PARSE_TABLE pt, char* read_buffer, FIRST first, FOLLOW follow, FILE* fin){
 
-    return make_parse_tree(gr, pt,read_buffer, first, follow, fin);
+    return make_parse_tree(gr, pt,read_buffer, first, follow, fin, &lex_parse_error_flag);
 }
 
 void callTime(GRAMMAR gr, PARSE_TABLE pt, char* read_buffer, FIRST first, FOLLOW follow, FILE* fin){
@@ -212,10 +223,12 @@ void activationSizeAll(moduleHashNode* symbolForest[]){
     for(int i=0; i<MAX_MODULES; i++){
         moduleHashNode* temp = symbolForest[i];
         while(temp != NULL){
-            int ans = activationSizeUtil(temp->tablePtr);
+            int ans; 
             if(strcmp(temp->key, "driverFunctionNode")!=0){
-                ans += activationSizeUtil(temp->tablePtr->childList[0]);
+                ans = temp->tablePtr->childList[0]->running_offset;
 
+            }else{
+               ans = temp->tablePtr->running_offset;
             }
             activationSizePrint(temp->key, ans);
             temp = temp->next;
@@ -224,20 +237,20 @@ void activationSizeAll(moduleHashNode* symbolForest[]){
     printf("\n");
 }
 
-int activationSizeUtil(symbolTableNode* stable){
-    // symbolTableNode* temp;
-    // int i=0;
-    // for(i=0; i<MAX_SCOPES; i++){
-    //     if(stable->childList[i] == NULL){
-    //         break;
-    //     }
-    // }
-    // if(i==0){
-    //     return stable->running_offset;
-    // }
-    // return activationSizeUtil(stable->childList[i-1]);
-    return stable->running_offset;
-}
+// int activationSizeUtil(symbolTableNode* stable){
+//     // symbolTableNode* temp;
+//     // int i=0;
+//     // for(i=0; i<MAX_SCOPES; i++){
+//     //     if(stable->childList[i] == NULL){
+//     //         break;
+//     //     }
+//     // }
+//     // if(i==0){
+//     //     return stable->running_offset;
+//     // }
+//     // return activationSizeUtil(stable->childList[i-1]);
+//     return stable->running_offset;
+// }
 
 void activationSizePrint(char* name, int size){
     printf("\nModuleName: %23s , Size: %d", name, size);
