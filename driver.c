@@ -113,7 +113,7 @@ int main(int argc, char* argv[]){
 				    break;
 
             case 6:
-                
+                activationSizeAll(symbolForest);
                 break;
 
             case 7:
@@ -214,7 +214,8 @@ void activationSizeAll(moduleHashNode* symbolForest[]){
         while(temp != NULL){
             int ans = activationSizeUtil(temp->tablePtr);
             if(strcmp(temp->key, "driverFunctionNode")!=0){
-                ans += temp->tablePtr->running_offset;
+                ans += activationSizeUtil(temp->tablePtr->childList[0]);
+
             }
             activationSizePrint(temp->key, ans);
             temp = temp->next;
@@ -224,17 +225,18 @@ void activationSizeAll(moduleHashNode* symbolForest[]){
 }
 
 int activationSizeUtil(symbolTableNode* stable){
-    symbolTableNode* temp;
-    int i=0;
-    for(i=0; i<MAX_SCOPES; i++){
-        if(stable->childList[i] == NULL){
-            break;
-        }
-    }
-    if(i==0){
-        return stable->running_offset;
-    }
-    return activationSizeUtil(stable->childList[i-1]);
+    // symbolTableNode* temp;
+    // int i=0;
+    // for(i=0; i<MAX_SCOPES; i++){
+    //     if(stable->childList[i] == NULL){
+    //         break;
+    //     }
+    // }
+    // if(i==0){
+    //     return stable->running_offset;
+    // }
+    // return activationSizeUtil(stable->childList[i-1]);
+    return stable->running_offset;
 }
 
 void activationSizePrint(char* name, int size){

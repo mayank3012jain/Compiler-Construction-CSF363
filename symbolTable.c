@@ -183,6 +183,8 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         // ASTnode* node = root->firstChild;
 
         traverse_ast_recurse(root->firstChild, temp, symbolForest);
+        //fix in running offset
+        stable->running_offset = temp->running_offset;
 
         checkWhileIsAssigned(stable, exprnCheckList);
 
@@ -293,6 +295,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             }
 
         }
+        stable->running_offset = temp->running_offset;
         
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
@@ -323,6 +326,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         if(loopVarEntry->isAssigned==1){
             printf("Line %d: Error - Loop variable [%s] is changed inside the loop\n", temp->scopeEnd,loopVar);
         }
+        stable->running_offset = temp->running_offset;
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
         }
