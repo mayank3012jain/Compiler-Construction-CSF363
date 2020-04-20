@@ -64,34 +64,14 @@ char* getReturnOffset(char* name, symbolTableNode* symNode, int* retOffset, int 
     symbolTableEntry* symEntry = getSymbolTableEntry(symNode, name);
     char* retc = (char*)malloc(sizeof(char)*STRING_SIZE);
 
-    if(symEntry->isArray == 0){
-        if(symEntry->isReturn == 1){ //outputplist
-            sprintf(retc, "%s - %d", "rbp", symEntry->offset - (*retOffset) + symEntry->width);//ebp
-        }
-        else if (symEntry->isReturn == 2){ //inputplist
-            sprintf(retc, "%s + %d", "rbp", symEntry->offset + 16);
-        }
-        else{ //local
-            sprintf(retc, "%s - %d", "rbp", symEntry->offset + size + symEntry->width);//rbp
-        }
+    if(symEntry->isReturn == 1){ //outputplist
+        sprintf(retc, "%s - %d", "rbp", symEntry->offset - (*retOffset) + symEntry->width);//ebp
     }
-    else{
-        if(symEntry->isStatic == 0){//dynamic arrays
-            if(symEntry->isReturn==0){
-
-            }
-        }
-        else{//static
-            if(symEntry->isReturn==0){//local
-                sprintf(retc, "%s - %d", "rbp", symEntry->offset + size + DATA_TYPE_SIZES[symEntry->type]);//rbp
-            }
-            else{
-                sprintf(retc, "%s + %d", "rbp", 16 + symEntry->offset);
-                //mov r1, qword[rbp+16+offset]
-                //mov t0, word/byte[r1+i]; i is for element, r1 is base address of array
-            }
-            
-        }
+    else if (symEntry->isReturn == 2){ //inputplist
+        sprintf(retc, "%s + %d", "rbp", symEntry->offset + 16);
+    }
+    else{ //local
+        sprintf(retc, "%s - %d", "rbp", symEntry->offset + size + symEntry->width);//rbp
     }
     
     return retc;
@@ -179,9 +159,9 @@ void statementsCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *
     
     fprintf(fptr, "\n");
 
-    if(root->label == DECLARESTMT_NODE){
-        declareStmtCodeGen(root, fptr, stable, retOffset, size);
-    }
+    // if(root->label == DECLARESTMT_NODE){
+    //     declareStmtCodeGen(root, fptr, stable, retOffset, size);
+    // }
 
     if (root->label == PRINT_STMT_NODE){
         printStmtCodeGen(root, fptr, stable, symbolForest, retOffset, size);
@@ -849,23 +829,17 @@ void pushRetParameters(FILE *fptr, ASTnode* node, symbolTableNode *stable, modul
 void declareStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int* retOffset, int size){
     
     ASTnode* typeNode = root->firstChild;
-    ASTnode* temp = typeNode->sibling;//id
+    ASTnode* temp = typeNode->sibling;
     int size_declare = 0;
     symbolTableEntry *newEntry = getSymbolTableEntry(stable, temp->syntaxTreeNode->lexeme);
-    
-    if(newEntry->isArray==1){
-        if(newEntry->isStatic==0){
-            if(newEntry->isReturn==0){
-                symbolTableEntry *startIndEnt = newEntry->startIndexDyn;
-                symbolTableEntry *endIndEnt = newEntry->endIndexDyn;
-                int startOffset = getReturnOffset(startIndEnt->name,stable, retOffset, size);
-                int endOffset = getReturnOffset(endIndEnt->name,stable, retOffset, size);
-                fprintf(fptr, "\tmov r8w, word[%s]\n", startOffset);
-                
-            }
-        }
+    int datasize = newEntry->width;
+
+    while(temp){
+        size_declare++;
+        temp=temp->sibling;
     }
-    
+
+    size_declare *= datasize;
     fprintf(fptr, "\tsub\trsp, %d\n", size_declare);
 }
 

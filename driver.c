@@ -71,19 +71,19 @@ int main(int argc, char* argv[]){
     populateFirst(first,grammarIndex, gr);
     allFollow(first, grammarIndex, gr, follow);
     populate_parse_table(gr,first, follow, pt);
-    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
 
-    if(!lex_parse_error_flag)
-        ast = populateAST(syntaxTree, NULL, NULL);
+
     
     // traverse_ast(ast, symbolForest);//prints semantic errors
 
-    printf("\nALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES\n");
-    printf("\t1.Grammar Table constructed from Grammar.txt\n");
-    printf("\t2.First and Follow sets are automated from grammar table\n");
-    printf("\t3.Parse Table generated from First and Follow sets\n");
-    printf("\t4.Both Lexical and Syntax Analysis modules implemented\n");
-    printf("\t5.Error Recovery also implemented\n\n");
+    // printf("\nALL MODULES WORKING CORRECTLY ON ALL GIVEN TESTCASES\n");
+    // printf("\t1.Grammar Table constructed from Grammar.txt\n");
+    // printf("\t2.First and Follow sets are automated from grammar table\n");
+    // printf("\t3.Parse Table generated from First and Follow sets\n");
+    // printf("\t4.Both Lexical and Syntax Analysis modules implemented\n");
+    // printf("\t5.Error Recovery also implemented\n\n");
+    printf("\tLEVEL 4: Lexer, Parser, AST, Symbol Table, Type Checker, Code Genereration working\n");
+
 
 	while(cases != 0){
 
@@ -97,11 +97,18 @@ int main(int argc, char* argv[]){
 					break;
 
 			case 2: 
+                    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
                     printTree(syntaxTree);
 					break;
 
 			case 3: 
+                    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
+                    if(!lex_parse_error_flag)
+                        ast = populateAST(syntaxTree, NULL, NULL);
+    
                     if(!lex_parse_error_flag){
+                        printf("***Pre-order Traversal of AST***\n\n"); //print traversal order
+                        traverse_ast(ast, symbolForest);
                         printAST(ast);
                     }
                     else
@@ -110,18 +117,27 @@ int main(int argc, char* argv[]){
 
             case 4: 
                     printf("Parse Tree Number of Nodes = %d\n", PARSETREENODES);
-                    printf("Allocated Memory = %lu bytes\n", PARSETREENODES*sizeof(ptree_node));
+                    printf("Allocated Memory = %lu bytes\n", PARSETREENODES*sizeof(ptree_node)/2);
                     printf("AST Number of Nodes = %d\n", ASTNODES);
                     printf("Allocated Memory = %lu bytes\n", ASTNODES*sizeof(ASTnode));
-                    printf("Compression ratio = %lf\n",(((double)PARSETREENODES*sizeof(ptree_node)-ASTNODES*sizeof(ASTnode)) * 100)/(PARSETREENODES*sizeof(ptree_node)));
+                    printf("Compression ratio = %lf\n",(((double)PARSETREENODES*(sizeof(ptree_node)/2)-ASTNODES*sizeof(ASTnode)) * 100)/(PARSETREENODES*sizeof(ptree_node)/2));
                     break;
 			
             case 5:
+                    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
+                    if(!lex_parse_error_flag)
+                        ast = populateAST(syntaxTree, NULL, NULL);
+    
+                    
                     traverse_ast(ast, symbolForest);
                     printSymbolForest(symbolForest);
 				    break;
 
             case 6:
+                    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
+                    if(!lex_parse_error_flag)
+                        ast = populateAST(syntaxTree, NULL, NULL);
+
                     traverse_ast(ast, symbolForest);
                     activationSizeAll(symbolForest);
                     break;
@@ -135,6 +151,10 @@ int main(int argc, char* argv[]){
                     break;
 
             case 9:
+                    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
+                    if(!lex_parse_error_flag)
+                        ast = populateAST(syntaxTree, NULL, NULL);
+                    
                     traverse_ast(ast, symbolForest);
                     initializeCodeGen(ast,fout,symbolForest);
                     break;
@@ -208,8 +228,12 @@ void callTime(GRAMMAR gr, PARSE_TABLE pt, char* read_buffer, FIRST first, FOLLOW
 
     start_time = clock();
 
-    callBoth(gr, pt, read_buffer, first, follow, fin);
-
+    ptree_node* syntaxTree = callBoth(gr, pt, read_buffer, first, follow, fin);
+    if(!lex_parse_error_flag){
+        ASTnode* ast = populateAST(syntaxTree, NULL, NULL);
+        moduleHashNode* symbolForest[MAX_MODULES];
+        traverse_ast(ast,symbolForest);
+    }
     end_time = clock();
 
     total_CPU_time  =  (double) (end_time - start_time);

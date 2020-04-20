@@ -98,9 +98,9 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
         int size = DATA_TYPE_SIZES[type];
         width = ((endIndex - startIndex + 1) * size) +1;
         if(isReturn==2){
-            width=5;
+            width=12;
         }else if(isStatic==0){
-            width=1;
+            width=8;
         }
     }
     else{
@@ -511,93 +511,107 @@ void printSymbolForest(moduleHashNode* symbolForest[]){
 
     for(int i=0; i<MAX_MODULES; i++){
         if(symbolForest[i] != NULL){
-            printModuleHashNode(symbolForest[i]);
+            printModuleHashNode(symbolForest[i], 0);
         }
     }    
 }
 
-void printModuleHashNode(moduleHashNode* modhash){
+int printModuleHashNode(moduleHashNode* modhash, int correction){
 
     if(modhash == NULL){
-        return;
+        return correction;
     }
     moduleHashNode* temp = modhash;
 
     while(temp != NULL){
-        printf("Module Name: [%s], isUsed: [%d], isDefined: [%d] astNode: [%s]\n",temp->key, temp->isUsed, temp->isDefined, nodeNameString[temp->moduleAst->label]);
-        printSymbolTableNode(temp->tablePtr, temp);
+        // printf("Module Name: [%s], isUsed: [%d], isDefined: [%d] astNode: [%s]\n",temp->key, temp->isUsed, temp->isDefined, nodeNameString[temp->moduleAst->label]);
+        printf("\n");
+        correction = printSymbolTableNode(temp->tablePtr, temp, correction);
         temp = temp->next;
     }
-    return;
+    return correction;
 }
 
-void printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash){
+int printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash, int correction){
     if(symNode == NULL){
-        return;
+        return correction;
     }
 
-    printf("\n**new stable started in %s**", modhash->key);
-    printVarHashTable(symNode->varHashTable, symNode, modhash);
+    // printf("\n**new stable started in %s**", modhash->key);
+    correction= printVarHashTable(symNode->varHashTable, symNode, modhash, correction);
     int i = 0;
 
     while(i<MAX_SCOPES){
         if(symNode->childList[i] != NULL){
-            printSymbolTableNode(symNode->childList[i], modhash);
+            correction= printSymbolTableNode(symNode->childList[i], modhash, correction);
         }
         i++;
     }
 
-    return;
+    return correction;
 }
 
-void printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHashNode* modhash){
+int printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHashNode* modhash, int correction){
 
     if(varht == NULL){
-        return;
+        return correction;
     }
     
     for(int i=0; i<VAR_SYMBOLTABLE_SIZE; i++){
         if(varht[i] != NULL){
-            printVarHashNode(varht[i], symNode, modhash);
+            correction = printVarHashNode(varht[i], symNode, modhash, correction);
         }
     }
 
-    return;
+    return correction;
 }
 
-void printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash){
+int printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash, int correction){
 
     if (varhn == NULL)
-        return;
+        return correction;
 
-    printSymbolTableEntry(varhn->entryPtr, symNode, modhash);
+    correction = printSymbolTableEntry(varhn->entryPtr, symNode, modhash, correction);
     varHashNode *temp = varhn;
     while(temp->next != NULL){
         temp = temp->next;
-        printVarHashNode(temp, symNode, modhash);
+        correction = printVarHashNode(temp, symNode, modhash, correction);
     }
-    return; 
+    return correction; 
 }
 
-void printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash){
+int printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash, int correction){
 
     if(symEntry == NULL){
-        return;
+        return correction;
     }
     if(symEntry->isArray == 1){
-        if(symEntry->isStatic == 1){
-            printf("\tVar Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
-        }
-        else{
-            printf("\tVar Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 1,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+        if(symEntry->isReturn==2){
+            if(symEntry->isStatic == 1){
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, 5, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset - correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                correction+=7;
+            }
+            else{
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 5,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset- correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                correction+=7;
+            }
+        }else{
+            if(symEntry->isStatic == 1){
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset - correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+            }
+            else{
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 1,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset- correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                correction+=7;
+            }
         }
     }
     else{
-        printf("\tVar Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: NO, ------ [--], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, DATA_TYPE_SIZES[symEntry->type], nodeNameString[symEntry->type], symEntry->offset, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+        printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: NO, ------ [--], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, DATA_TYPE_SIZES[symEntry->type], nodeNameString[symEntry->type], symEntry->offset- correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
     }
     
-    return;
+    return correction;
 }
+
 
 int checkFunctionReturnType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolTableNode* stable, moduleHashNode* symbolForest[]){
     ASTnode *formalPar = moduleRoot->firstChild->sibling->sibling->firstChild;

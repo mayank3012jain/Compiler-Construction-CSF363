@@ -29,11 +29,11 @@ void checkWhileIsAssigned(symbolTableNode* stable, whileList* list);
 
 //print
 void printSymbolForest(moduleHashNode* symbolForest[]);
-void printModuleHashNode(moduleHashNode* modhash);
-void printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash);
-void printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHashNode* modhash);
-void printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash);
-void printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash);
+int printModuleHashNode(moduleHashNode* modhash, int correction);
+int printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash, int correction);
+int printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHashNode* modhash, int correction);
+int printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash, int correction);
+int printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash, int correction);
 
 void activationSizeAll(moduleHashNode* symbolForest[]);
 int activationSizeUtil(symbolTableNode* stable);

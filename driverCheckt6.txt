@@ -1,0 +1,1009 @@
+	LEVEL 4: Lexer, Parser, AST, Symbol Table, Type Checker, Code Genereration working
+Enter a case
+[0: To exit]
+[1: Call Lexer]
+[2: Call Parser]
+[3: Generate AST]
+[4: Calculate AST compression ratio]
+[5: Print Symbol Table]
+[6: Print activation record sizes]
+[7: Print sizes of static and dynamic arrays]
+[8: Report compilation errors]
+[9: Generate code]
+ 1	declare	DECLARE
+1	module	MODULE
+1	readArr	ID
+1	;	SEMICOL
+3	<<	DEF
+3	module	MODULE
+3	arraySum	ID
+3	>>	ENDDEF
+4	takes	TAKES
+4	input	INPUT
+4	[	SQBO
+4	list	ID
+4	:	COLON
+4	array	ARRAY
+4	[	SQBO
+4	1	NUM
+4	..	RANGEOP
+4	15	NUM
+4	]	SQBC
+4	of	OF
+4	real	REAL
+4	,	COMMA
+4	n	ID
+4	integer	INTEGER
+4	]	SQBC
+4	;	SEMICOL
+5	returns	RETURNS
+5	[	SQBO
+5	sum	ID
+5	:	COLON
+5	real	REAL
+5	]	SQBC
+5	;	SEMICOL
+6	start	START
+7	declare	DECLARE
+7	index	ID
+7	:	COLON
+7	integer	INTEGER
+7	;	SEMICOL
+8	declare	DECLARE
+8	t	ID
+8	:	COLON
+8	boolean	BOOLEAN
+8	;	SEMICOL
+9	sum	ID
+
+LEXICAL ERROR at line 9. Lexeme: =
+9	ý	ERROR
+9	0.0	RNUM
+9	;	SEMICOL
+10	for	FOR
+10	(	BO
+10	index	ID
+10	in2	ID
+10	1	NUM
+10	..	RANGEOP
+10	15	NUM
+10	)	BC
+11	start	START
+12	t	ID
+12	:=	ASSIGNOP
+12	index	ID
+12	<=	LE
+12	n	ID
+12	;	SEMICOL
+13	switch	SWITCH
+13	(	BO
+13	t	ID
+13	)	BC
+14	start	START
+15	case	CASE
+15	true	TRUE
+15	:	COLON
+15	print	PRINT
+15	(	BO
+15	list	ID
+15	[	SQBO
+15	index	ID
+15	]	SQBC
+15	)	BC
+15	;	SEMICOL
+16	sum	ID
+16	:=	ASSIGNOP
+16	sum	ID
+16	list	ID
+16	[	SQBO
+16	index	ID
+16	]	SQBC
+16	;	SEMICOL
+17	break	BREAK
+17	;	SEMICOL
+18	case	CASE
+18	false	FALSE
+18	:	COLON
+18	print	PRINT
+18	(	BO
+18	sum	ID
+18	)	BC
+18	;	SEMICOL
+19	print	PRINT
+19	(	BO
+19	index	ID
+19	)	BC
+19	;	SEMICOL
+21	break	BREAK
+21	;	SEMICOL
+22	end	END
+24	end	END
+25	print	PRINT
+25	(	BO
+25	+	PLUS
+25	sum	ID
+25	)	BC
+25	;	SEMICOL
+26	end	END
+27	<<<	DRIVERDEF
+27	driver	DRIVER
+27	program	PROGRAM
+27	>>>	DRIVERENDDEF
+28	start	START
+29	declare	DECLARE
+29	A	ID
+29	:	COLON
+29	array	ARRAY
+29	[	SQBO
+29	1	NUM
+29	..	RANGEOP
+
+LEXICAL ERROR at line 29. Lexeme: .
+29	.	ERROR
+29	15	NUM
+29	]	SQBC
+29	of	OF
+29	real	REAL
+29	;	SEMICOL
+30	declare	DECLARE
+30	k	ID
+30	:	COLON
+30	integer	INTEGER
+30	;	SEMICOL
+31	declare	DECLARE
+31	s	ID
+31	:	COLON
+31	real	REAL
+31	;	SEMICOL
+32	get_value	GET_VALUE
+32	(	BO
+32	k	ID
+32	)	BC
+32	;	SEMICOL
+33	use	USE
+33	module	MODULE
+33	readArr	ID
+33	while	WHILE
+33	parameters	PARAMETERS
+33	A	ID
+33	,	COMMA
+33	k	ID
+33	;	SEMICOL
+34	[	SQBO
+34	s	ID
+34	]	SQBC
+34	:=	ASSIGNOP
+34	use	USE
+34	module	MODULE
+34	arraySum	ID
+34	with	WITH
+34	parameters	PARAMETERS
+34	A	ID
+34	,	COMMA
+34	k	ID
+34	;	SEMICOL
+35	s	ID
+35	:=	ASSIGNOP
+35	s	ID
+35	<=	LE
+35	n	ID
+35	>=	GE
+35	k	ID
+35	;	SEMICOL
+36	print	PRINT
+36	(	BO
+36	s	ID
+36	)	BC
+37	end	END
+44	<<	DEF
+44	module	MODULE
+44	readArr	ID
+44	>>	ENDDEF
+45	takes	TAKES
+45	input	INPUT
+45	[	SQBO
+45	arr1	ID
+45	:	COLON
+45	array	ARRAY
+45	[	SQBO
+45	1	NUM
+45	..	RANGEOP
+45	15	NUM
+45	]	SQBC
+45	of	OF
+45	real	REAL
+45	,	COMMA
+45	k	ID
+45	:	COLON
+45	integer	INTEGER
+45	]	SQBC
+45	;	SEMICOL
+46	start	START
+47	declare	DECLARE
+47	tempvar	ID
+47	:	COLON
+47	real23	ID
+47	;	SEMICOL
+48	declare	DECLARE
+48	i	ID
+48	:	COLON
+48	integer	INTEGER
+48	;	SEMICOL
+49	i	ID
+49	:=	ASSIGNOP
+49	1	NUM
+49	;	SEMICOL
+50	while	WHILE
+50	(	BO
+50	i	ID
+50	<=	LE
+50	k	ID
+50	)	BC
+51	start	START
+52	get_value	GET_VALUE
+52	(	BO
+52	tempvar	ID
+52	)	BC
+52	;	SEMICOL
+53	arr1	ID
+53	[	SQBO
+53	i	ID
+53	]	SQBC
+53	:=	ASSIGNOP
+53	for	FOR
+53	;	SEMICOL
+54	i	ID
+54	:=	ASSIGNOP
+54	i	ID
+54	+	PLUS
+54	1	NUM
+54	;	SEMICOL
+56	end	END
+57	end	END
+63		DOLLAR
+Enter a case
+[0: To exit]
+[1: Call Lexer]
+[2: Call Parser]
+[3: Generate AST]
+[4: Calculate AST compression ratio]
+[5: Print Symbol Table]
+[6: Print activation record sizes]
+[7: Print sizes of static and dynamic arrays]
+[8: Report compilation errors]
+[9: Generate code]
+ SYNTAX ERROR at line 4 TOKEN MISMATCH Expected COLON Found integer
+
+LEXICAL ERROR at line 9. Lexeme: =
+SYNTAX ERROR at line 9 on [Stack, Input] -> [whichstmt, 0.0] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 9 on [Stack, Input] -> [whichstmt, ;] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 10 TOKEN MISMATCH Expected IN Found in2
+SYNTAX ERROR at line 16 on [Stack, Input] -> [whichid, list] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL SQBO BC]
+SYNTAX ERROR at line 25 on [Stack, Input] -> [var, +] NO RULE FOUND. Expected one of: [ TRUE FALSE ID RNUM NUM]
+
+LEXICAL ERROR at line 29. Lexeme: .
+SYNTAX ERROR at line 33 TOKEN MISMATCH Expected WITH Found while
+SYNTAX ERROR at line 35 on [Stack, Input] -> [n7, >=] NO RULE FOUND. Expected one of: [ AND OR SEMICOL BC]
+SYNTAX ERROR at line 35 on [Stack, Input] -> [n7, k] NO RULE FOUND. Expected one of: [ AND OR SEMICOL BC]
+SYNTAX ERROR at line 37 TOKEN MISMATCH Expected SEMICOL Found end
+SYNTAX ERROR at line 44 on [Stack, Input] -> [statements, <<] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 44 on [Stack, Input] -> [statements, module] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 44 on [Stack, Input] -> [whichstmt, >>] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [whichstmt, takes] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [whichstmt, input] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 TOKEN MISMATCH Expected SQBC Found :
+SYNTAX ERROR at line 45 TOKEN MISMATCH Expected ASSIGNOP Found array
+SYNTAX ERROR at line 45 on [Stack, Input] -> [expression, [] NO RULE FOUND. Expected one of: [ TRUE FALSE PLUS MINUS BO ID RNUM NUM]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ..] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, 15] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ]] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, of] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, real] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ,] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, k] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, :] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, integer] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ]] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 46 on [Stack, Input] -> [statements, start] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 47 on [Stack, Input] -> [datatype, real23] NO RULE FOUND. Expected one of: [ INTEGER REAL BOOLEAN ARRAY]
+SYNTAX ERROR at line 53 on [Stack, Input] -> [expression, for] NO RULE FOUND. Expected one of: [ TRUE FALSE PLUS MINUS BO ID RNUM NUM]
+Rule: 0	Lexeme:                   program	Linenumber:    -1	Token:   0	Value: -----	Parent:                      ROOT	IsLeaf:  NO	Symbol:                   PROGRAM
+Rule: 1	Lexeme:                    ------	Linenumber: -----	Token:   1	Value: -----	Parent:                   PROGRAM	IsLeaf:  NO	Symbol:        moduledeclarations
+Rule: 3	Lexeme:                    ------	Linenumber: -----	Token:   2	Value: -----	Parent:        moduledeclarations	IsLeaf:  NO	Symbol:         moduledeclaration
+Rule: --	Lexeme:                   declare	Linenumber:     1	Token:   9	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                   DECLARE
+Rule: --	Lexeme:                    module	Linenumber:     1	Token:  10	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                    MODULE
+Rule: --	Lexeme:                   readArr	Linenumber:     1	Token:  59	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         ;	Linenumber:     1	Token:  51	Value: -----	Parent:         moduledeclaration	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 2	Lexeme:                    ------	Linenumber: -----	Token:   1	Value: -----	Parent:        moduledeclarations	IsLeaf:  NO	Symbol:        moduledeclarations
+Rule: --	Lexeme:                        <<	Linenumber:     3	Token:   0	Value: -----	Parent:        moduledeclarations	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 4	Lexeme:                    ------	Linenumber: -----	Token:   3	Value: -----	Parent:                   PROGRAM	IsLeaf:  NO	Symbol:              othermodules
+Rule: 7	Lexeme:                    ------	Linenumber: -----	Token:   5	Value: -----	Parent:              othermodules	IsLeaf:  NO	Symbol:                    module
+Rule: --	Lexeme:                        <<	Linenumber:     3	Token:  45	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                       DEF
+Rule: --	Lexeme:                    module	Linenumber:     3	Token:  10	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                    MODULE
+Rule: --	Lexeme:                  arraySum	Linenumber:     3	Token:  59	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                        >>	Linenumber:     3	Token:  47	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                    ENDDEF
+Rule: --	Lexeme:                     takes	Linenumber:     3	Token:  23	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                     TAKES
+Rule: --	Lexeme:                     input	Linenumber:     3	Token:  24	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                     INPUT
+Rule: --	Lexeme:                         [	Linenumber:     3	Token:  54	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                      SQBO
+Rule: 10	Lexeme:                    ------	Linenumber: -----	Token:   7	Value: -----	Parent:                    module	IsLeaf:  NO	Symbol:                inputplist
+Rule: --	Lexeme:                      list	Linenumber:     4	Token:  59	Value: -----	Parent:                inputplist	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         :	Linenumber:     4	Token:  49	Value: -----	Parent:                inputplist	IsLeaf: YES	Symbol:                     COLON
+Rule: 19	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:                inputplist	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                     array	Linenumber:     4	Token:   6	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                     ARRAY
+Rule: --	Lexeme:                         [	Linenumber:     4	Token:  54	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                      SQBO
+Rule: 20	Lexeme:                    ------	Linenumber: -----	Token:  12	Value: -----	Parent:                  datatype	IsLeaf:  NO	Symbol:               rangearrays
+Rule: 50	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:               rangearrays	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                         1	Linenumber:     4	Token:  61	Value:     1	Parent:                       ind	IsLeaf: YES	Symbol:                       NUM
+Rule: --	Lexeme:                        ..	Linenumber:     4	Token:  50	Value: -----	Parent:               rangearrays	IsLeaf: YES	Symbol:                   RANGEOP
+Rule: 50	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:               rangearrays	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                        15	Linenumber:     4	Token:  61	Value:    15	Parent:                       ind	IsLeaf: YES	Symbol:                       NUM
+Rule: --	Lexeme:                         ]	Linenumber:     4	Token:  55	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                        of	Linenumber:     4	Token:   5	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                        OF
+Rule: 22	Lexeme:                    ------	Linenumber: -----	Token:  13	Value: -----	Parent:                  datatype	IsLeaf:  NO	Symbol:                      type
+Rule: --	Lexeme:                      real	Linenumber:     4	Token:   3	Value: -----	Parent:                      type	IsLeaf: YES	Symbol:                      REAL
+Rule: 11	Lexeme:                    ------	Linenumber: -----	Token:   8	Value: -----	Parent:                inputplist	IsLeaf:  NO	Symbol:                        n1
+Rule: --	Lexeme:                         ,	Linenumber:     4	Token:  52	Value: -----	Parent:                        n1	IsLeaf: YES	Symbol:                     COMMA
+Rule: --	Lexeme:                         n	Linenumber:     4	Token:  59	Value: -----	Parent:                        n1	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         ,	Linenumber:     4	Token:  49	Value: -----	Parent:                        n1	IsLeaf: YES	Symbol:                     COLON
+Rule: -2	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:                        n1	IsLeaf:  NO	Symbol:                  datatype
+Rule: 12	Lexeme:                    ------	Linenumber: -----	Token:   8	Value: -----	Parent:                        n1	IsLeaf:  NO	Symbol:                        n1
+Rule: --	Lexeme:                         ]	Linenumber:     4	Token:   0	Value: -----	Parent:                        n1	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ]	Linenumber:     3	Token:  55	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                         ;	Linenumber:     3	Token:  51	Value: -----	Parent:                    module	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 8	Lexeme:                    ------	Linenumber: -----	Token:   6	Value: -----	Parent:                    module	IsLeaf:  NO	Symbol:                       ret
+Rule: --	Lexeme:                   returns	Linenumber:     5	Token:  25	Value: -----	Parent:                       ret	IsLeaf: YES	Symbol:                   RETURNS
+Rule: --	Lexeme:                         [	Linenumber:     5	Token:  54	Value: -----	Parent:                       ret	IsLeaf: YES	Symbol:                      SQBO
+Rule: 13	Lexeme:                    ------	Linenumber: -----	Token:   9	Value: -----	Parent:                       ret	IsLeaf:  NO	Symbol:               outputplist
+Rule: --	Lexeme:                       sum	Linenumber:     5	Token:  59	Value: -----	Parent:               outputplist	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         :	Linenumber:     5	Token:  49	Value: -----	Parent:               outputplist	IsLeaf: YES	Symbol:                     COLON
+Rule: 22	Lexeme:                    ------	Linenumber: -----	Token:  13	Value: -----	Parent:               outputplist	IsLeaf:  NO	Symbol:                      type
+Rule: --	Lexeme:                      real	Linenumber:     5	Token:   3	Value: -----	Parent:                      type	IsLeaf: YES	Symbol:                      REAL
+Rule: 15	Lexeme:                    ------	Linenumber: -----	Token:  10	Value: -----	Parent:               outputplist	IsLeaf:  NO	Symbol:                        n2
+Rule: --	Lexeme:                         ]	Linenumber:     5	Token:   0	Value: -----	Parent:                        n2	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ]	Linenumber:     5	Token:  55	Value: -----	Parent:                       ret	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                         ;	Linenumber:     5	Token:  51	Value: -----	Parent:                       ret	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 24	Lexeme:                    ------	Linenumber: -----	Token:  14	Value: -----	Parent:                    module	IsLeaf:  NO	Symbol:                 moduledef
+Rule: --	Lexeme:                     start	Linenumber:     6	Token:   7	Value: -----	Parent:                 moduledef	IsLeaf: YES	Symbol:                     START
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                 moduledef	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:     7	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                     index	Linenumber:     7	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:     7	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:     7	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: 16	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                   integer	Linenumber:     7	Token:   2	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                   INTEGER
+Rule: --	Lexeme:                         ;	Linenumber:     7	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:     8	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         t	Linenumber:     8	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:     8	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:     8	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: 18	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                   boolean	Linenumber:     8	Token:   4	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                   BOOLEAN
+Rule: --	Lexeme:                         ;	Linenumber:     8	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                       sum	Linenumber:     9	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: -2	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 31	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 100	Lexeme:                    ------	Linenumber: -----	Token:  54	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:             iterativestmt
+Rule: --	Lexeme:                       for	Linenumber:    10	Token:  28	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                       FOR
+Rule: --	Lexeme:                         (	Linenumber:    10	Token:  56	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                        BO
+Rule: --	Lexeme:                     index	Linenumber:    10	Token:  59	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                       for	Linenumber:    10	Token:  29	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                        IN
+Rule: 102	Lexeme:                    ------	Linenumber: -----	Token:  55	Value: -----	Parent:             iterativestmt	IsLeaf:  NO	Symbol:                     range
+Rule: --	Lexeme:                         1	Linenumber:    10	Token:  61	Value:     1	Parent:                     range	IsLeaf: YES	Symbol:                       NUM
+Rule: --	Lexeme:                        ..	Linenumber:    10	Token:  50	Value: -----	Parent:                     range	IsLeaf: YES	Symbol:                   RANGEOP
+Rule: --	Lexeme:                        15	Linenumber:    10	Token:  61	Value:    15	Parent:                     range	IsLeaf: YES	Symbol:                       NUM
+Rule: --	Lexeme:                         )	Linenumber:    10	Token:  57	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                     start	Linenumber:    10	Token:   7	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                     START
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:             iterativestmt	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                         t	Linenumber:    12	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 46	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 48	Lexeme:                    ------	Linenumber: -----	Token:  25	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:              lvalueidstmt
+Rule: --	Lexeme:                        :=	Linenumber:    12	Token:  53	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: 58	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:              lvalueidstmt	IsLeaf:  NO	Symbol:                expression
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:                expression	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                     index	Linenumber:    12	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                        <=	Linenumber:    12	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                        <=	Linenumber:    12	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                        <=	Linenumber:    12	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 68	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: 85	Lexeme:                    ------	Linenumber: -----	Token:  47	Value: -----	Parent:                        n8	IsLeaf:  NO	Symbol:              relationalop
+Rule: --	Lexeme:                        <=	Linenumber:    12	Token:  40	Value: -----	Parent:              relationalop	IsLeaf: YES	Symbol:                        LE
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                        n8	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         n	Linenumber:    12	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         ;	Linenumber:    12	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                         ;	Linenumber:    12	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                         ;	Linenumber:    12	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 65	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         ;	Linenumber:    12	Token:   0	Value: -----	Parent:                        n7	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    12	Token:  51	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 30	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 91	Lexeme:                    ------	Linenumber: -----	Token:  49	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:           conditionalstmt
+Rule: --	Lexeme:                    switch	Linenumber:    13	Token:  30	Value: -----	Parent:           conditionalstmt	IsLeaf: YES	Symbol:                    SWITCH
+Rule: --	Lexeme:                         (	Linenumber:    13	Token:  56	Value: -----	Parent:           conditionalstmt	IsLeaf: YES	Symbol:                        BO
+Rule: --	Lexeme:                         t	Linenumber:    13	Token:  59	Value: -----	Parent:           conditionalstmt	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         )	Linenumber:    13	Token:  57	Value: -----	Parent:           conditionalstmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                     start	Linenumber:    13	Token:   7	Value: -----	Parent:           conditionalstmt	IsLeaf: YES	Symbol:                     START
+Rule: 92	Lexeme:                    ------	Linenumber: -----	Token:  50	Value: -----	Parent:           conditionalstmt	IsLeaf:  NO	Symbol:                 casestmts
+Rule: --	Lexeme:                      case	Linenumber:    15	Token:  31	Value: -----	Parent:                 casestmts	IsLeaf: YES	Symbol:                      CASE
+Rule: 96	Lexeme:                    ------	Linenumber: -----	Token:  52	Value: -----	Parent:                 casestmts	IsLeaf:  NO	Symbol:                     value
+Rule: --	Lexeme:                      true	Linenumber:    15	Token:  21	Value: -----	Parent:                     value	IsLeaf: YES	Symbol:                      TRUE
+Rule: --	Lexeme:                         :	Linenumber:    15	Token:  49	Value: -----	Parent:                 casestmts	IsLeaf: YES	Symbol:                     COLON
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                 casestmts	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 33	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                     print	Linenumber:    15	Token:  17	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                     PRINT
+Rule: --	Lexeme:                         (	Linenumber:    15	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: 39	Lexeme:                    ------	Linenumber: -----	Token:  20	Value: -----	Parent:                    iostmt	IsLeaf:  NO	Symbol:                       var
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                       var	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                      list	Linenumber:    15	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 41	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         [	Linenumber:    15	Token:  54	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                      SQBO
+Rule: 51	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:                   whichid	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                     index	Linenumber:    15	Token:  59	Value: -----	Parent:                       ind	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         ]	Linenumber:    15	Token:  55	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                         )	Linenumber:    15	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                         ;	Linenumber:    15	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                       sum	Linenumber:    16	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 46	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 48	Lexeme:                    ------	Linenumber: -----	Token:  25	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:              lvalueidstmt
+Rule: --	Lexeme:                        :=	Linenumber:    16	Token:  53	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: 58	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:              lvalueidstmt	IsLeaf:  NO	Symbol:                expression
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:                expression	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                       sum	Linenumber:    16	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 41	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         [	Linenumber:    16	Token:  54	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                      SQBO
+Rule: 51	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:                   whichid	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                     index	Linenumber:    16	Token:  59	Value: -----	Parent:                       ind	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         ]	Linenumber:    16	Token:  55	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                      SQBC
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                         ;	Linenumber:    16	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                         ;	Linenumber:    16	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 69	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: --	Lexeme:                         ;	Linenumber:    16	Token:   0	Value: -----	Parent:                        n8	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 65	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         ;	Linenumber:    16	Token:   0	Value: -----	Parent:                        n7	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    16	Token:  51	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 26	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: --	Lexeme:                     break	Linenumber:    17	Token:   0	Value: -----	Parent:                statements	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                     break	Linenumber:    15	Token:  32	Value: -----	Parent:                 casestmts	IsLeaf: YES	Symbol:                     BREAK
+Rule: --	Lexeme:                         ;	Linenumber:    15	Token:  51	Value: -----	Parent:                 casestmts	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 93	Lexeme:                    ------	Linenumber: -----	Token:  51	Value: -----	Parent:                 casestmts	IsLeaf:  NO	Symbol:                        n9
+Rule: --	Lexeme:                      case	Linenumber:    18	Token:  31	Value: -----	Parent:                        n9	IsLeaf: YES	Symbol:                      CASE
+Rule: 97	Lexeme:                    ------	Linenumber: -----	Token:  52	Value: -----	Parent:                        n9	IsLeaf:  NO	Symbol:                     value
+Rule: --	Lexeme:                     false	Linenumber:    18	Token:  22	Value: -----	Parent:                     value	IsLeaf: YES	Symbol:                     FALSE
+Rule: --	Lexeme:                         :	Linenumber:    18	Token:  49	Value: -----	Parent:                        n9	IsLeaf: YES	Symbol:                     COLON
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                        n9	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 33	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                     print	Linenumber:    18	Token:  17	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                     PRINT
+Rule: --	Lexeme:                         (	Linenumber:    18	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: 39	Lexeme:                    ------	Linenumber: -----	Token:  20	Value: -----	Parent:                    iostmt	IsLeaf:  NO	Symbol:                       var
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                       var	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                       sum	Linenumber:    18	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         )	Linenumber:    18	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         )	Linenumber:    18	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                         ;	Linenumber:    18	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 33	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                     print	Linenumber:    19	Token:  17	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                     PRINT
+Rule: --	Lexeme:                         (	Linenumber:    19	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: 39	Lexeme:                    ------	Linenumber: -----	Token:  20	Value: -----	Parent:                    iostmt	IsLeaf:  NO	Symbol:                       var
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                       var	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                     index	Linenumber:    19	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         )	Linenumber:    19	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         )	Linenumber:    19	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                         ;	Linenumber:    19	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 26	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: --	Lexeme:                     break	Linenumber:    21	Token:   0	Value: -----	Parent:                statements	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                     break	Linenumber:    18	Token:  32	Value: -----	Parent:                        n9	IsLeaf: YES	Symbol:                     BREAK
+Rule: --	Lexeme:                         ;	Linenumber:    18	Token:  51	Value: -----	Parent:                        n9	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 94	Lexeme:                    ------	Linenumber: -----	Token:  51	Value: -----	Parent:                        n9	IsLeaf:  NO	Symbol:                        n9
+Rule: --	Lexeme:                       end	Linenumber:    22	Token:   0	Value: -----	Parent:                        n9	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 99	Lexeme:                    ------	Linenumber: -----	Token:  53	Value: -----	Parent:           conditionalstmt	IsLeaf:  NO	Symbol:                      dflt
+Rule: --	Lexeme:                       end	Linenumber:    22	Token:   0	Value: -----	Parent:                      dflt	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                       end	Linenumber:    13	Token:   8	Value: -----	Parent:           conditionalstmt	IsLeaf: YES	Symbol:                       END
+Rule: 26	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: --	Lexeme:                       end	Linenumber:    24	Token:   0	Value: -----	Parent:                statements	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                       end	Linenumber:    10	Token:   8	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                       END
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 33	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                     print	Linenumber:    25	Token:  17	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                     PRINT
+Rule: --	Lexeme:                         (	Linenumber:    25	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: 39	Lexeme:                    ------	Linenumber: -----	Token:  20	Value: -----	Parent:                    iostmt	IsLeaf:  NO	Symbol:                       var
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                       var	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                       sum	Linenumber:    25	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         )	Linenumber:    25	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         )	Linenumber:    25	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                         ;	Linenumber:    25	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 26	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: --	Lexeme:                       end	Linenumber:    26	Token:   0	Value: -----	Parent:                statements	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                       end	Linenumber:     6	Token:   8	Value: -----	Parent:                 moduledef	IsLeaf: YES	Symbol:                       END
+Rule: 5	Lexeme:                    ------	Linenumber: -----	Token:   3	Value: -----	Parent:              othermodules	IsLeaf:  NO	Symbol:              othermodules
+Rule: --	Lexeme:                       <<<	Linenumber:    27	Token:   0	Value: -----	Parent:              othermodules	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 6	Lexeme:                    ------	Linenumber: -----	Token:   4	Value: -----	Parent:                   PROGRAM	IsLeaf:  NO	Symbol:              drivermodule
+Rule: --	Lexeme:                       <<<	Linenumber:    27	Token:  46	Value: -----	Parent:              drivermodule	IsLeaf: YES	Symbol:                 DRIVERDEF
+Rule: --	Lexeme:                    driver	Linenumber:    27	Token:  11	Value: -----	Parent:              drivermodule	IsLeaf: YES	Symbol:                    DRIVER
+Rule: --	Lexeme:                   program	Linenumber:    27	Token:  12	Value: -----	Parent:              drivermodule	IsLeaf: YES	Symbol:                   PROGRAM
+Rule: --	Lexeme:                       >>>	Linenumber:    27	Token:  48	Value: -----	Parent:              drivermodule	IsLeaf: YES	Symbol:              DRIVERENDDEF
+Rule: 24	Lexeme:                    ------	Linenumber: -----	Token:  14	Value: -----	Parent:              drivermodule	IsLeaf:  NO	Symbol:                 moduledef
+Rule: --	Lexeme:                     start	Linenumber:    28	Token:   7	Value: -----	Parent:                 moduledef	IsLeaf: YES	Symbol:                     START
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                 moduledef	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:    29	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         A	Linenumber:    29	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:    29	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:    29	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: 19	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                     array	Linenumber:    29	Token:   6	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                     ARRAY
+Rule: --	Lexeme:                         [	Linenumber:    29	Token:  54	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                      SQBO
+Rule: 20	Lexeme:                    ------	Linenumber: -----	Token:  12	Value: -----	Parent:                  datatype	IsLeaf:  NO	Symbol:               rangearrays
+Rule: 50	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:               rangearrays	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                         1	Linenumber:    29	Token:  61	Value:     1	Parent:                       ind	IsLeaf: YES	Symbol:                       NUM
+Rule: --	Lexeme:                        ..	Linenumber:    29	Token:  50	Value: -----	Parent:               rangearrays	IsLeaf: YES	Symbol:                   RANGEOP
+Rule: 50	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:               rangearrays	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                        15	Linenumber:    29	Token:  61	Value:    15	Parent:                       ind	IsLeaf: YES	Symbol:                       NUM
+Rule: --	Lexeme:                         ]	Linenumber:    29	Token:  55	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                        of	Linenumber:    29	Token:   5	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                        OF
+Rule: 22	Lexeme:                    ------	Linenumber: -----	Token:  13	Value: -----	Parent:                  datatype	IsLeaf:  NO	Symbol:                      type
+Rule: --	Lexeme:                      real	Linenumber:    29	Token:   3	Value: -----	Parent:                      type	IsLeaf: YES	Symbol:                      REAL
+Rule: --	Lexeme:                         ;	Linenumber:    29	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:    30	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         k	Linenumber:    30	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:    30	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:    30	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: 16	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                   integer	Linenumber:    30	Token:   2	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                   INTEGER
+Rule: --	Lexeme:                         ;	Linenumber:    30	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:    31	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         s	Linenumber:    31	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:    31	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:    31	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: 17	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                      real	Linenumber:    31	Token:   3	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                      REAL
+Rule: --	Lexeme:                         ;	Linenumber:    31	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 32	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                 get_value	Linenumber:    32	Token:  16	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                 GET_VALUE
+Rule: --	Lexeme:                         (	Linenumber:    32	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: --	Lexeme:                         k	Linenumber:    32	Token:  59	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         )	Linenumber:    32	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                         ;	Linenumber:    32	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 44	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 52	Lexeme:                    ------	Linenumber: -----	Token:  28	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:           modulereusestmt
+Rule: 54	Lexeme:                    ------	Linenumber: -----	Token:  29	Value: -----	Parent:           modulereusestmt	IsLeaf:  NO	Symbol:                  optional
+Rule: --	Lexeme:                       use	Linenumber:    33	Token:   0	Value: -----	Parent:                  optional	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                       use	Linenumber:    33	Token:  18	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                       USE
+Rule: --	Lexeme:                    module	Linenumber:    33	Token:  10	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                    MODULE
+Rule: --	Lexeme:                   readArr	Linenumber:    33	Token:  59	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                       use	Linenumber:    33	Token:  19	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                      WITH
+Rule: --	Lexeme:                parameters	Linenumber:    33	Token:  20	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                PARAMETERS
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:           modulereusestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         A	Linenumber:    33	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 56	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         ,	Linenumber:    33	Token:  52	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                     COMMA
+Rule: --	Lexeme:                         k	Linenumber:    33	Token:  59	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                        n3	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         ;	Linenumber:    33	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    33	Token:  51	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 44	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 52	Lexeme:                    ------	Linenumber: -----	Token:  28	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:           modulereusestmt
+Rule: 53	Lexeme:                    ------	Linenumber: -----	Token:  29	Value: -----	Parent:           modulereusestmt	IsLeaf:  NO	Symbol:                  optional
+Rule: --	Lexeme:                         [	Linenumber:    34	Token:  54	Value: -----	Parent:                  optional	IsLeaf: YES	Symbol:                      SQBO
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:                  optional	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         s	Linenumber:    34	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         ]	Linenumber:    34	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ]	Linenumber:    34	Token:  55	Value: -----	Parent:                  optional	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                        :=	Linenumber:    34	Token:  53	Value: -----	Parent:                  optional	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: --	Lexeme:                       use	Linenumber:    34	Token:  18	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                       USE
+Rule: --	Lexeme:                    module	Linenumber:    34	Token:  10	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                    MODULE
+Rule: --	Lexeme:                  arraySum	Linenumber:    34	Token:  59	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                      with	Linenumber:    34	Token:  19	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                      WITH
+Rule: --	Lexeme:                parameters	Linenumber:    34	Token:  20	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                PARAMETERS
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:           modulereusestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         A	Linenumber:    34	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 56	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         ,	Linenumber:    34	Token:  52	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                     COMMA
+Rule: --	Lexeme:                         k	Linenumber:    34	Token:  59	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                        n3	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         ;	Linenumber:    34	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    34	Token:  51	Value: -----	Parent:           modulereusestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                         s	Linenumber:    35	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 46	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 48	Lexeme:                    ------	Linenumber: -----	Token:  25	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:              lvalueidstmt
+Rule: --	Lexeme:                        :=	Linenumber:    35	Token:  53	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: 58	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:              lvalueidstmt	IsLeaf:  NO	Symbol:                expression
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:                expression	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         s	Linenumber:    35	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                        <=	Linenumber:    35	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                        <=	Linenumber:    35	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                        <=	Linenumber:    35	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 68	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: 85	Lexeme:                    ------	Linenumber: -----	Token:  47	Value: -----	Parent:                        n8	IsLeaf:  NO	Symbol:              relationalop
+Rule: --	Lexeme:                        <=	Linenumber:    35	Token:  40	Value: -----	Parent:              relationalop	IsLeaf: YES	Symbol:                        LE
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                        n8	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         n	Linenumber:    35	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                        >=	Linenumber:    35	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                        >=	Linenumber:    35	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                        >=	Linenumber:    35	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: -2	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         ;	Linenumber:    35	Token:  51	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 33	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                     print	Linenumber:    36	Token:  17	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                     PRINT
+Rule: --	Lexeme:                         (	Linenumber:    36	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: 39	Lexeme:                    ------	Linenumber: -----	Token:  20	Value: -----	Parent:                    iostmt	IsLeaf:  NO	Symbol:                       var
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                       var	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         s	Linenumber:    36	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         )	Linenumber:    36	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         )	Linenumber:    36	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                     print	Linenumber:    36	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                   readArr	Linenumber:    44	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 47	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 49	Lexeme:                    ------	Linenumber: -----	Token:  26	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:             lvaluearrstmt
+Rule: --	Lexeme:                         [	Linenumber:    45	Token:  54	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                      SQBO
+Rule: 51	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:             lvaluearrstmt	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                      arr1	Linenumber:    45	Token:  59	Value: -----	Parent:                       ind	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         [	Linenumber:    45	Token:  55	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                         [	Linenumber:    45	Token:  53	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: 58	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:             lvaluearrstmt	IsLeaf:  NO	Symbol:                expression
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:                expression	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 37	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         1	Linenumber:    45	Token:  61	Value:     1	Parent:                  varidnum	IsLeaf: YES	Symbol:                       NUM
+Rule: -2	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                         ;	Linenumber:    45	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 69	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: --	Lexeme:                         ;	Linenumber:    45	Token:   0	Value: -----	Parent:                        n8	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 65	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         ;	Linenumber:    45	Token:   0	Value: -----	Parent:                        n7	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    45	Token:  51	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:    47	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                   tempvar	Linenumber:    47	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:    47	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:    47	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: -2	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                         ;	Linenumber:    47	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 29	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 90	Lexeme:                    ------	Linenumber: -----	Token:  48	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:               declarestmt
+Rule: --	Lexeme:                   declare	Linenumber:    48	Token:   9	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   DECLARE
+Rule: 55	Lexeme:                    ------	Linenumber: -----	Token:  30	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                    idlist
+Rule: --	Lexeme:                         i	Linenumber:    48	Token:  59	Value: -----	Parent:                    idlist	IsLeaf: YES	Symbol:                        ID
+Rule: 57	Lexeme:                    ------	Linenumber: -----	Token:  31	Value: -----	Parent:                    idlist	IsLeaf:  NO	Symbol:                        n3
+Rule: --	Lexeme:                         :	Linenumber:    48	Token:   0	Value: -----	Parent:                        n3	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         :	Linenumber:    48	Token:  49	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                     COLON
+Rule: 16	Lexeme:                    ------	Linenumber: -----	Token:  11	Value: -----	Parent:               declarestmt	IsLeaf:  NO	Symbol:                  datatype
+Rule: --	Lexeme:                   integer	Linenumber:    48	Token:   2	Value: -----	Parent:                  datatype	IsLeaf: YES	Symbol:                   INTEGER
+Rule: --	Lexeme:                         ;	Linenumber:    48	Token:  51	Value: -----	Parent:               declarestmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                         i	Linenumber:    49	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 46	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 48	Lexeme:                    ------	Linenumber: -----	Token:  25	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:              lvalueidstmt
+Rule: --	Lexeme:                        :=	Linenumber:    49	Token:  53	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: 58	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:              lvalueidstmt	IsLeaf:  NO	Symbol:                expression
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:                expression	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 37	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         1	Linenumber:    49	Token:  61	Value:     1	Parent:                  varidnum	IsLeaf: YES	Symbol:                       NUM
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                         ;	Linenumber:    49	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                         ;	Linenumber:    49	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 69	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: --	Lexeme:                         ;	Linenumber:    49	Token:   0	Value: -----	Parent:                        n8	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 65	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         ;	Linenumber:    49	Token:   0	Value: -----	Parent:                        n7	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    49	Token:  51	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 31	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 101	Lexeme:                    ------	Linenumber: -----	Token:  54	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:             iterativestmt
+Rule: --	Lexeme:                     while	Linenumber:    50	Token:  34	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                     WHILE
+Rule: --	Lexeme:                         (	Linenumber:    50	Token:  56	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                        BO
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:             iterativestmt	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         i	Linenumber:    50	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                        <=	Linenumber:    50	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                        <=	Linenumber:    50	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                        <=	Linenumber:    50	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 68	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: 85	Lexeme:                    ------	Linenumber: -----	Token:  47	Value: -----	Parent:                        n8	IsLeaf:  NO	Symbol:              relationalop
+Rule: --	Lexeme:                        <=	Linenumber:    50	Token:  40	Value: -----	Parent:              relationalop	IsLeaf: YES	Symbol:                        LE
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                        n8	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         k	Linenumber:    50	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         )	Linenumber:    50	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                         )	Linenumber:    50	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                         )	Linenumber:    50	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 65	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         )	Linenumber:    50	Token:   0	Value: -----	Parent:                        n7	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         )	Linenumber:    50	Token:  57	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                     start	Linenumber:    50	Token:   7	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                     START
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:             iterativestmt	IsLeaf:  NO	Symbol:                statements
+Rule: 27	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 32	Lexeme:                    ------	Linenumber: -----	Token:  17	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                    iostmt
+Rule: --	Lexeme:                 get_value	Linenumber:    52	Token:  16	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                 GET_VALUE
+Rule: --	Lexeme:                         (	Linenumber:    52	Token:  56	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BO
+Rule: --	Lexeme:                   tempvar	Linenumber:    52	Token:  59	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         )	Linenumber:    52	Token:  57	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                        BC
+Rule: --	Lexeme:                         ;	Linenumber:    52	Token:  51	Value: -----	Parent:                    iostmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                      arr1	Linenumber:    53	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 47	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 49	Lexeme:                    ------	Linenumber: -----	Token:  26	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:             lvaluearrstmt
+Rule: --	Lexeme:                         [	Linenumber:    53	Token:  54	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                      SQBO
+Rule: 51	Lexeme:                    ------	Linenumber: -----	Token:  27	Value: -----	Parent:             lvaluearrstmt	IsLeaf:  NO	Symbol:                       ind
+Rule: --	Lexeme:                         i	Linenumber:    53	Token:  59	Value: -----	Parent:                       ind	IsLeaf: YES	Symbol:                        ID
+Rule: --	Lexeme:                         ]	Linenumber:    53	Token:  55	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                      SQBC
+Rule: --	Lexeme:                        :=	Linenumber:    53	Token:  53	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: -2	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:             lvaluearrstmt	IsLeaf:  NO	Symbol:                expression
+Rule: --	Lexeme:                         ;	Linenumber:    53	Token:  51	Value: -----	Parent:             lvaluearrstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 25	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: 28	Lexeme:                    ------	Linenumber: -----	Token:  16	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                 statement
+Rule: 43	Lexeme:                    ------	Linenumber: -----	Token:  22	Value: -----	Parent:                 statement	IsLeaf:  NO	Symbol:                simplestmt
+Rule: 45	Lexeme:                    ------	Linenumber: -----	Token:  23	Value: -----	Parent:                simplestmt	IsLeaf:  NO	Symbol:                assignstmt
+Rule: --	Lexeme:                         i	Linenumber:    54	Token:  59	Value: -----	Parent:                assignstmt	IsLeaf: YES	Symbol:                        ID
+Rule: 46	Lexeme:                    ------	Linenumber: -----	Token:  24	Value: -----	Parent:                assignstmt	IsLeaf:  NO	Symbol:                 whichstmt
+Rule: 48	Lexeme:                    ------	Linenumber: -----	Token:  25	Value: -----	Parent:                 whichstmt	IsLeaf:  NO	Symbol:              lvalueidstmt
+Rule: --	Lexeme:                        :=	Linenumber:    54	Token:  53	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                  ASSIGNOP
+Rule: 58	Lexeme:                    ------	Linenumber: -----	Token:  32	Value: -----	Parent:              lvalueidstmt	IsLeaf:  NO	Symbol:                expression
+Rule: 63	Lexeme:                    ------	Linenumber: -----	Token:  35	Value: -----	Parent:                expression	IsLeaf:  NO	Symbol:   arithmeticorbooleanexpr
+Rule: 66	Lexeme:                    ------	Linenumber: -----	Token:  37	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                   anyterm
+Rule: 70	Lexeme:                    ------	Linenumber: -----	Token:  39	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:            arithmeticexpr
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 36	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         i	Linenumber:    54	Token:  59	Value: -----	Parent:                  varidnum	IsLeaf: YES	Symbol:                        ID
+Rule: 42	Lexeme:                    ------	Linenumber: -----	Token:  21	Value: -----	Parent:                  varidnum	IsLeaf:  NO	Symbol:                   whichid
+Rule: --	Lexeme:                         +	Linenumber:    54	Token:   0	Value: -----	Parent:                   whichid	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                         +	Linenumber:    54	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 71	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:            arithmeticexpr	IsLeaf:  NO	Symbol:                        n4
+Rule: 78	Lexeme:                    ------	Linenumber: -----	Token:  44	Value: -----	Parent:                        n4	IsLeaf:  NO	Symbol:                       op1
+Rule: --	Lexeme:                         +	Linenumber:    54	Token:  35	Value: -----	Parent:                       op1	IsLeaf: YES	Symbol:                      PLUS
+Rule: 73	Lexeme:                    ------	Linenumber: -----	Token:  41	Value: -----	Parent:                        n4	IsLeaf:  NO	Symbol:                      term
+Rule: 77	Lexeme:                    ------	Linenumber: -----	Token:  43	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                    factor
+Rule: 37	Lexeme:                    ------	Linenumber: -----	Token:  19	Value: -----	Parent:                    factor	IsLeaf:  NO	Symbol:                  varidnum
+Rule: --	Lexeme:                         1	Linenumber:    54	Token:  61	Value:     1	Parent:                  varidnum	IsLeaf: YES	Symbol:                       NUM
+Rule: 75	Lexeme:                    ------	Linenumber: -----	Token:  42	Value: -----	Parent:                      term	IsLeaf:  NO	Symbol:                        n5
+Rule: --	Lexeme:                         ;	Linenumber:    54	Token:   0	Value: -----	Parent:                        n5	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 72	Lexeme:                    ------	Linenumber: -----	Token:  40	Value: -----	Parent:                        n4	IsLeaf:  NO	Symbol:                        n4
+Rule: --	Lexeme:                         ;	Linenumber:    54	Token:   0	Value: -----	Parent:                        n4	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 69	Lexeme:                    ------	Linenumber: -----	Token:  38	Value: -----	Parent:                   anyterm	IsLeaf:  NO	Symbol:                        n8
+Rule: --	Lexeme:                         ;	Linenumber:    54	Token:   0	Value: -----	Parent:                        n8	IsLeaf: YES	Symbol:                   EPSILON
+Rule: 65	Lexeme:                    ------	Linenumber: -----	Token:  36	Value: -----	Parent:   arithmeticorbooleanexpr	IsLeaf:  NO	Symbol:                        n7
+Rule: --	Lexeme:                         ;	Linenumber:    54	Token:   0	Value: -----	Parent:                        n7	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                         ;	Linenumber:    54	Token:  51	Value: -----	Parent:              lvalueidstmt	IsLeaf: YES	Symbol:                   SEMICOL
+Rule: 26	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: --	Lexeme:                       end	Linenumber:    56	Token:   0	Value: -----	Parent:                statements	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                       end	Linenumber:    50	Token:   8	Value: -----	Parent:             iterativestmt	IsLeaf: YES	Symbol:                       END
+Rule: 26	Lexeme:                    ------	Linenumber: -----	Token:  15	Value: -----	Parent:                statements	IsLeaf:  NO	Symbol:                statements
+Rule: --	Lexeme:                       end	Linenumber:    57	Token:   0	Value: -----	Parent:                statements	IsLeaf: YES	Symbol:                   EPSILON
+Rule: --	Lexeme:                       end	Linenumber:    28	Token:   8	Value: -----	Parent:                 moduledef	IsLeaf: YES	Symbol:                       END
+Rule: 5	Lexeme:                    ------	Linenumber: -----	Token:   3	Value: -----	Parent:                   PROGRAM	IsLeaf:  NO	Symbol:              othermodules
+Rule: --	Lexeme:                          	Linenumber:    63	Token:   0	Value: -----	Parent:              othermodules	IsLeaf: YES	Symbol:                   EPSILON
+Enter a case
+[0: To exit]
+[1: Call Lexer]
+[2: Call Parser]
+[3: Generate AST]
+[4: Calculate AST compression ratio]
+[5: Print Symbol Table]
+[6: Print activation record sizes]
+[7: Print sizes of static and dynamic arrays]
+[8: Report compilation errors]
+[9: Generate code]
+ SYNTAX ERROR at line 4 TOKEN MISMATCH Expected COLON Found integer
+
+LEXICAL ERROR at line 9. Lexeme: =
+SYNTAX ERROR at line 9 on [Stack, Input] -> [whichstmt, 0.0] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 9 on [Stack, Input] -> [whichstmt, ;] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 10 TOKEN MISMATCH Expected IN Found in2
+SYNTAX ERROR at line 16 on [Stack, Input] -> [whichid, list] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL SQBO BC]
+SYNTAX ERROR at line 25 on [Stack, Input] -> [var, +] NO RULE FOUND. Expected one of: [ TRUE FALSE ID RNUM NUM]
+
+LEXICAL ERROR at line 29. Lexeme: .
+SYNTAX ERROR at line 33 TOKEN MISMATCH Expected WITH Found while
+SYNTAX ERROR at line 35 on [Stack, Input] -> [n7, >=] NO RULE FOUND. Expected one of: [ AND OR SEMICOL BC]
+SYNTAX ERROR at line 35 on [Stack, Input] -> [n7, k] NO RULE FOUND. Expected one of: [ AND OR SEMICOL BC]
+SYNTAX ERROR at line 37 TOKEN MISMATCH Expected SEMICOL Found end
+SYNTAX ERROR at line 44 on [Stack, Input] -> [statements, <<] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 44 on [Stack, Input] -> [statements, module] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 44 on [Stack, Input] -> [whichstmt, >>] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [whichstmt, takes] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [whichstmt, input] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 TOKEN MISMATCH Expected SQBC Found :
+SYNTAX ERROR at line 45 TOKEN MISMATCH Expected ASSIGNOP Found array
+SYNTAX ERROR at line 45 on [Stack, Input] -> [expression, [] NO RULE FOUND. Expected one of: [ TRUE FALSE PLUS MINUS BO ID RNUM NUM]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ..] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, 15] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ]] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, of] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, real] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ,] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, k] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, :] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, integer] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ]] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 46 on [Stack, Input] -> [statements, start] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 47 on [Stack, Input] -> [datatype, real23] NO RULE FOUND. Expected one of: [ INTEGER REAL BOOLEAN ARRAY]
+SYNTAX ERROR at line 53 on [Stack, Input] -> [expression, for] NO RULE FOUND. Expected one of: [ TRUE FALSE PLUS MINUS BO ID RNUM NUM]
+Cannot generate AST. There were syntax/lexical errorsEnter a case
+[0: To exit]
+[1: Call Lexer]
+[2: Call Parser]
+[3: Generate AST]
+[4: Calculate AST compression ratio]
+[5: Print Symbol Table]
+[6: Print activation record sizes]
+[7: Print sizes of static and dynamic arrays]
+[8: Report compilation errors]
+[9: Generate code]
+ SYNTAX ERROR at line 4 TOKEN MISMATCH Expected COLON Found integer
+
+LEXICAL ERROR at line 9. Lexeme: =
+SYNTAX ERROR at line 9 on [Stack, Input] -> [whichstmt, 0.0] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 9 on [Stack, Input] -> [whichstmt, ;] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 10 TOKEN MISMATCH Expected IN Found in2
+SYNTAX ERROR at line 16 on [Stack, Input] -> [whichid, list] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL SQBO BC]
+SYNTAX ERROR at line 25 on [Stack, Input] -> [var, +] NO RULE FOUND. Expected one of: [ TRUE FALSE ID RNUM NUM]
+
+LEXICAL ERROR at line 29. Lexeme: .
+SYNTAX ERROR at line 33 TOKEN MISMATCH Expected WITH Found while
+SYNTAX ERROR at line 35 on [Stack, Input] -> [n7, >=] NO RULE FOUND. Expected one of: [ AND OR SEMICOL BC]
+SYNTAX ERROR at line 35 on [Stack, Input] -> [n7, k] NO RULE FOUND. Expected one of: [ AND OR SEMICOL BC]
+SYNTAX ERROR at line 37 TOKEN MISMATCH Expected SEMICOL Found end
+SYNTAX ERROR at line 44 on [Stack, Input] -> [statements, <<] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 44 on [Stack, Input] -> [statements, module] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 44 on [Stack, Input] -> [whichstmt, >>] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [whichstmt, takes] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [whichstmt, input] NO RULE FOUND. Expected one of: [ ASSIGNOP SQBO]
+SYNTAX ERROR at line 45 TOKEN MISMATCH Expected SQBC Found :
+SYNTAX ERROR at line 45 TOKEN MISMATCH Expected ASSIGNOP Found array
+SYNTAX ERROR at line 45 on [Stack, Input] -> [expression, [] NO RULE FOUND. Expected one of: [ TRUE FALSE PLUS MINUS BO ID RNUM NUM]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ..] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, 15] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ]] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, of] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, real] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ,] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, k] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, :] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, integer] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 45 on [Stack, Input] -> [n5, ]] NO RULE FOUND. Expected one of: [ AND OR PLUS MINUS MUL DIV LT LE GE GT EQ NE SEMICOL BC]
+SYNTAX ERROR at line 46 on [Stack, Input] -> [statements, start] NO RULE FOUND. Expected one of: [ END DECLARE GET_VALUE PRINT USE FOR SWITCH BREAK WHILE SQBO ID]
+SYNTAX ERROR at line 47 on [Stack, Input] -> [datatype, real23] NO RULE FOUND. Expected one of: [ INTEGER REAL BOOLEAN ARRAY]
+SYNTAX ERROR at line 53 on [Stack, Input] -> [expression, for] NO RULE FOUND. Expected one of: [ TRUE FALSE PLUS MINUS BO ID RNUM NUM]
+
+CALLED ON NULL ROOT
+
+traverse 2 called on nullEnter a case
+[0: To exit]
+[1: Call Lexer]
+[2: Call Parser]
+[3: Generate AST]
+[4: Calculate AST compression ratio]
+[5: Print Symbol Table]
+[6: Print activation record sizes]
+[7: Print sizes of static and dynamic arrays]
+[8: Report compilation errors]
+[9: Generate code]
+ 

@@ -637,11 +637,11 @@ ASTnode* populateAST(ptree_node* root, ASTnode* parent, ASTnode* inhert){
 void printAST(ASTnode* root){
     printASTNode(root);
     if(root->firstChild!=NULL){
-        printf("\n%s going to child",nodeNameString[root->label]);
+        // printf("\n%s going to child",nodeNameString[root->label]);
         printAST(root->firstChild);
     }
     if(root->sibling!=NULL){
-        printf("\n%s going to sibling",nodeNameString[root->label]);
+        // printf("\n%s going to sibling",nodeNameString[root->label]);
         printAST(root->sibling);
     }
     return;

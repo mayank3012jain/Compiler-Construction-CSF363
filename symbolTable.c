@@ -22,10 +22,10 @@ void traverse_ast(ASTnode* root, moduleHashNode* symbolForest[]){
     symbolTableNode* stable = NULL;
     
     traverse_ast_recurse(root,stable,symbolForest);
-    printf("\n\n***************starting second traversal************\n");
+    // printf("\n\n***************starting second traversal************\n");
     traverse_ast_recurse2(root,stable,symbolForest,0);
     
-    printSymbolForest(symbolForest);
+    // printSymbolForest(symbolForest);
 }
 
 void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode* symbolForest[]){ 
@@ -72,7 +72,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
                     symbolTableEntry* endIn = getSymbolTableEntry(stable,ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->lexeme);
                     //check for NULL
                     if(startIn==NULL || endIn== NULL){
-                        printf("Line numbe- %d Error- index variable not declared", ast->firstChild->firstChild->firstChild->syntaxTreeNode->lineNumber);
+                        printf("Line number- %d Error- index variable not declared", ast->firstChild->firstChild->firstChild->syntaxTreeNode->lineNumber);
                     }
                     int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
                         ast->firstChild->firstChild->sibling->label, 1, 0, 0,

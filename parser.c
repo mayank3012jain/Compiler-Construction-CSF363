@@ -367,7 +367,7 @@ ptree_node* make_parse_tree(GRAMMAR gr, PARSE_TABLE pt,char* input, FIRST first,
     while(1){
         // if stack head is terminal
         if(stack->tag==TERMINAL && stack->term==DOLLAR && tokenReturn->token==DOLLAR){
-            printf("\nPARSED SUCCESSFULLY\n");
+            // printf("\nPARSED SUCCESSFULLY\n");
             stack = pop(stack);
             break;
         }
@@ -464,11 +464,20 @@ void printNode(ptree_node* node){
     if (node->parentNode == NULL)
         printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule, node->lexeme, node->lineNumber, node->token,"-----", "ROOT", " NO", node->symbol);
     else if(node->isLeaf == 1 && node->token==RNUM){
-        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5f\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.rnum, node->parentNode->symbol, "YES", node->symbol);
+        if (node->rule == -2)
+            printf("Rule: --\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5f\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->lexeme, node->lineNumber, node->token, node->value.rnum, node->parentNode->symbol, "YES", node->symbol);
+        else 
+            printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5f\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.rnum, node->parentNode->symbol, "YES", node->symbol);
     }else if(node->isLeaf == 1 && node->token==NUM){
-        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5d\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.num, node->parentNode->symbol, "YES", node->symbol);
+        if (node->rule == -2)
+            printf("Rule: --\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5d\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->lexeme, node->lineNumber, node->token, node->value.num, node->parentNode->symbol, "YES", node->symbol);
+        else
+            printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %5d\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, node->value.num, node->parentNode->symbol, "YES", node->symbol);
     }else if(node->isLeaf == 1)
-        printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, "-----", node->parentNode->symbol, "YES", node->symbol);
+        if (node->rule == -2)
+            printf("Rule: --\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->lexeme, node->lineNumber, node->token, "-----", node->parentNode->symbol, "YES", node->symbol);
+        else
+            printf("Rule: %d\tLexeme: %25s\tLinenumber: %5d\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,node->lexeme, node->lineNumber, node->token, "-----", node->parentNode->symbol, "YES", node->symbol);
     else{
         printf("Rule: %d\tLexeme: %25s\tLinenumber: %5s\tToken: %3d\tValue: %s\tParent: %25s\tIsLeaf: %s\tSymbol: %25s\n", node->rule,"------", "-----", node->token, "-----", node->parentNode->symbol, " NO", node->symbol);
     }
