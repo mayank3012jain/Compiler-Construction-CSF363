@@ -24,6 +24,7 @@ int DATA_TYPE_SIZES[] = {1, 4, 2};
 int ASTNODES = 0;
 int PARSETREENODES = 0;
 int lex_parse_error_flag = 0;
+int printFlag=0;
 
 int main(int argc, char* argv[]){
 
@@ -124,6 +125,7 @@ int main(int argc, char* argv[]){
                     break;
 			
             case 5:
+                    printFlag=0;
                     syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
                     if(!lex_parse_error_flag)
                         ast = populateAST(syntaxTree, NULL, NULL);
@@ -143,8 +145,15 @@ int main(int argc, char* argv[]){
                     break;
 
             case 7:
-                    // Array sizes
-                    break;
+                    printFlag=1;
+                    syntaxTree = callBoth(gr,pt, read_buffer, first, follow, fin);
+                    if(!lex_parse_error_flag)
+                        ast = populateAST(syntaxTree, NULL, NULL);
+    
+                    
+                    traverse_ast(ast, symbolForest);
+                    printSymbolForest(symbolForest);
+				    break;
 
             case 8: 
                     callTime(gr, pt, read_buffer, first, follow, fin);

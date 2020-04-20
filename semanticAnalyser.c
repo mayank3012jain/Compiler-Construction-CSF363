@@ -570,8 +570,11 @@ int printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNod
 
     if (varhn == NULL)
         return correction;
-
-    correction = printSymbolTableEntry(varhn->entryPtr, symNode, modhash, correction);
+    if(printFlag==0){
+        correction = printSymbolTableEntry(varhn->entryPtr, symNode, modhash, correction);
+    }else{
+        printArray(varhn->entryPtr, symNode, modhash);
+    }
     varHashNode *temp = varhn;
     while(temp->next != NULL){
         temp = temp->next;
@@ -612,6 +615,19 @@ int printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, 
     return correction;
 }
 
+void printArray(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash){
+    
+    if(symEntry->isArray==0)
+        return;
+    if(symEntry->isStatic==1){
+        int stIn, endIn;
+        stIn = symEntry->startIndex;
+        endIn = symEntry->endIndex;
+        printf("%23s  %4d -%4d  %s  %s array [%d, %d]  %s\n", modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->name, "Static", stIn, endIn,  nodeNameString[symEntry->type]);
+    }else{
+        printf("%23s  %4d-%4d  %s  %s array [%s, %s]  %s\n", modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->name, "Dynamic", symEntry->startIndexDyn->name, symEntry->endIndexDyn->name,  nodeNameString[symEntry->type]);
+    }
+}
 
 int checkFunctionReturnType(ASTnode* moduleRoot, ASTnode* reuseStmtRoot, symbolTableNode* stable, moduleHashNode* symbolForest[]){
     ASTnode *formalPar = moduleRoot->firstChild->sibling->sibling->firstChild;

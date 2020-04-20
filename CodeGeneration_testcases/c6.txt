@@ -58,7 +58,6 @@ Input: Enter an integer value
 7
 RUN TIME ERROR:  Array index out of bound                [Note: Run time bound checking is done and reported here as A[5] is an error, Aborted execution]
 
-
 Similarly run the generated assembly code for other input values and verify.
 **
 

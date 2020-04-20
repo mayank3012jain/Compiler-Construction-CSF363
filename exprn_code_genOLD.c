@@ -54,33 +54,21 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 
         symbolTableEntry* entry = getSymbolTableEntry(stable,node->firstChild->syntaxTreeNode->lexeme);
 		// If array
-		
+
 		//TODO:
         if(ind){
-
             // If array indexed by variable
             if(ind->label==ID_NODE){
 				// Load index
-				fprintf(fptr, "\txor rsi, rsi\n");//check for id type
 				char* offset = getReturnOffset(ind->syntaxTreeNode->lexeme, stable, retOffset, size);
 				//check dynamic range
-				if(entry->isStatic == 1){
-					fprintf(fptr, "\tmov si, word [%s]\n", offset);
-					fprintf(fptr, "\tcmp si, %d\n", entry->endIndex);
-					fprintf(fptr, "\tjg _exit\n");
-					fprintf(fptr, "\tcmp si, %d\n", entry->startIndex);
-					fprintf(fptr, "\tjl _exit\n");
-				}
-				else{
-					char* startOff = getReturnOffset(entry->startIndexDyn->name, stable, retOffset, size);
-					char* endOff = getReturnOffset(entry->endIndexDyn->name, stable, retOffset, size);
 
-					fprintf(fptr, "\tmov si, word [%s]\n", offset);
-					fprintf(fptr, "\tcmp si, word[%s]\n", endOff);
-					fprintf(fptr, "\tjg _exit\n");
-					fprintf(fptr, "\tcmp si, word[%s]\n", startOff);
-					fprintf(fptr, "\tjl _exit\n");
-				}
+				fprintf(fptr, "\txor rsi, rsi\n");//check for id type
+				fprintf(fptr, "\tmov si, word [%s]\n", offset);
+				fprintf(fptr, "\tcmp si, %d\n", entry->endIndex);
+				fprintf(fptr, "\tjg _exit\n");
+				fprintf(fptr, "\tcmp si, %d\n", entry->startIndex);
+				fprintf(fptr, "\tjl _exit\n");
 			}
 			// If array indexed by NUM
 			else{
@@ -89,26 +77,14 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 				fprintf(fptr, "\tmov si, %d\n", ind->syntaxTreeNode->value.num);
 			}
             // Get actual index
-			if(entry->isStatic == 1){
-				fprintf(fptr, "\tsub rsi, %d\n", entry->startIndex);
-				fprintf(fptr, "\timul rsi, %d\n", DATA_TYPE_SIZES[entry->type]);
-			}
-			else{
-				char* startOffArr = getReturnOffset(entry->startIndexDyn->name, stable, retOffset, size);
-				fprintf(fptr, "\tsub si, word[%s]\n", startOffArr);
-			}
+            fprintf(fptr, "\tsub rsi, %d\n", entry->startIndex);
+			fprintf(fptr, "\timul rsi, %d\n", DATA_TYPE_SIZES[entry->type]);
 
-			fprintf(fptr, "\tmov r12, rbp\n");
-
-			if(entry->isStatic == 1){
 			//load the address of element
-				fprintf(fptr, "\tsub r12, %d\n", entry->offset+size+DATA_TYPE_SIZES[entry->type]);
-				fprintf(fptr, "\tsub r12, rsi\n");
-			}
-			else{
-				getArrayElement("r15","r12","rsi",entry,stable,fptr,retOffset, size);
-			}
-			
+			fprintf(fptr, "\tmov r12, rbp\n");//hardcoded for now
+        	fprintf(fptr, "\tsub r12, %d\n", entry->offset+size+DATA_TYPE_SIZES[entry->type]);
+        	fprintf(fptr, "\tsub r12, rsi\n");
+
 			if(entry->type==INT){				
 				// Load array value            
 				fprintf(fptr, "\tmov r8w, word[r12]\n");

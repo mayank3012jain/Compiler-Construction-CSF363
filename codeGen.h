@@ -36,4 +36,6 @@ void declareStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int*
 int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stable, int* retOffset, int size);
 void pushRetParameters(FILE *fptr, ASTnode* node, symbolTableNode *stable, moduleHashNode* symbolForest[], int* retOffset, int size);
 
+void getArrayElement(char* reg, char* reg1, char* i, symbolTableEntry* arrSymEntry, symbolTableNode* stable, FILE* fptr, int* retOffset, int size);
+
 #endif

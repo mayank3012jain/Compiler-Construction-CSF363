@@ -36,5 +36,6 @@ extern char* keywords[];
 extern char* termString[]; //For getting enum->string
 extern char* NtermString[]; //For getting enum->string 
 // extern hashNode* symbolTable[];
+extern int printFlag;
 
 #endif

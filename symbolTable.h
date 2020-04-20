@@ -34,6 +34,7 @@ int printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash, int 
 int printVarHashTable(varHashNode* varht[], symbolTableNode* symNode, moduleHashNode* modhash, int correction);
 int printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNode* modhash, int correction);
 int printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash, int correction);
+void printArray(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash);
 
 void activationSizeAll(moduleHashNode* symbolForest[]);
 int activationSizeUtil(symbolTableNode* stable);

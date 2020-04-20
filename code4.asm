@@ -2,12 +2,18 @@ extern	scanf
 extern	printf
 
 section	.data
-	printTRUE	db	'TRUE', 10, 0
-	printFALSE	db	'FALSE', 10, 0
-	printI	db	'%d', 10, 0
-	printR	db	'%f', 10, 0
+	printTRUE	db	'Output: TRUE', 10, 0
+	printFALSE	db	'Output: FALSE', 10, 0
+	printI	db	'Output: %d', 10, 0
+	printR	db	'Output: %f', 10, 0
+	printINPUTINT	db	'Input: Enter an INTEGER value:', 10, 0
+	printINPUTBOOL	db	'Input: Enter a BOOLEAN (0/1) Value:', 10, 0
+	printINPUTINTARR	db	'Input: Enter %d INTEGER values:', 10, 0
+	printINPUTBOOLARR	db	'Input: Enter %d BOOLEAN (0/1) values:', 10, 0
+	printArrUtil1	db	'Output: ', 0
 	printIArr	db	'%d ', 0
 	printRArr	db	'%f ', 0
+	printArrUtil2	db	' ', 10, 0
 	getI	db	'%d', 0
 	getR	db	'%f', 0
 	printTRUEArr	db	'TRUE ', 0
@@ -123,6 +129,10 @@ main:
 	mov	bx, [t0]
 	mov word[rbp - 12], bx
 
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
@@ -130,6 +140,10 @@ main:
 	mov bx, word[bufferInt]
 	mov word[rbp - 2], bx
 
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
@@ -209,6 +223,10 @@ _L1:
 	mov	bx, [t0]
 	mov word[rbp - 31], bx
 
+	mov rdi, printINPUTINT
+	mov rsi, 0
+	xor rax, rax
+	call printf
 	mov rsi,	bufferInt
 	mov rdi, getI
 	mov al, 0
@@ -387,11 +405,20 @@ _L7:
 	mov rax, 0
 	call printf
 
+	mov word[t39], 6
+	mov rax, 0
+	mov ax, word[t39]
+	movsx rax, ax
+	mov rdi,printINPUTINTARR
+	mov rsi, rax
+	mov rax, 0
+	call printf
 	mov r13, 0
+	mov r12, rbp
 	mov r12, rbp
 	sub r12, 18
 _L8:
-	cmp r13, 6
+	cmp r13w, word[t39]
 	jge _L9
 	mov rsi,	bufferInt
 	mov rdi, getI
@@ -468,6 +495,10 @@ _L9:
 	mov rax, 0
 	call printf
 
+	mov rdi, printArrUtil1
+	mov rsi, 0
+	mov rax, 0
+	call printf
 	mov r13, 0
 	mov r12, rbp
 	sub r12, 18
@@ -477,7 +508,7 @@ _L10:
 	mov rax, 0
 	mov ax, word[r12]
 	movsx rax, ax
-	mov rdi,printI
+	mov rdi,printIArr
 	mov rsi, rax
 	mov rax, 0
 	call printf
@@ -485,6 +516,10 @@ _L10:
 	add r13, 1
 	jmp _L10
 _L11:
+	mov rdi, printArrUtil2
+	mov rsi, 0
+	mov rax, 0
+	call printf
 	jmp _exit
 
 _exit:
