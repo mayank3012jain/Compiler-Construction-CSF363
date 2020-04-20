@@ -35,6 +35,8 @@ void initializeCodeGen(ASTnode* root, FILE* fptr, moduleHashNode* symbolForest[]
     fprintf(fptr, "\tprintTRUEArr\tdb\t\'TRUE \', 0\n");
     fprintf(fptr, "\tprintFALSEArr\tdb\t\'FALSE \', 0\n\n");
 
+    fprintf(fptr, "\tprintError\tdb\t\'Error- Out of bounds \', 10, 0\n\n");
+    
     fprintf(fptr,"\tbufferInt\tdb\t0\n");
 	fprintf(fptr,"\toutputInt\tdb\t0\n");
     
@@ -406,10 +408,21 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
                     // fprintf(fptr, "\tsub r13w, %d\n", entryIndex->offset);
                     //cmp index
                     // fprintf(fptr,"\tmov r15w, word[r13]\n");
+                    char* label = new_label();
+                    char* label1 = new_label();
                     fprintf(fptr, "\tcmp r13, %d\n", entry->endIndex);
-                    fprintf(fptr, "\tjg _exit\n");
+                    fprintf(fptr, "\tjg %s\n", label1);
                     fprintf(fptr, "\tcmp r13, %d\n", entry->startIndex);
-                    fprintf(fptr, "\tjl _exit\n");
+                    fprintf(fptr, "\tjge %s\n", label);
+                    
+                    fprintf(fptr ,"%s: \n", label1);
+                    fprintf(fptr, "\tmov rdi, %s\n", "printError");
+                    fprintf(fptr, "\tmov rsi, 0\n");
+                    fprintf(fptr, "\tmov rax, 0\n");
+                    fprintf(fptr, "\tcall printf\n");
+                    fprintf(fptr, "\tjmp _exit\n");
+                    fprintf(fptr ,"%s: \n", label);
+                    
 
                     fprintf(fptr, "\tsub r13, %d\n", entry->startIndex);
                     fprintf(fptr, "\timul r13, %d\n", DATA_TYPE_SIZES[entry->type]);
@@ -534,10 +547,20 @@ void printStmtCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, module
                     fprintf(fptr, "\tmov r1w, word[%s]\n", getReturnOffset(entry->startIndexDyn->name, stable, retOffset, size));
                     fprintf(fptr, "\tmov r2w, word[%s]\n", getReturnOffset(entry->endIndexDyn->name, stable, retOffset, size));
                 
+                    char* label = new_label();
+                    char* label1 = new_label();
                     fprintf(fptr, "\tcmp r13, r2w\n");
-                    fprintf(fptr, "\tjg _exit\n");
+                    fprintf(fptr, "\tjg %s\n", label1);
                     fprintf(fptr, "\tcmp r13, r1w\n");
-                    fprintf(fptr, "\tjl _exit\n");
+                    fprintf(fptr, "\tjge %s\n", label);
+
+                    fprintf(fptr ,"%s: \n", label1);
+                    fprintf(fptr, "\tmov rdi, %s\n", "printError");
+                    fprintf(fptr, "\tmov rsi, 0\n");
+                    fprintf(fptr, "\tmov rax, 0\n");
+                    fprintf(fptr, "\tcall printf\n");
+                    fprintf(fptr, "\tjmp _exit\n");
+                    fprintf(fptr ,"%s: \n", label);
 
                     fprintf(fptr, "\tsub r13, r1w\n");
                     fprintf(fptr, "\timul r13, %d\n", DATA_TYPE_SIZES[entry->type]);
@@ -824,8 +847,9 @@ void assignopCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, int *sc
 
         fprintf(fptr,"\tmov r9, 0\n");
 
-        if(symEntry->isStatic == 1)
+        if(symEntry->isStatic == 1){
             fprintf(fptr,"\tmov word[%s], %d\n", var,symEntry->endIndex-symEntry->startIndex+1);
+        }
         else{
             char* leftInd = getReturnOffset(symEntry->startIndexDyn->name,stable, retOffset, size);
             char* rightInd = getReturnOffset(symEntry->endIndexDyn->name,stable, retOffset, size);
@@ -919,10 +943,20 @@ void assignopArrayCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, in
             fprintf(fptr, "\tmov r14, 0\n");
             fprintf(fptr,"\tmov r14w, word[r13]\n");
 
+            char* label = new_label();
+            char* label1 = new_label();
             fprintf(fptr, "\tcmp r14w, %d\n", symEntry->endIndex);
-            fprintf(fptr, "\tjg _exit\n");
-            fprintf(fptr, "\tcmp r14, %d\n", symEntry->startIndex);
-            fprintf(fptr, "\tjl _exit\n");
+            fprintf(fptr, "\tjg %s\n", label1);
+            fprintf(fptr, "\tcmp r14w, %d\n", symEntry->startIndex);
+            fprintf(fptr, "\tjge %s\n", label);
+            
+            fprintf(fptr ,"%s: \n", label1);
+            fprintf(fptr, "\tmov rdi, %s\n", "printError");
+            fprintf(fptr, "\tmov rsi, 0\n");
+            fprintf(fptr, "\tmov rax, 0\n");
+            fprintf(fptr, "\tcall printf\n");
+            fprintf(fptr, "\tjmp _exit\n");
+            fprintf(fptr ,"%s: \n", label);
 
             fprintf(fptr, "\tsub r14, %d\n", symEntry->startIndex);
             fprintf(fptr, "\timul r14, %d\n", DATA_TYPE_SIZES[symEntry->type]);
@@ -949,16 +983,39 @@ void assignopArrayCodeGen(ASTnode* root, FILE *fptr, symbolTableNode* stable, in
         //mov r1, [offset of startInd]
         //sub regi, r1
         char* startIndOffset = getReturnOffset(symEntry->startIndexDyn->name, stable, retOffset, size);
+        char* endIndOffset = getReturnOffset(symEntry->endIndexDyn->name, stable, retOffset, size);
         fprintf(fptr,"\tmov r12, 0\n");
         fprintf(fptr,"\tmov r13, 0\n");
 
         fprintf(fptr,"\tmov r13w, word[%s]\n", startIndOffset);
         if(root->firstChild->firstChild->sibling->label == NUM_NODE){//
+        
             fprintf(fptr,"\tmov r12w, %d\n", root->firstChild->firstChild->sibling->syntaxTreeNode->value.num); //For index
+            
         }else{//ind is variable
             char* actualIndOffset = getReturnOffset(symEntryInd->name, stable, retOffset, size);
             fprintf(fptr,"\tmov r12w, word[%s]\n", actualIndOffset);
         }
+
+        
+        char* label = new_label();
+        char* label1 = new_label();
+        fprintf(fptr,"\tmov r14w, word[%s]\n",startIndOffset);
+        fprintf(fptr,"\tcmp r12w, r14w\n");
+        fprintf(fptr, "\tjl %s\n", label1);
+        fprintf(fptr,"\tmov r14w, word[%s]\n",endIndOffset);
+        fprintf(fptr,"\tcmp r12w, r14w\n");
+        fprintf(fptr, "\tjle %s\n", label);
+
+        fprintf(fptr ,"%s: \n", label1);
+        fprintf(fptr, "\tmov rdi, %s\n", "printError");
+        fprintf(fptr, "\tmov rsi, 0\n");
+        fprintf(fptr, "\tmov rax, 0\n");
+        fprintf(fptr, "\tcall printf\n");
+        fprintf(fptr, "\tjmp _exit\n");
+        fprintf(fptr ,"%s: \n", label);
+
+
         fprintf(fptr,"\tsub r12w, r13w\n");
 
         getArrayElement("r10", "r11", "r12", symEntry, stable, fptr, retOffset, size);

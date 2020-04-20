@@ -19,6 +19,8 @@ section	.data
 	printTRUEArr	db	'TRUE ', 0
 	printFALSEArr	db	'FALSE ', 0
 
+	printError	db	'Error- Out of bounds ', 10, 0
+
 	bufferInt	db	0
 	outputInt	db	0
 	t0	dw	0
@@ -262,107 +264,31 @@ _L5:
 	mov bx, word[bufferInt]
 	mov word[rbp - 4], bx
 
-	xor rsi, rsi
-	mov si, word [rbp - 2]
-	cmp si, word[rbp - 18]
-	jg _exit
-	cmp si, word[rbp - 16]
-	jl _exit
-	sub si, word[rbp - 16]
-	mov r12, rbp
-	mov r15, rsi
-	imul r15, 2
-	mov r12, qword[rbp - 26]
-	sub r12, r15
-	mov r8w, word[r12]
-	mov word [t1], r8w
-	xor rsi, rsi
-	mov si, word [rbp - 4]
-	cmp si, word[rbp - 18]
-	jg _exit
-	cmp si, word[rbp - 16]
-	jl _exit
-	sub si, word[rbp - 16]
-	mov r12, rbp
-	mov r15, rsi
-	imul r15, 2
-	mov r12, qword[rbp - 34]
-	sub r12, r15
-	mov r8w, word[r12]
-	mov word [t2], r8w
-	mov word r8w, [t1]
-	add r8w, [t2]
-	mov word [t0], r8w
-	mov	bx, [t0]
-	mov word[rbp - 10], bx
-
-	xor rsi, rsi
-	mov si, word [rbp - 6]
-	cmp si, word[rbp - 18]
-	jg _exit
-	cmp si, word[rbp - 16]
-	jl _exit
-	sub si, word[rbp - 16]
-	mov r12, rbp
-	mov r15, rsi
-	imul r15, 2
-	mov r12, qword[rbp - 26]
-	sub r12, r15
-	mov r8w, word[r12]
-	mov word [t1], r8w
-	xor rsi, rsi
-	mov si, word [rbp - 4]
-	cmp si, word[rbp - 18]
-	jg _exit
-	cmp si, word[rbp - 16]
-	jl _exit
-	sub si, word[rbp - 16]
-	mov r12, rbp
-	mov r15, rsi
-	imul r15, 2
-	mov r12, qword[rbp - 34]
-	sub r12, r15
-	mov r8w, word[r12]
-	mov word [t2], r8w
-	mov word r8w, [t1]
-	add r8w, [t2]
-	mov word [t0], r8w
-	mov	bx, [t0]
-	mov word[rbp - 12], bx
-
-	xor rsi, rsi
-	mov si, word [rbp - 2]
-	cmp si, word[rbp - 18]
-	jg _exit
-	cmp si, word[rbp - 16]
-	jl _exit
-	sub si, word[rbp - 16]
-	mov r12, rbp
-	mov r15, rsi
-	imul r15, 2
-	mov r12, qword[rbp - 26]
-	sub r12, r15
-	mov r8w, word[r12]
-	mov word [t1], r8w
-	xor rsi, rsi
-	mov si, word [rbp - 6]
-	cmp si, word[rbp - 18]
-	jg _exit
-	cmp si, word[rbp - 16]
-	jl _exit
-	sub si, word[rbp - 16]
-	mov r12, rbp
-	mov r15, rsi
-	imul r15, 2
-	mov r12, qword[rbp - 34]
-	sub r12, r15
-	mov r8w, word[r12]
-	mov word [t2], r8w
-	mov word r8w, [t1]
-	add r8w, [t2]
-	mov word [t0], r8w
-	mov	bx, [t0]
-	mov word[rbp - 14], bx
+	mov word[t0], 2
+	mov r12, 0
+	mov r13, 0
+	mov r13w, word[rbp - 16]
+	mov r12w, word[rbp - 2]
+	mov r14w, word[rbp - 16]
+	cmp r12w, r14w
+	jl _L8
+	mov r14w, word[rbp - 18]
+	cmp r12w, r14w
+	jle _L7
+_L8: 
+	mov rdi, printError
+	mov rsi, 0
+	mov rax, 0
+	call printf
+	jmp _exit
+_L7: 
+	sub r12w, r13w
+	mov r10, r12
+	imul r10, 2
+	mov r11, qword[rbp - 26]
+	sub r11, r10
+	mov r8w, word[t0]
+	mov word[r11], r8w
 
 	mov rax, 0
 	mov ax, word[rbp - 10]

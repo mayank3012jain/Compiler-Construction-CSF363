@@ -66,20 +66,41 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 				//check dynamic range
 				if(entry->isStatic == 1){
 					fprintf(fptr, "\tmov si, word [%s]\n", offset);
-					fprintf(fptr, "\tcmp si, %d\n", entry->endIndex);
-					fprintf(fptr, "\tjg _exit\n");
-					fprintf(fptr, "\tcmp si, %d\n", entry->startIndex);
-					fprintf(fptr, "\tjl _exit\n");
+					
+					char* label = new_label();
+					char* label1 = new_label();
+                    fprintf(fptr, "\tcmp si, %d\n", entry->endIndex);
+                    fprintf(fptr, "\tjg %s\n", label1);
+                    fprintf(fptr, "\tcmp si, %d\n", entry->startIndex);
+                    fprintf(fptr, "\tjge %s\n", label);
+                    
+                    fprintf(fptr ,"%s: \n", label1);
+                    fprintf(fptr, "\tmov rdi, %s\n", "printError");
+                    fprintf(fptr, "\tmov rsi, 0\n");
+                    fprintf(fptr, "\tmov rax, 0\n");
+                    fprintf(fptr, "\tcall printf\n");
+                    fprintf(fptr, "\tjmp _exit\n");
+                    fprintf(fptr ,"%s: \n", label);
 				}
 				else{
 					char* startOff = getReturnOffset(entry->startIndexDyn->name, stable, retOffset, size);
 					char* endOff = getReturnOffset(entry->endIndexDyn->name, stable, retOffset, size);
 
-					fprintf(fptr, "\tmov si, word [%s]\n", offset);
+					char* label = new_label();
+					char* label1 = new_label();
+                    fprintf(fptr, "\tmov si, word [%s]\n", offset);
 					fprintf(fptr, "\tcmp si, word[%s]\n", endOff);
-					fprintf(fptr, "\tjg _exit\n");
-					fprintf(fptr, "\tcmp si, word[%s]\n", startOff);
-					fprintf(fptr, "\tjl _exit\n");
+                    fprintf(fptr, "\tjg %s\n", label1);
+                    fprintf(fptr, "\tcmp si, word[%s]\n", startOff);
+                    fprintf(fptr, "\tjge %s\n", label);
+                    
+                    fprintf(fptr ,"%s: \n", label1);
+                    fprintf(fptr, "\tmov rdi, %s\n", "printError");
+                    fprintf(fptr, "\tmov rsi, 0\n");
+                    fprintf(fptr, "\tmov rax, 0\n");
+                    fprintf(fptr, "\tcall printf\n");
+                    fprintf(fptr, "\tjmp _exit\n");
+                    fprintf(fptr ,"%s: \n", label);
 				}
 			}
 			// If array indexed by NUM
