@@ -1,3 +1,9 @@
+//GROUP 10
+//2017A7PS0179P - MAYANK JAIN
+//2017A7PS0143P - UJJWAL GANDHI
+//2017A7PS0157P - ADITYA MITHAL
+//2017A7PS0101P - ATMADEEP BANERJEE
+
 #ifndef symboltable_h
 #define symboltable_h
  
@@ -24,7 +30,7 @@ void check_module_dec(char* name, moduleHashNode *symbolForest[], ASTnode* ast);
 int check_type(ASTnode* root, symbolTableNode* stable);
 
 whileList* checkWhileExprn(ASTnode* root, symbolTableNode* stable, whileList* list);
-void checkWhileIsAssigned(symbolTableNode* stable, whileList* list);
+void checkWhileIsAssigned(symbolTableNode* stable, whileList* list, int line);
 
 
 //print

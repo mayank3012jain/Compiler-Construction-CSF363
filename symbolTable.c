@@ -1,3 +1,9 @@
+//GROUP 10
+//2017A7PS0179P - MAYANK JAIN
+//2017A7PS0143P - UJJWAL GANDHI
+//2017A7PS0157P - ADITYA MITHAL
+//2017A7PS0101P - ATMADEEP BANERJEE
+
 #include "astDef.h"
 #include "ast.h"
 #include"symbolTable.h"
@@ -68,15 +74,26 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
             else{ 
                 //dynamic
                 if(ast->firstChild->firstChild->firstChild->label == ID_NODE){
-                    symbolTableEntry* startIn = getSymbolTableEntry(stable, ast->firstChild->firstChild->firstChild->syntaxTreeNode->lexeme);
-                    symbolTableEntry* endIn = getSymbolTableEntry(stable,ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->lexeme);
-                    //check for NULL
-                    if(startIn==NULL || endIn== NULL){
-                        printf("Line number- %d Error- index variable not declared", ast->firstChild->firstChild->firstChild->syntaxTreeNode->lineNumber);
-                    }
+                    // symbolTableEntry* startIn = getSymbolTableEntry(stable, ast->firstChild->firstChild->firstChild->syntaxTreeNode->lexeme);
+                    // symbolTableEntry* endIn = getSymbolTableEntry(stable,ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->lexeme);
+                    // //check for NULL
+                    // if(startIn==NULL || endIn== NULL){
+                    //     printf("Line number- %d Error- index variable not declared", ast->firstChild->firstChild->firstChild->syntaxTreeNode->lineNumber);
+                    // }
+
                     int x = insert_into_stable(stable->varHashTable, ast->firstChild->sibling->syntaxTreeNode->lexeme, 
                         ast->firstChild->firstChild->sibling->label, 1, 0, 0,
-                        startIn, endIn, stable->running_offset, 1,2, 0, ast->firstChild->sibling);
+                        NULL, NULL, stable->running_offset, 1,2, 0, ast->firstChild->sibling);
+                    stable->running_offset += x;
+                    x = insert_into_stable(stable->varHashTable, ast->firstChild->firstChild->firstChild->syntaxTreeNode->lexeme,INTEGER_NODE,0,0,0,NULL,NULL,stable->running_offset,3,2,0,ast->firstChild->firstChild->firstChild);
+                    stable->running_offset += x;
+                    x = insert_into_stable(stable->varHashTable, ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->lexeme,INTEGER_NODE,0,0,0,NULL,NULL,stable->running_offset,3,2,0,ast->firstChild->firstChild->firstChild->sibling);
+                    stable->running_offset += x;
+
+                    symbolTableEntry* arrNode = getSymbolTableEntry(stable, ast->firstChild->sibling->syntaxTreeNode->lexeme);
+                    arrNode->startIndexDyn = getSymbolTableEntry(stable, ast->firstChild->firstChild->firstChild->syntaxTreeNode->lexeme);
+                    arrNode->endIndexDyn = getSymbolTableEntry(stable,ast->firstChild->firstChild->firstChild->sibling->syntaxTreeNode->lexeme);
+
                 }
                 //static
                 else{
@@ -186,7 +203,7 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //fix in running offset
         stable->running_offset = temp->running_offset;
 
-        checkWhileIsAssigned(stable, exprnCheckList);
+        checkWhileIsAssigned(stable, exprnCheckList, temp->scopeEnd);
 
         if(root->sibling!=NULL){
             return traverse_ast_recurse(root->sibling, stable, symbolForest);
@@ -332,6 +349,16 @@ void traverse_ast_recurse(ASTnode* root, symbolTableNode* stable, moduleHashNode
         //check loop variable not changed inside
         char* loopVar = root->firstChild->syntaxTreeNode->lexeme;
         symbolTableEntry* loopVarEntry = getSymbolTableEntry(stable, loopVar);
+        if (loopVarEntry == NULL){
+            printf("Line %d: Error - Loop variable [%s] is undeclared\n", temp->scopeEnd,loopVar);
+            if(root->sibling!=NULL){
+                return traverse_ast_recurse(root->sibling, stable, symbolForest);
+            }
+            else{
+                stable->scopeEnd = temp->scopeEnd +1;
+                return;
+            }
+        }
         int tempIsAssigned = loopVarEntry->isAssigned;
         loopVarEntry->isAssigned = 0;
         traverse_ast_recurse(root->firstChild->sibling, temp, symbolForest);//kya in teeno me firstchild hi statements hai?//sibling added

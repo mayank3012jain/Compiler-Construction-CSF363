@@ -1,3 +1,9 @@
+//GROUP 10
+//2017A7PS0179P - MAYANK JAIN
+//2017A7PS0143P - UJJWAL GANDHI
+//2017A7PS0157P - ADITYA MITHAL
+//2017A7PS0101P - ATMADEEP BANERJEE
+
 #include "ast.h"
 #include "parser.h"
 #include "lexer.h"
@@ -109,26 +115,27 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
                 fprintf(fptr, "\txor rsi, rsi\n");
 				fprintf(fptr, "\tmov si, %d\n", ind->syntaxTreeNode->value.num);
 			}
+			
             // Get actual index
 			if(entry->isStatic == 1){
 				fprintf(fptr, "\tsub rsi, %d\n", entry->startIndex);
-				fprintf(fptr, "\timul rsi, %d\n", DATA_TYPE_SIZES[entry->type]);
+				// fprintf(fptr, "\timul rsi, %d\n", DATA_TYPE_SIZES[entry->type]);
 			}
 			else{
 				char* startOffArr = getReturnOffset(entry->startIndexDyn->name, stable, retOffset, size);
 				fprintf(fptr, "\tsub si, word[%s]\n", startOffArr);
 			}
 
-			fprintf(fptr, "\tmov r12, rbp\n");
+			// fprintf(fptr, "\tmov r12, rbp\n");
 
-			if(entry->isStatic == 1){
-			//load the address of element
-				fprintf(fptr, "\tsub r12, %d\n", entry->offset+size+DATA_TYPE_SIZES[entry->type]);
-				fprintf(fptr, "\tsub r12, rsi\n");
-			}
-			else{
-				getArrayElement("r15","r12","rsi",entry,stable,fptr,retOffset, size);
-			}
+			// if(entry->isStatic == 1){
+			// //load the address of element
+			// 	fprintf(fptr, "\tsub r12, %d\n", entry->offset+size+DATA_TYPE_SIZES[entry->type]);
+			// 	fprintf(fptr, "\tsub r12, rsi\n");
+			// }
+			// else{
+			getArrayElement("r15","r12","rsi",entry,stable,fptr,retOffset, size);
+			// }
 			
 			if(entry->type==INT){				
 				// Load array value            
@@ -454,4 +461,6 @@ int genExpr(ASTnode *node, FILE *fptr, int interm_counter, symbolTableNode* stab
 			return BOOL;
 		}
     }
+
+	return 0;
 }

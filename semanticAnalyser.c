@@ -1,3 +1,9 @@
+//GROUP 10
+//2017A7PS0179P - MAYANK JAIN
+//2017A7PS0143P - UJJWAL GANDHI
+//2017A7PS0157P - ADITYA MITHAL
+//2017A7PS0101P - ATMADEEP BANERJEE
+
 #include "ast.h"
 #include "parser.h"
 #include "lexer.h"
@@ -97,10 +103,10 @@ int insert_into_stable(varHashNode* varHashTable[], char* name, int type, int is
     if(isArray){
         int size = DATA_TYPE_SIZES[type];
         width = ((endIndex - startIndex + 1) * size) +1;
-        if(isReturn==2){
-            width=12;
-        }else if(isStatic==0){
+        if(isStatic==0){
             width=8;
+        }else if(isReturn==2){
+            width=12;
         }
     }
     else{
@@ -309,9 +315,11 @@ int check_type(ASTnode* root, symbolTableNode* stable){
             else if(root->firstChild->sibling->label==NUM_NODE){
                 int num = root->firstChild->sibling->syntaxTreeNode->value.num;
                 // Bound check error
-                if(num<temp->startIndex || num>temp->endIndex){
-                    printf("Line %d: Error - NUM %d Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->value.num);
-                    return -1; // print error
+                if(temp->isStatic == 1){
+                    if(num<temp->startIndex || num>temp->endIndex){
+                        printf("Line %d: Error - NUM %d Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->value.num);
+                        return -1; // print error
+                    }
                 }
                 return temp->type;
             }
@@ -377,10 +385,13 @@ int check_type(ASTnode* root, symbolTableNode* stable){
         else if(root->firstChild->sibling->label==NUM_NODE){
             int num = root->firstChild->sibling->syntaxTreeNode->value.num;
             // Bound check error
-            if(num<temp->startIndex || num>temp->endIndex){
-                printf("Line %d: Error - NUM %d Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->value.num);
-                return -1; // print error
+            if(temp->isStatic == 1){
+                if(num<temp->startIndex || num>temp->endIndex){
+                    printf("Line %d: Error - NUM %d Not In Range\n", root->firstChild->sibling->syntaxTreeNode->lineNumber, root->firstChild->sibling->syntaxTreeNode->value.num);
+                    return -1; // print error
+                }
             }
+            
             return temp->type;
         }
         else{
@@ -543,7 +554,10 @@ int printSymbolTableNode(symbolTableNode* symNode, moduleHashNode* modhash, int 
 
     while(i<MAX_SCOPES){
         if(symNode->childList[i] != NULL){
-            correction= printSymbolTableNode(symNode->childList[i], modhash, correction);
+            if(symNode->nest==0 && strcmp(symNode->key, "driverFunctionNode")!=0){
+                correction= printSymbolTableNode(symNode->childList[i], modhash, 0);
+            }else
+                correction= printSymbolTableNode(symNode->childList[i], modhash, correction);
         }
         i++;
     }
@@ -585,31 +599,35 @@ int printVarHashNode(varHashNode* varhn, symbolTableNode* symNode, moduleHashNod
 
 int printSymbolTableEntry(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHashNode* modhash, int correction){
 
+    if(symEntry->isAssigned==3){
+        return correction;
+    }
+
     if(symEntry == NULL){
         return correction;
     }
     if(symEntry->isArray == 1){
         if(symEntry->isReturn==2){
             if(symEntry->isStatic == 1){
-                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, 5, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset - correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset, symNode->nest);
                 correction+=7;
             }
             else{
-                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 5,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset- correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 12,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset, symNode->nest);
                 correction+=7;
             }
         }else{
             if(symEntry->isStatic == 1){
-                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset - correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, static array [%d-%d], Type: [%s], offset: [%d], nesting level: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width, symEntry->startIndex, symEntry->endIndex, nodeNameString[symEntry->type], symEntry->offset, symNode->nest);
             }
             else{
-                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, 1,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset- correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+                printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: YES, dynamic array [%s-%s], Type: [%s], offset: [%d], nesting level: [%d]\n", symEntry->name,  modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->width,symEntry->startIndexDyn->name, symEntry->endIndexDyn->name, nodeNameString[symEntry->type], symEntry->offset, symNode->nest);
                 correction+=7;
             }
         }
     }
     else{
-        printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: NO, ------ [--], Type: [%s], offset: [%d], nesting level: [%d], isAssigned: [%d], isReturn: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, DATA_TYPE_SIZES[symEntry->type], nodeNameString[symEntry->type], symEntry->offset- correction, symNode->nest, symEntry->isAssigned, symEntry->isReturn);
+        printf("Var Name: [%s], Scope: [%s, %d-%d], Width: [%d], isArray: NO, ------ [--], Type: [%s], offset: [%d], nesting level: [%d]\n", symEntry->name, modhash->key, symNode->scopeStart, symNode->scopeEnd, DATA_TYPE_SIZES[symEntry->type], nodeNameString[symEntry->type], symEntry->offset, symNode->nest);
     }
     
     return correction;
@@ -623,9 +641,9 @@ void printArray(symbolTableEntry* symEntry, symbolTableNode* symNode, moduleHash
         int stIn, endIn;
         stIn = symEntry->startIndex;
         endIn = symEntry->endIndex;
-        printf("%23s  %4d -%4d  %s  %s array [%d, %d]  %s\n", modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->name, "Static", stIn, endIn,  nodeNameString[symEntry->type]);
+        printf("%23s  %4d -%4d  %s  %7s array [%d, %d]  %s\n", modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->name, "Static", stIn, endIn,  nodeNameString[symEntry->type]);
     }else{
-        printf("%23s  %4d-%4d  %s  %s array [%s, %s]  %s\n", modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->name, "Dynamic", symEntry->startIndexDyn->name, symEntry->endIndexDyn->name,  nodeNameString[symEntry->type]);
+        printf("%23s  %4d -%4d  %s  %7s array [%s, %s]  %s\n", modhash->key, symNode->scopeStart, symNode->scopeEnd, symEntry->name, "Dynamic", symEntry->startIndexDyn->name, symEntry->endIndexDyn->name,  nodeNameString[symEntry->type]);
     }
 }
 
@@ -747,7 +765,7 @@ whileList* checkWhileExprn(ASTnode* root, symbolTableNode* stable, whileList* li
     
 }
 
-void checkWhileIsAssigned(symbolTableNode* stable, whileList* list){
+void checkWhileIsAssigned(symbolTableNode* stable, whileList* list, int line){
     whileList* temp = list;
     int flag =0;
     while(temp){
@@ -760,7 +778,7 @@ void checkWhileIsAssigned(symbolTableNode* stable, whileList* list){
         temp = temp->next;
     }
     if(flag==0){
-        printf("Line %d ERROR- While variable not changed\n", stable->scopeEnd);
+        printf("Line %d: Error- While variable not changed\n", line);
     }
     return;
 }
