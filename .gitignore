@@ -1,5 +1,4 @@
-.vscode
-a.out
-unit_tests.c
-*.out
 *.o
+*.out
+.git
+*.asm

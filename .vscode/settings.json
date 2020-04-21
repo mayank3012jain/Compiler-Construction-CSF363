@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "parser.h": "c",
+        "lexer.h": "c",
+        "symboltable.h": "c",
+        "ast.h": "c",
+        "codegen.h": "c",
+        "astdef.h": "c"
+    }
+}
