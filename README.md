@@ -1,1 +1,2 @@
-# Compiler-Construction-CSF363
+# ERPLag-Compiler
+Working compiler for ERPlag, a pascal like language.
